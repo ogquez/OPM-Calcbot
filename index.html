@@ -768,6 +768,199 @@
             border-color: var(--input-focus-border);
         }
 
+        .btn-danger {
+            background: transparent;
+            color: #ef4444;
+            border: 2px solid #ef4444;
+        }
+
+        .btn-danger:hover {
+            background: #ef4444;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+        }
+
+        @keyframes resetShake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-4px); }
+            40% { transform: translateX(4px); }
+            60% { transform: translateX(-3px); }
+            80% { transform: translateX(3px); }
+        }
+
+        .reset-shake {
+            animation: resetShake 0.4s ease;
+        }
+
+        /* Mode Toggle */
+        .mode-toggle-container {
+            display: flex;
+            background: var(--input-bg);
+            border: 2px solid var(--input-border);
+            border-radius: 12px;
+            padding: 4px;
+            gap: 4px;
+        }
+
+        .mode-btn {
+            flex: 1;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: transparent;
+            color: var(--text-muted);
+        }
+
+        .mode-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        .mode-btn:not(.active):hover {
+            color: var(--text-primary);
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        /* Reverse Mode - Profit Target Card */
+        .reverse-only {
+            display: none;
+        }
+
+        .forward-only {
+            display: block;
+        }
+
+        .list-at-card {
+            background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+            padding: 20px;
+            border-radius: 14px;
+            margin-bottom: 16px;
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.3);
+            display: none;
+        }
+
+        .list-at-card .list-at-label {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .list-at-card .list-at-value {
+            color: #ffffff;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        /* Compare Modal */
+        .compare-modal .modal-content {
+            max-width: 700px;
+        }
+
+        .compare-selectors {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .compare-selector {
+            flex: 1;
+        }
+
+        .compare-selector label {
+            margin-bottom: 6px;
+            font-size: 11px;
+        }
+
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+
+        .compare-table th {
+            text-align: left;
+            padding: 8px 10px;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid var(--section-border);
+        }
+
+        .compare-table td {
+            padding: 8px 10px;
+            color: var(--text-primary);
+            font-weight: 500;
+            border-bottom: 1px solid var(--input-border);
+        }
+
+        .compare-table tr.highlight-row {
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .compare-table tr.highlight-row td {
+            font-weight: 700;
+        }
+
+        .delta-positive {
+            color: #4ade80 !important;
+        }
+
+        .delta-negative {
+            color: #ef4444 !important;
+        }
+
+        .delta-neutral {
+            color: var(--text-muted) !important;
+        }
+
+        [data-theme="light"] .delta-positive {
+            color: #16a34a !important;
+        }
+
+        [data-theme="light"] .delta-negative {
+            color: #dc2626 !important;
+        }
+
+        @media (max-width: 600px) {
+            .compare-modal .modal-content {
+                max-width: 100%;
+                border-radius: 20px 20px 0 0;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                max-height: 85vh;
+                overflow-y: auto;
+            }
+
+            .compare-selectors {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .compare-table {
+                font-size: 11px;
+            }
+
+            .compare-table th,
+            .compare-table td {
+                padding: 6px 6px;
+            }
+        }
+
         .saved-items {
             max-height: 200px;
             overflow-y: auto;
@@ -1042,6 +1235,34 @@
             </div>
 
             <div class="left-panel">
+                <!-- Mode Toggle -->
+                <div class="mode-toggle-container">
+                    <button class="mode-btn active" id="forwardModeBtn" onclick="setMode('forward')">💰 Calculate Profit</button>
+                    <button class="mode-btn" id="reverseModeBtn" onclick="setMode('reverse')">🎯 Find List Price</button>
+                </div>
+
+                <!-- Profit Target Card (Reverse Mode Only) -->
+                <div class="input-card reverse-only" id="profitTargetCard">
+                    <div class="card-header">
+                        <span class="card-icon">🎯</span>
+                        <span class="card-title">Profit Target</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="input-grid">
+                            <div class="input-group">
+                                <label for="desiredProfit">Desired Profit ($)</label>
+                                <input type="number" id="desiredProfit" placeholder="25.00" step="0.01" min="0" value="25">
+                                <div class="helper-text">Takes priority over margin</div>
+                            </div>
+                            <div class="input-group">
+                                <label for="desiredMargin">Desired Margin (%)</label>
+                                <input type="number" id="desiredMargin" placeholder="20" step="0.1" min="0" max="100" value="">
+                                <div class="helper-text">Used if profit $ is empty</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Sale Information Card -->
                 <div class="input-card" id="saleInfoCard">
                     <div class="card-header" onclick="toggleCard('saleInfo')">
@@ -1121,10 +1342,10 @@
                                     <option value="13.6">Antiques (13.6%)</option>
                                     <option value="13.6">Art (13.6%)</option>
                                     <option value="13.6">Baby (13.6%)</option>
+                                    <option value="13.6">Business & Industrial (13.6%)</option>
                                     <option value="13.6">Cameras & Photo (13.6%)</option>
                                     <option value="13.6">Cell Phones & Accessories (13.6%)</option>
                                     <option value="13.6">Clothing, Shoes & Accessories (13.6%)</option>
-                                    <option value="13.6">Coins & Paper Money (13.6%)</option>
                                     <option value="13.6">Collectibles (13.6%)</option>
                                     <option value="13.6">Computers/Tablets & Networking (13.6%)</option>
                                     <option value="13.6">Consumer Electronics (13.6%)</option>
@@ -1133,34 +1354,54 @@
                                     <option value="13.6">Entertainment Memorabilia (13.6%)</option>
                                     <option value="13.6">Health & Beauty (13.6%)</option>
                                     <option value="13.6">Home & Garden (13.6%)</option>
-                                    <option value="13.6">Jewelry & Watches (13.6%)</option>
+                                    <option value="13.6">Musical Instruments & Gear (13.6%)</option>
                                     <option value="13.6">Pet Supplies (13.6%)</option>
                                     <option value="13.6">Pottery & Glass (13.6%)</option>
                                     <option value="13.6">Sporting Goods (13.6%)</option>
-                                    <option value="13.6">Sports Mem, Cards & Fan Shop (13.6%)</option>
                                     <option value="13.6">Stamps (13.6%)</option>
                                     <option value="13.6">Tickets & Experiences (13.6%)</option>
                                     <option value="13.6">Toys & Hobbies (13.6%)</option>
                                     <option value="13.6">Travel (13.6%)</option>
                                     <option value="13.6">Video Games & Consoles (13.6%)</option>
+                                    <option value="13.6">Vinyl Records (13.6%)</option>
                                     <option value="13.6">Everything Else (13.6%)</option>
                                 </optgroup>
-                                <optgroup label="Media (15%)">
-                                    <option value="15">Books (15%)</option>
-                                    <option value="15">DVDs & Movies (15%)</option>
-                                    <option value="15">Music (15%)</option>
-                                    <option value="15">Magazines (15%)</option>
+                                <optgroup label="Media (15.3%)">
+                                    <option value="15.3">Books & Magazines (15.3%)</option>
+                                    <option value="15.3">Movies & TV (15.3%)</option>
+                                    <option value="15.3">Music (15.3%)</option>
                                 </optgroup>
-                                <optgroup label="Automotive">
-                                    <option value="13.6">Auto Parts & Accessories (13.6%)</option>
+                                <optgroup label="Jewelry, Watches & Handbags">
+                                    <option value="15">Jewelry & Watches ≤$5,000 (15%)</option>
+                                    <option value="9">Jewelry & Watches >$5,000 (9%)</option>
+                                    <option value="15">Watches ≤$1,000 (15%)</option>
+                                    <option value="6.5">Watches $1,000–$7,500 (6.5%)</option>
+                                    <option value="15">Women's Bags & Handbags ≤$2,000 (15%)</option>
+                                    <option value="9">Women's Bags & Handbags >$2,000 (9%)</option>
+                                </optgroup>
+                                <optgroup label="Coins & Collectible Cards (13.25%)">
+                                    <option value="13.25">Coins & Paper Money (13.25%)</option>
+                                    <option value="13.6">Coins - Bullion ≤$7,500 (13.6%)</option>
+                                    <option value="7">Coins - Bullion >$7,500 (7%)</option>
+                                    <option value="13.25">Comic Books & Memorabilia (13.25%)</option>
+                                    <option value="13.25">Non-Sport Trading Cards (13.25%)</option>
+                                    <option value="13.25">Sports Trading Cards (13.25%)</option>
+                                    <option value="13.25">Collectible Card Games (13.25%)</option>
+                                </optgroup>
+                                <optgroup label="Athletic Shoes">
+                                    <option value="13.6">Athletic Shoes under $150 (13.6%)</option>
+                                    <option value="8">Athletic Shoes $150+ (8%)</option>
+                                </optgroup>
+                                <optgroup label="Automotive (13.6%)">
+                                    <option value="13.6">eBay Motors Parts & Accessories (13.6%)</option>
                                     <option value="13.6">Automotive Tools & Supplies (13.6%)</option>
-                                    <option value="10">eBay Motors - Cars & Trucks (10%)</option>
-                                    <option value="10">eBay Motors - Motorcycles (10%)</option>
-                                    <option value="10">eBay Motors - Powersports (10%)</option>
                                 </optgroup>
                                 <optgroup label="Special Categories">
-                                    <option value="3.5">Musical Instruments & Gear (3.5%)</option>
-                                    <option value="2">Business & Industrial (2%)</option>
+                                    <option value="6.7">Guitars & Basses (6.7%)</option>
+                                    <option value="3">Heavy Equipment (3%)</option>
+                                    <option value="3">Commercial Printing Presses (3%)</option>
+                                    <option value="3">Food Trucks & Carts (3%)</option>
+                                    <option value="5">NFTs (5%)</option>
                                 </optgroup>
                             </select>
                         </div>
@@ -1198,7 +1439,7 @@
                                 <option value="6.00">Iowa (6.00%)</option>
                                 <option value="6.50">Kansas (6.50%)</option>
                                 <option value="6.00">Kentucky (6.00%)</option>
-                                <option value="4.45">Louisiana (4.45%)</option>
+                                <option value="5.00">Louisiana (5.00%)</option>
                                 <option value="5.50">Maine (5.50%)</option>
                                 <option value="6.00">Maryland (6.00%)</option>
                                 <option value="6.25">Massachusetts (6.25%)</option>
@@ -1211,7 +1452,7 @@
                                 <option value="6.85">Nevada (6.85%)</option>
                                 <option value="0">New Hampshire (0%)</option>
                                 <option value="6.625">New Jersey (6.625%)</option>
-                                <option value="5.125">New Mexico (5.125%)</option>
+                                <option value="4.875">New Mexico (4.875%)</option>
                                 <option value="4.00">New York (4.00%)</option>
                                 <option value="4.75">North Carolina (4.75%)</option>
                                 <option value="5.00">North Dakota (5.00%)</option>
@@ -1229,7 +1470,7 @@
                                 <option value="5.30">Virginia (5.30%)</option>
                                 <option value="6.50">Washington (6.50%)</option>
                                 <option value="6.00">West Virginia (6.00%)</option>
-                                <option value="5.00">Wisconsin (5.00%)</option>
+                                <option value="5.50">Wisconsin (5.50%)</option>
                                 <option value="4.00">Wyoming (4.00%)</option>
                                 <option value="6.00">Washington D.C. (6.00%)</option>
                             </select>
@@ -1264,7 +1505,12 @@
                 <div class="results" id="results">
                     <div class="results-header">
                         <span class="card-icon">📊</span>
-                        <span class="results-title">Results</span>
+                        <span class="results-title" id="resultsTitle">Results</span>
+                    </div>
+                    <!-- List At Card (Reverse Mode Only) -->
+                    <div class="list-at-card" id="listAtCard">
+                        <div class="list-at-label">List At Price</div>
+                        <div class="list-at-value" id="listAtValue">$0.00</div>
                     </div>
                     <div class="result-row">
                         <span class="result-label">Item Price:</span>
@@ -1390,6 +1636,8 @@
                         <div class="save-buttons">
                             <button class="btn btn-primary" onclick="saveCalculation()">💾 Save</button>
                             <button class="btn btn-secondary" onclick="toggleHistory()">📋 History</button>
+                            <button class="btn btn-secondary" onclick="openCompareView()">⚖️ Compare</button>
+                            <button class="btn btn-danger" onclick="resetAllFields()">🔄 Reset</button>
                         </div>
                         <div id="savedItemsContainer" style="display: none;">
                             <div style="font-size: 11px; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase;">Saved Calculations</div>
@@ -1409,6 +1657,39 @@
             <div class="modal-buttons">
                 <button class="btn btn-primary" onclick="confirmSave()">Save</button>
                 <button class="btn btn-secondary" onclick="closeSaveModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Compare Modal -->
+    <div class="modal compare-modal" id="compareModal">
+        <div class="modal-content">
+            <div class="modal-header">⚖️ Compare Scenarios</div>
+            <div class="compare-selectors">
+                <div class="compare-selector">
+                    <label for="compareA">Scenario A</label>
+                    <select id="compareA" class="category-select" onchange="updateComparison()"></select>
+                </div>
+                <div class="compare-selector">
+                    <label for="compareB">Scenario B</label>
+                    <select id="compareB" class="category-select" onchange="updateComparison()"></select>
+                </div>
+            </div>
+            <div id="compareTableContainer">
+                <table class="compare-table">
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>A</th>
+                            <th>B</th>
+                            <th>Delta</th>
+                        </tr>
+                    </thead>
+                    <tbody id="compareTableBody"></tbody>
+                </table>
+            </div>
+            <div class="modal-buttons" style="margin-top: 20px;">
+                <button class="btn btn-secondary" onclick="closeCompareModal()">Close</button>
             </div>
         </div>
     </div>
@@ -1497,7 +1778,159 @@
             }
         }
 
-        function calculateFees() {
+        // Current calculator mode
+        var currentMode = 'forward';
+
+        function setMode(mode) {
+            currentMode = mode;
+            var forwardBtn = document.getElementById('forwardModeBtn');
+            var reverseBtn = document.getElementById('reverseModeBtn');
+            var reverseEls = document.querySelectorAll('.reverse-only');
+            var salePriceGroup = document.getElementById('salePrice').closest('.input-group');
+            var listAtCard = document.getElementById('listAtCard');
+            var resultsTitle = document.getElementById('resultsTitle');
+            var mobileProfitLabel = document.querySelector('.mobile-profit-label');
+
+            if (mode === 'reverse') {
+                forwardBtn.classList.remove('active');
+                reverseBtn.classList.add('active');
+                for (var i = 0; i < reverseEls.length; i++) reverseEls[i].style.display = 'block';
+                salePriceGroup.style.display = 'none';
+                listAtCard.style.display = 'block';
+                resultsTitle.textContent = 'Recommended Listing';
+                if (mobileProfitLabel) mobileProfitLabel.textContent = 'List At';
+            } else {
+                reverseBtn.classList.remove('active');
+                forwardBtn.classList.add('active');
+                for (var i = 0; i < reverseEls.length; i++) reverseEls[i].style.display = 'none';
+                salePriceGroup.style.display = 'block';
+                listAtCard.style.display = 'none';
+                resultsTitle.textContent = 'Results';
+                if (mobileProfitLabel) mobileProfitLabel.textContent = 'Net Profit';
+            }
+            recalculate();
+        }
+
+        function recalculate() {
+            if (currentMode === 'reverse') {
+                calculateReverse();
+            } else {
+                calculateFees();
+            }
+        }
+
+        function calculateReverse() {
+            var itemCost = parseFloat(document.getElementById('itemCost').value) || 0;
+            var buyerShipping = parseFloat(document.getElementById('buyerShipping').value) || 0;
+            var shipping = parseFloat(document.getElementById('shipping').value) || 0;
+            var packagingCost = parseFloat(document.getElementById('packagingCost').value) || 0;
+            var categoryRate = parseFloat(document.getElementById('category').value) / 100;
+            var storeLevelDiscount = parseFloat(document.getElementById('storeLevel').value) / 100;
+            var stateTaxRate = parseFloat(document.getElementById('stateTax').value) / 100;
+            var adFeeRate = parseFloat(document.getElementById('adFee').value) / 100;
+            var taxOnFeesRate = parseFloat(document.getElementById('taxOnFees').value) / 100 || 0;
+
+            var desiredProfit = parseFloat(document.getElementById('desiredProfit').value);
+            var desiredMargin = parseFloat(document.getElementById('desiredMargin').value);
+
+            // Determine the target profit
+            var targetProfit;
+            if (!isNaN(desiredProfit) && desiredProfit > 0) {
+                targetProfit = desiredProfit;
+            } else if (!isNaN(desiredMargin) && desiredMargin > 0) {
+                // We'll solve iteratively for margin — start with an estimate
+                targetProfit = null; // flag to use margin approach
+            } else {
+                targetProfit = 0;
+            }
+
+            // Effective rate: the fraction of totalSaleAmount consumed by fees
+            // FVF = totalBuyerPays * categoryRate * storeLevelDiscount
+            // totalBuyerPays = totalSaleAmount * (1 + stateTaxRate)
+            // FVF = totalSaleAmount * (1 + stateTaxRate) * categoryRate * storeLevelDiscount
+            // adFee = totalSaleAmount * (1 + stateTaxRate) * adFeeRate
+            // perOrderFee handled separately
+            // taxOnFees = (FVF + perOrderFee) * taxOnFeesRate
+
+            var fvfRate = (1 + stateTaxRate) * categoryRate * storeLevelDiscount;
+            var adRate = (1 + stateTaxRate) * adFeeRate;
+            // effectiveRate = fvfRate + fvfRate*taxOnFeesRate + adRate
+            // But taxOnFees also applies to perOrderFee, which is fixed
+            var effectiveRate = fvfRate * (1 + taxOnFeesRate) + adRate;
+
+            if (effectiveRate >= 1) {
+                // Impossible — fees exceed 100%
+                document.getElementById('listAtValue').textContent = 'N/A';
+                document.getElementById('mobileProfitValue').textContent = 'N/A';
+                return;
+            }
+
+            function solveForSalePrice(profit) {
+                // First try with perOrderFee = $0.40 (totalSaleAmount > $10)
+                var perOrderFee = 0.40;
+                var fixedFees = perOrderFee * (1 + taxOnFeesRate);
+                var totalSaleAmount = (profit + fixedFees + itemCost + shipping + packagingCost) / (1 - effectiveRate);
+
+                // Check if totalSaleAmount <= $10, recompute with $0.30
+                if (totalSaleAmount <= 10) {
+                    perOrderFee = 0.30;
+                    fixedFees = perOrderFee * (1 + taxOnFeesRate);
+                    totalSaleAmount = (profit + fixedFees + itemCost + shipping + packagingCost) / (1 - effectiveRate);
+                }
+
+                var salePrice = totalSaleAmount - buyerShipping;
+                return Math.max(0, Math.ceil(salePrice * 100) / 100); // round up to nearest cent
+            }
+
+            var computedSalePrice;
+
+            if (targetProfit !== null) {
+                computedSalePrice = solveForSalePrice(targetProfit);
+            } else {
+                // Margin approach: netProfit / totalSaleAmount = desiredMargin/100
+                // netProfit = totalSaleAmount * (desiredMargin/100)
+                // totalSaleAmount * (desiredMargin/100) = totalSaleAmount * (1 - effectiveRate) - fixedFees - itemCost - shipping - packaging
+                // totalSaleAmount * (desiredMargin/100) - totalSaleAmount * (1 - effectiveRate) = -fixedFees - itemCost - shipping - packaging
+                // totalSaleAmount * (desiredMargin/100 - 1 + effectiveRate) = -(fixedFees + itemCost + shipping + packaging)
+                // totalSaleAmount = (fixedFees + itemCost + shipping + packaging) / (1 - effectiveRate - desiredMargin/100)
+                var marginFrac = desiredMargin / 100;
+                var denominator = 1 - effectiveRate - marginFrac;
+
+                if (denominator <= 0) {
+                    document.getElementById('listAtValue').textContent = 'N/A';
+                    document.getElementById('mobileProfitValue').textContent = 'N/A';
+                    return;
+                }
+
+                var perOrderFee = 0.40;
+                var fixedFees = perOrderFee * (1 + taxOnFeesRate);
+                var totalSaleAmount = (fixedFees + itemCost + shipping + packagingCost) / denominator;
+
+                if (totalSaleAmount <= 10) {
+                    perOrderFee = 0.30;
+                    fixedFees = perOrderFee * (1 + taxOnFeesRate);
+                    totalSaleAmount = (fixedFees + itemCost + shipping + packagingCost) / denominator;
+                }
+
+                computedSalePrice = Math.max(0, Math.ceil((totalSaleAmount - buyerShipping) * 100) / 100);
+            }
+
+            // Set the computed sale price into the input and run forward calculation
+            document.getElementById('salePrice').value = computedSalePrice.toFixed(2);
+            document.getElementById('listAtValue').textContent = '$' + computedSalePrice.toFixed(2);
+
+            // Update mobile profit bar to show list price in reverse mode
+            var mobileProfitValue = document.getElementById('mobileProfitValue');
+            if (mobileProfitValue) {
+                mobileProfitValue.textContent = '$' + computedSalePrice.toFixed(2);
+                mobileProfitValue.style.color = '#a78bfa';
+            }
+
+            // Now run the forward calculation to populate the full breakdown
+            calculateFees(true); // pass flag to skip mobile bar update
+        }
+
+        function calculateFees(skipMobileUpdate) {
             const salePrice = parseFloat(document.getElementById('salePrice').value) || 0;
             const itemCost = parseFloat(document.getElementById('itemCost').value) || 0;
             const buyerShipping = parseFloat(document.getElementById('buyerShipping').value) || 0;
@@ -1516,7 +1949,7 @@
             // Apply store level discount to final value fee
             const baseFee = totalBuyerPays * (categoryRate / 100);
             const ebayFee = baseFee * (storeLevelDiscount / 100);
-            
+
             const perOrderFee = totalSaleAmount <= 10 ? 0.30 : 0.40;
             const adFeeCost = totalBuyerPays * (adFeeRate / 100);
             const taxOnFeesAmount = (ebayFee + perOrderFee) * (taxOnFeesRate / 100);
@@ -1540,18 +1973,20 @@
             document.getElementById('displayItemCost').textContent = '$' + itemCost.toFixed(2);
             document.getElementById('displayShipping').textContent = '$' + shipping.toFixed(2);
             document.getElementById('displayPackaging').textContent = '$' + packagingCost.toFixed(2);
-            
+
             const profitElement = document.getElementById('netProfit');
             profitElement.textContent = '$' + netProfit.toFixed(2);
             profitElement.className = 'result-value ' + (netProfit >= 0 ? 'profit' : 'loss');
-            
-            // Update mobile profit bar
-            const mobileProfitValue = document.getElementById('mobileProfitValue');
-            if (mobileProfitValue) {
-                mobileProfitValue.textContent = '$' + netProfit.toFixed(2);
-                mobileProfitValue.style.color = netProfit >= 0 ? '#10b981' : '#ef4444';
+
+            // Update mobile profit bar (unless called from reverse mode)
+            if (!skipMobileUpdate) {
+                const mobileProfitValue = document.getElementById('mobileProfitValue');
+                if (mobileProfitValue) {
+                    mobileProfitValue.textContent = '$' + netProfit.toFixed(2);
+                    mobileProfitValue.style.color = netProfit >= 0 ? '#10b981' : '#ef4444';
+                }
             }
-            
+
             document.getElementById('profitMargin').textContent = profitMargin.toFixed(2) + '%';
             document.getElementById('revenueAfterFees').textContent = '$' + revenueAfterFees.toFixed(2);
 
@@ -1591,16 +2026,18 @@
             }
         }
 
-        document.getElementById('salePrice').addEventListener('input', calculateFees);
-        document.getElementById('itemCost').addEventListener('input', calculateFees);
-        document.getElementById('buyerShipping').addEventListener('input', calculateFees);
-        document.getElementById('shipping').addEventListener('input', calculateFees);
-        document.getElementById('packagingCost').addEventListener('input', calculateFees);
-        document.getElementById('category').addEventListener('change', calculateFees);
-        document.getElementById('storeLevel').addEventListener('change', calculateFees);
-        document.getElementById('stateTax').addEventListener('change', calculateFees);
-        document.getElementById('adFee').addEventListener('change', calculateFees);
-        document.getElementById('taxOnFees').addEventListener('input', calculateFees);
+        document.getElementById('salePrice').addEventListener('input', recalculate);
+        document.getElementById('itemCost').addEventListener('input', recalculate);
+        document.getElementById('buyerShipping').addEventListener('input', recalculate);
+        document.getElementById('shipping').addEventListener('input', recalculate);
+        document.getElementById('packagingCost').addEventListener('input', recalculate);
+        document.getElementById('category').addEventListener('change', recalculate);
+        document.getElementById('storeLevel').addEventListener('change', recalculate);
+        document.getElementById('stateTax').addEventListener('change', recalculate);
+        document.getElementById('adFee').addEventListener('change', recalculate);
+        document.getElementById('taxOnFees').addEventListener('input', recalculate);
+        document.getElementById('desiredProfit').addEventListener('input', recalculate);
+        document.getElementById('desiredMargin').addEventListener('input', recalculate);
 
         // Save/History Functionality
         let savedCalculations = JSON.parse(localStorage.getItem('ebayCalcSaved')) || [];
@@ -1636,7 +2073,10 @@
                     stateTax: document.getElementById('stateTax').value,
                     adFee: document.getElementById('adFee').value,
                     taxOnFees: document.getElementById('taxOnFees').value,
-                    netProfit: document.getElementById('netProfit').textContent
+                    netProfit: document.getElementById('netProfit').textContent,
+                    mode: currentMode,
+                    desiredProfit: document.getElementById('desiredProfit').value,
+                    desiredMargin: document.getElementById('desiredMargin').value
                 }
             };
 
@@ -1648,7 +2088,7 @@
             localStorage.setItem('ebayCalcSaved', JSON.stringify(savedCalculations));
             closeSaveModal();
             renderSavedItems();
-            
+
             // Show history after saving
             document.getElementById('savedItemsContainer').style.display = 'block';
         }
@@ -1700,8 +2140,15 @@
             document.getElementById('stateTax').value = calc.data.stateTax;
             document.getElementById('adFee').value = calc.data.adFee;
             document.getElementById('taxOnFees').value = calc.data.taxOnFees || 0;
+            document.getElementById('desiredProfit').value = calc.data.desiredProfit || 25;
+            document.getElementById('desiredMargin').value = calc.data.desiredMargin || '';
 
-            calculateFees();
+            // Restore mode
+            if (calc.data.mode && calc.data.mode !== currentMode) {
+                setMode(calc.data.mode);
+            } else {
+                recalculate();
+            }
         }
 
         function deleteCalculation(index) {
@@ -1712,10 +2159,189 @@
             }
         }
 
+        // Reset All Fields
+        function resetAllFields() {
+            document.getElementById('salePrice').value = 100;
+            document.getElementById('itemCost').value = 50;
+            document.getElementById('buyerShipping').value = 0;
+            document.getElementById('shipping').value = 0;
+            document.getElementById('packagingCost').value = 0;
+            document.getElementById('category').selectedIndex = 0;
+            document.getElementById('storeLevel').selectedIndex = 0;
+            document.getElementById('stateTax').selectedIndex = 0;
+            document.getElementById('adFee').selectedIndex = 0;
+            document.getElementById('taxOnFees').value = 0;
+            document.getElementById('desiredProfit').value = 25;
+            document.getElementById('desiredMargin').value = '';
+
+            // Reset to forward mode
+            if (currentMode !== 'forward') {
+                setMode('forward');
+            } else {
+                recalculate();
+            }
+
+            // Shake animation on results
+            var results = document.getElementById('results');
+            results.classList.add('reset-shake');
+            setTimeout(function() { results.classList.remove('reset-shake'); }, 400);
+        }
+
+        // ========== Comparison View ==========
+        function getCalculationSnapshot() {
+            var salePrice = parseFloat(document.getElementById('salePrice').value) || 0;
+            var itemCost = parseFloat(document.getElementById('itemCost').value) || 0;
+            var buyerShipping = parseFloat(document.getElementById('buyerShipping').value) || 0;
+            var shipping = parseFloat(document.getElementById('shipping').value) || 0;
+            var packagingCost = parseFloat(document.getElementById('packagingCost').value) || 0;
+            var categoryRate = parseFloat(document.getElementById('category').value);
+            var storeLevelDiscount = parseFloat(document.getElementById('storeLevel').value);
+            var stateTaxRate = parseFloat(document.getElementById('stateTax').value);
+            var adFeeRate = parseFloat(document.getElementById('adFee').value);
+            var taxOnFeesRate = parseFloat(document.getElementById('taxOnFees').value) || 0;
+
+            return computeValues({
+                salePrice: salePrice,
+                itemCost: itemCost,
+                buyerShipping: buyerShipping,
+                shipping: shipping,
+                packagingCost: packagingCost,
+                categoryRate: categoryRate,
+                storeLevelDiscount: storeLevelDiscount,
+                stateTaxRate: stateTaxRate,
+                adFeeRate: adFeeRate,
+                taxOnFeesRate: taxOnFeesRate
+            });
+        }
+
+        function computeFromSaved(data) {
+            return computeValues({
+                salePrice: parseFloat(data.salePrice) || 0,
+                itemCost: parseFloat(data.itemCost) || 0,
+                buyerShipping: parseFloat(data.buyerShipping) || 0,
+                shipping: parseFloat(data.shipping) || 0,
+                packagingCost: parseFloat(data.packagingCost) || 0,
+                categoryRate: parseFloat(data.category) || 13.6,
+                storeLevelDiscount: parseFloat(data.storeLevel) || 100,
+                stateTaxRate: parseFloat(data.stateTax) || 0,
+                adFeeRate: parseFloat(data.adFee) || 0,
+                taxOnFeesRate: parseFloat(data.taxOnFees) || 0
+            });
+        }
+
+        function computeValues(p) {
+            var totalSaleAmount = p.salePrice + p.buyerShipping;
+            var salesTaxAmount = totalSaleAmount * (p.stateTaxRate / 100);
+            var totalBuyerPays = totalSaleAmount + salesTaxAmount;
+            var baseFee = totalBuyerPays * (p.categoryRate / 100);
+            var ebayFee = baseFee * (p.storeLevelDiscount / 100);
+            var perOrderFee = totalSaleAmount <= 10 ? 0.30 : 0.40;
+            var adFeeCost = totalBuyerPays * (p.adFeeRate / 100);
+            var taxOnFeesAmount = (ebayFee + perOrderFee) * (p.taxOnFeesRate / 100);
+            var totalFees = ebayFee + perOrderFee + adFeeCost + taxOnFeesAmount;
+            var netProfit = totalSaleAmount - totalFees - p.itemCost - p.shipping - p.packagingCost;
+            var profitMargin = totalSaleAmount > 0 ? (netProfit / totalSaleAmount) * 100 : 0;
+
+            return {
+                salePrice: p.salePrice,
+                itemCost: p.itemCost,
+                totalSaleAmount: totalSaleAmount,
+                totalFees: totalFees,
+                netProfit: netProfit,
+                profitMargin: profitMargin,
+                shipping: p.shipping,
+                packagingCost: p.packagingCost,
+                ebayFee: ebayFee,
+                adFeeCost: adFeeCost
+            };
+        }
+
+        function openCompareView() {
+            populateCompareDropdowns();
+            updateComparison();
+            document.getElementById('compareModal').classList.add('active');
+        }
+
+        function closeCompareModal() {
+            document.getElementById('compareModal').classList.remove('active');
+        }
+
+        function populateCompareDropdowns() {
+            var selA = document.getElementById('compareA');
+            var selB = document.getElementById('compareB');
+            var html = '<option value="current">Current Calculation</option>';
+            savedCalculations.forEach(function(calc, i) {
+                var safeName = calc.name.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+                html += '<option value="' + i + '">' + safeName + '</option>';
+            });
+            selA.innerHTML = html;
+            selB.innerHTML = html;
+            // Default: A = current, B = first saved (if any)
+            selA.value = 'current';
+            selB.value = savedCalculations.length > 0 ? '0' : 'current';
+        }
+
+        function updateComparison() {
+            var selA = document.getElementById('compareA').value;
+            var selB = document.getElementById('compareB').value;
+
+            var dataA = selA === 'current' ? getCalculationSnapshot() : computeFromSaved(savedCalculations[parseInt(selA)].data);
+            var dataB = selB === 'current' ? getCalculationSnapshot() : computeFromSaved(savedCalculations[parseInt(selB)].data);
+
+            var metrics = [
+                { label: 'Sale Price', key: 'salePrice', format: '$', higherBetter: true, highlight: false },
+                { label: 'Item Cost', key: 'itemCost', format: '$', higherBetter: false, highlight: false },
+                { label: 'Total Sale Amount', key: 'totalSaleAmount', format: '$', higherBetter: true, highlight: false },
+                { label: 'Total eBay Fees', key: 'totalFees', format: '$', higherBetter: false, highlight: true },
+                { label: 'Shipping Cost', key: 'shipping', format: '$', higherBetter: false, highlight: false },
+                { label: 'Packaging Cost', key: 'packagingCost', format: '$', higherBetter: false, highlight: false },
+                { label: 'Net Profit', key: 'netProfit', format: '$', higherBetter: true, highlight: true },
+                { label: 'Profit Margin', key: 'profitMargin', format: '%', higherBetter: true, highlight: true }
+            ];
+
+            var tbody = document.getElementById('compareTableBody');
+            var rows = '';
+            metrics.forEach(function(m) {
+                var valA = dataA[m.key];
+                var valB = dataB[m.key];
+                var delta = valB - valA;
+                var deltaClass = 'delta-neutral';
+
+                if (Math.abs(delta) > 0.005) {
+                    if (m.higherBetter) {
+                        deltaClass = delta > 0 ? 'delta-positive' : 'delta-negative';
+                    } else {
+                        deltaClass = delta < 0 ? 'delta-positive' : 'delta-negative';
+                    }
+                }
+
+                var fmt = m.format === '$' ?
+                    function(v) { return '$' + v.toFixed(2); } :
+                    function(v) { return v.toFixed(2) + '%'; };
+
+                var deltaStr = (delta >= 0 ? '+' : '') + fmt(delta);
+                var rowClass = m.highlight ? ' class="highlight-row"' : '';
+
+                rows += '<tr' + rowClass + '>';
+                rows += '<td>' + m.label + '</td>';
+                rows += '<td>' + fmt(valA) + '</td>';
+                rows += '<td>' + fmt(valB) + '</td>';
+                rows += '<td class="' + deltaClass + '">' + deltaStr + '</td>';
+                rows += '</tr>';
+            });
+            tbody.innerHTML = rows;
+        }
+
         // Close modal when clicking outside
         document.getElementById('saveModal').addEventListener('click', function(e) {
             if (e.target === this) {
                 closeSaveModal();
+            }
+        });
+
+        document.getElementById('compareModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeCompareModal();
             }
         });
 
@@ -1733,7 +2359,7 @@
             });
         }
 
-        calculateFees();
+        recalculate();
     </script>
 </body>
 </html>
