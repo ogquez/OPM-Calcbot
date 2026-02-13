@@ -202,7 +202,6 @@
             width: 32px;
             height: 32px;
             border-radius: 8px;
-            display: flex;
             align-items: center;
             justify-content: center;
             color: #ffffff;
@@ -356,19 +355,6 @@
 
         .toggle-switch.active::before {
             transform: translateX(24px);
-        }
-
-        .content-wrapper {
-            display: grid;
-            grid-template-columns: 1fr 480px;
-            gap: 40px;
-            align-items: start;
-        }
-
-        .left-panel {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
         }
 
         .input-grid {
@@ -942,7 +928,7 @@
 
             /* Show collapse toggles on mobile */
             .collapse-toggle {
-                display: block;
+                display: flex;
             }
 
             /* Make card header clickable */
@@ -1067,7 +1053,7 @@
                             </svg>
                         </button>
                     </div>
-                    <div class="card-content collapsed" id="saleInfoContent">
+                    <div class="card-content" id="saleInfoContent">
                         <div class="input-grid">
                             <div class="input-group">
                                 <label for="salePrice">Sale Price</label>
@@ -1093,7 +1079,7 @@
                             </svg>
                         </button>
                     </div>
-                    <div class="card-content collapsed" id="shippingContent">
+                    <div class="card-content" id="shippingContent">
                         <div class="input-grid">
                             <div class="input-group">
                                 <label for="buyerShipping">Buyer Paid Shipping</label>
@@ -1125,7 +1111,7 @@
                             </svg>
                         </button>
                     </div>
-                    <div class="card-content collapsed" id="feesContent">
+                    <div class="card-content" id="feesContent">
                         <div class="input-grid">
                         <div class="input-group">
                             <label for="category">Category</label>
@@ -1684,17 +1670,20 @@
                 return;
             }
 
-            container.innerHTML = savedCalculations.map((calc, index) => `
+            container.innerHTML = savedCalculations.map((calc, index) => {
+                const safeName = calc.name.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+                const safeProfit = (calc.data.netProfit || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                return `
                 <div class="saved-item">
                     <div onclick="loadCalculation(${index})" style="flex: 1;">
-                        <div class="saved-item-name">${calc.name}</div>
+                        <div class="saved-item-name">${safeName}</div>
                         <div style="font-size: 10px; color: var(--text-muted); margin-top: 2px;">
-                            ${new Date(calc.timestamp).toLocaleDateString()} - Profit: ${calc.data.netProfit}
+                            ${new Date(calc.timestamp).toLocaleDateString()} - Profit: ${safeProfit}
                         </div>
                     </div>
                     <button class="saved-item-delete" onclick="deleteCalculation(${index})" title="Delete">✕</button>
                 </div>
-            `).join('');
+            `}).join('');
         }
 
         function loadCalculation(index) {
@@ -1736,6 +1725,13 @@
                 confirmSave();
             }
         });
+
+        // Collapse input cards on mobile by default
+        if (window.innerWidth <= 1024) {
+            ['saleInfo', 'shipping', 'fees'].forEach(function(cardName) {
+                document.getElementById(cardName + 'Content').classList.add('collapsed');
+            });
+        }
 
         calculateFees();
     </script>
