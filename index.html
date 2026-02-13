@@ -120,6 +120,8 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 35px;
+            position: relative;
+            z-index: 101;
         }
 
         .header-left h1 {
@@ -903,18 +905,6 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
 
-        /* Extend background into notch area with transparency */
-        .mobile-profit-bar::before {
-            content: '';
-            position: absolute;
-            top: -100px;
-            left: 0;
-            right: 0;
-            height: 100px;
-            background: linear-gradient(to bottom, rgba(10, 10, 10, 0.95) 0%, rgba(10, 10, 10, 0.8) 50%, transparent 100%);
-            z-index: -1;
-        }
-
         .mobile-profit-content {
             display: flex;
             justify-content: space-between;
@@ -947,6 +937,10 @@
             .right-panel {
                 position: static;
                 top: auto;
+            }
+
+            .header {
+                margin-bottom: 25px;
             }
 
             .mobile-profit-bar {
@@ -1027,22 +1021,6 @@
             /* Mobile profit bar notch transparency */
             .mobile-profit-bar {
                 padding-top: max(12px, calc(env(safe-area-inset-top) + 12px));
-            }
-
-            .mobile-profit-bar::before {
-                background: linear-gradient(to bottom, 
-                    rgba(10, 10, 10, 0.98) 0%, 
-                    rgba(10, 10, 10, 0.85) 40%,
-                    rgba(10, 10, 10, 0.5) 70%,
-                    transparent 100%);
-            }
-
-            html[data-theme="light"] .mobile-profit-bar::before {
-                background: linear-gradient(to bottom, 
-                    rgba(245, 245, 245, 0.98) 0%, 
-                    rgba(245, 245, 245, 0.85) 40%,
-                    rgba(245, 245, 245, 0.5) 70%,
-                    transparent 100%);
             }
             
             .container {
