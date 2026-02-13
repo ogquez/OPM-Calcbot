@@ -215,10 +215,11 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            color: #ffffff;
         }
 
         .collapse-toggle:hover {
-            background: rgba(102, 126, 234, 0.1);
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .collapse-toggle:active {
@@ -229,6 +230,13 @@
             width: 20px;
             height: 20px;
             transition: transform 0.3s ease;
+            stroke: #ffffff;
+            opacity: 0.9;
+            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+        }
+
+        .collapse-toggle:hover svg {
+            opacity: 1;
         }
 
         .collapse-toggle.active svg {
@@ -289,7 +297,7 @@
         }
 
         .chart-collapse-toggle:hover {
-            background: rgba(102, 126, 234, 0.1);
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .chart-collapse-toggle:active {
@@ -300,6 +308,13 @@
             width: 20px;
             height: 20px;
             transition: transform 0.3s ease;
+            stroke: #ffffff;
+            opacity: 0.9;
+            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+        }
+
+        .chart-collapse-toggle:hover svg {
+            opacity: 1;
         }
 
         .chart-collapse-toggle.active svg {
@@ -718,7 +733,7 @@
 
         /* Save/History Section */
         .save-section {
-            margin-top: 0;
+            margin-top: 20px;
             padding: 25px;
             background: var(--input-bg);
             border-radius: 16px;
@@ -1294,7 +1309,11 @@
                     <div class="profit-chart">
                         <div class="chart-collapse-header" onclick="toggleChart()">
                             <div class="chart-header">💰 Profit Breakdown</div>
-                            <button class="chart-collapse-toggle" id="chartToggle">►</button>
+                            <button class="chart-collapse-toggle" id="chartToggle">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </button>
                         </div>
                         <div class="chart-content collapsed" id="chartContent">
                             <div class="chart-bar-container">
@@ -1415,11 +1434,9 @@
             if (content.classList.contains('collapsed')) {
                 content.classList.remove('collapsed');
                 toggle.classList.add('active');
-                toggle.textContent = '▼';
             } else {
                 content.classList.add('collapsed');
                 toggle.classList.remove('active');
-                toggle.textContent = '►';
             }
         }
 
@@ -1431,11 +1448,9 @@
             if (content.classList.contains('collapsed')) {
                 content.classList.remove('collapsed');
                 toggle.classList.add('active');
-                toggle.textContent = '▼';
             } else {
                 content.classList.add('collapsed');
                 toggle.classList.remove('active');
-                toggle.textContent = '►';
             }
         }
 
