@@ -6,12 +6,12 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="eBay Fee Calculator">
-    <meta name="theme-color" content="#0a0a0a">
+    <meta name="theme-color" content="#000000">
     <title>eBay Fee Calculator</title>
     <style>
         :root {
-            --bg-gradient-start: #0a0a0a;
-            --bg-gradient-end: #1a1a1a;
+            --bg-gradient-start: #000000;
+            --bg-gradient-end: #000000;
             --container-bg: #1e1e1e;
             --text-primary: #ffffff;
             --text-secondary: #a0a0a0;
@@ -95,7 +95,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            background: #000000;
             z-index: -1;
             pointer-events: none;
         }
@@ -1060,7 +1060,7 @@
             /* Ensure notch area is covered */
             @media (orientation: portrait) {
                 html, body {
-                    background: #0a0a0a;
+                    background: #000000;
                 }
                 
                 html[data-theme="light"], 
@@ -1480,7 +1480,7 @@
                 metaThemeColor.name = 'theme-color';
                 document.head.appendChild(metaThemeColor);
             }
-            metaThemeColor.content = theme === 'light' ? '#f5f5f5' : '#0a0a0a';
+            metaThemeColor.content = theme === 'light' ? '#f5f5f5' : '#000000';
             
             // Keep Apple status bar style as black-translucent for transparent notches
             let metaStatusBar = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
