@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="eBay Fee Calculator">
     <meta name="theme-color" content="#0a0a0a">
     <title>eBay Fee Calculator</title>
@@ -890,9 +890,21 @@
             z-index: 100;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 12px 20px;
-            margin: -40px -40px 25px -40px;
+            margin: -40px -40px 20px -40px;
             border-radius: 24px 24px 0 0;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Extend background into notch area with transparency */
+        .mobile-profit-bar::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: linear-gradient(to bottom, rgba(10, 10, 10, 0.95) 0%, rgba(10, 10, 10, 0.8) 50%, transparent 100%);
+            z-index: -1;
         }
 
         .mobile-profit-content {
@@ -1002,6 +1014,27 @@
 
             html[data-theme="light"] body {
                 background: #f5f5f5;
+            }
+
+            /* Mobile profit bar notch transparency */
+            .mobile-profit-bar {
+                padding-top: max(12px, calc(env(safe-area-inset-top) + 12px));
+            }
+
+            .mobile-profit-bar::before {
+                background: linear-gradient(to bottom, 
+                    rgba(10, 10, 10, 0.98) 0%, 
+                    rgba(10, 10, 10, 0.85) 40%,
+                    rgba(10, 10, 10, 0.5) 70%,
+                    transparent 100%);
+            }
+
+            html[data-theme="light"] .mobile-profit-bar::before {
+                background: linear-gradient(to bottom, 
+                    rgba(245, 245, 245, 0.98) 0%, 
+                    rgba(245, 245, 245, 0.85) 40%,
+                    rgba(245, 245, 245, 0.5) 70%,
+                    transparent 100%);
             }
             
             .container {
