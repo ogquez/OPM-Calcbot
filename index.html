@@ -468,6 +468,14 @@
             padding: 10px;
         }
 
+        .category-select optgroup {
+            font-weight: 700;
+            font-size: 13px;
+            color: #667eea;
+            background: var(--input-bg);
+            padding: 8px 0;
+        }
+
         .helper-text {
             font-size: 11px;
             color: var(--text-secondary);
@@ -1161,10 +1169,52 @@
                         <div class="input-group">
                             <label for="category">Category</label>
                             <select id="category" class="category-select">
-                                <option value="13.25">Most Categories (13.25%)</option>
-                                <option value="15">Books, DVDs, Movies, Music (15%)</option>
-                                <option value="3.5">Musical Instruments & Gear (3.5%)</option>
-                                <option value="2">Business & Industrial (2%)</option>
+                                <optgroup label="Standard Rate (13.25%)">
+                                    <option value="13.25" selected>Most Categories (13.25%)</option>
+                                    <option value="13.25">Antiques (13.25%)</option>
+                                    <option value="13.25">Art (13.25%)</option>
+                                    <option value="13.25">Baby (13.25%)</option>
+                                    <option value="13.25">Cameras & Photo (13.25%)</option>
+                                    <option value="13.25">Cell Phones & Accessories (13.25%)</option>
+                                    <option value="13.25">Clothing, Shoes & Accessories (13.25%)</option>
+                                    <option value="13.25">Coins & Paper Money (13.25%)</option>
+                                    <option value="13.25">Collectibles (13.25%)</option>
+                                    <option value="13.25">Computers/Tablets & Networking (13.25%)</option>
+                                    <option value="13.25">Consumer Electronics (13.25%)</option>
+                                    <option value="13.25">Crafts (13.25%)</option>
+                                    <option value="13.25">Dolls & Bears (13.25%)</option>
+                                    <option value="13.25">Entertainment Memorabilia (13.25%)</option>
+                                    <option value="13.25">Health & Beauty (13.25%)</option>
+                                    <option value="13.25">Home & Garden (13.25%)</option>
+                                    <option value="13.25">Jewelry & Watches (13.25%)</option>
+                                    <option value="13.25">Pet Supplies (13.25%)</option>
+                                    <option value="13.25">Pottery & Glass (13.25%)</option>
+                                    <option value="13.25">Sporting Goods (13.25%)</option>
+                                    <option value="13.25">Sports Mem, Cards & Fan Shop (13.25%)</option>
+                                    <option value="13.25">Stamps (13.25%)</option>
+                                    <option value="13.25">Tickets & Experiences (13.25%)</option>
+                                    <option value="13.25">Toys & Hobbies (13.25%)</option>
+                                    <option value="13.25">Travel (13.25%)</option>
+                                    <option value="13.25">Video Games & Consoles (13.25%)</option>
+                                    <option value="13.25">Everything Else (13.25%)</option>
+                                </optgroup>
+                                <optgroup label="Media (15%)">
+                                    <option value="15">Books (15%)</option>
+                                    <option value="15">DVDs & Movies (15%)</option>
+                                    <option value="15">Music (15%)</option>
+                                    <option value="15">Magazines (15%)</option>
+                                </optgroup>
+                                <optgroup label="Automotive">
+                                    <option value="13.25">Auto Parts & Accessories (13.25%)</option>
+                                    <option value="13.25">Automotive Tools & Supplies (13.25%)</option>
+                                    <option value="10">eBay Motors - Cars & Trucks (10%)</option>
+                                    <option value="10">eBay Motors - Motorcycles (10%)</option>
+                                    <option value="10">eBay Motors - Powersports (10%)</option>
+                                </optgroup>
+                                <optgroup label="Special Categories">
+                                    <option value="3.5">Musical Instruments & Gear (3.5%)</option>
+                                    <option value="2">Business & Industrial (2%)</option>
+                                </optgroup>
                             </select>
                         </div>
 
