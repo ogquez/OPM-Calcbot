@@ -900,9 +900,22 @@
             z-index: 100;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 12px 20px;
-            margin: -40px -40px 20px -40px;
+            margin: -40px -40px 12px -40px;
             border-radius: 24px 24px 0 0;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Transparent gradient extending into notch area */
+        .mobile-profit-bar::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: linear-gradient(to bottom, transparent 0%, transparent 100%);
+            z-index: -1;
+            pointer-events: none;
         }
 
         .mobile-profit-content {
@@ -940,7 +953,12 @@
             }
 
             .header {
-                margin-bottom: 25px;
+                margin-bottom: 15px;
+                background: transparent;
+            }
+
+            .header-left h1 {
+                margin-bottom: 10px;
             }
 
             .mobile-profit-bar {
@@ -961,8 +979,13 @@
 
         @media (max-width: 768px) {
             .container {
-                padding: 30px 20px;
+                padding: 0 20px 30px 20px;
                 border-radius: 20px;
+            }
+
+            .header {
+                padding: 30px 0 20px 0;
+                background: transparent;
             }
 
             .header-left h1 {
@@ -992,7 +1015,7 @@
             }
 
             .mobile-profit-bar {
-                margin: -30px -20px 20px -20px;
+                margin: -30px -20px 12px -20px;
                 border-radius: 20px 20px 0 0;
             }
         }
