@@ -152,7 +152,7 @@
         .left-panel {
             display: flex;
             flex-direction: column;
-            gap: 25px;
+            gap: 20px;
         }
 
         .right-panel {
@@ -169,6 +169,7 @@
             border: 2px solid var(--input-border);
             border-radius: 16px;
             padding: 25px;
+            margin: 0;
             transition: all 0.3s ease;
         }
 
@@ -204,15 +205,33 @@
             display: none;
             background: none;
             border: none;
-            color: var(--text-primary);
-            font-size: 20px;
             cursor: pointer;
-            padding: 5px;
+            padding: 8px;
             transition: transform 0.3s ease;
             -webkit-tap-highlight-color: transparent;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .collapse-toggle.active {
+        .collapse-toggle:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .collapse-toggle:active {
+            transform: scale(0.9);
+        }
+
+        .collapse-toggle svg {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .collapse-toggle.active svg {
             transform: rotate(180deg);
         }
 
@@ -257,15 +276,33 @@
         .chart-collapse-toggle {
             background: none;
             border: none;
-            color: var(--text-primary);
-            font-size: 18px;
             cursor: pointer;
-            padding: 5px;
-            transition: transform 0.3s ease;
+            padding: 8px;
+            transition: all 0.3s ease;
             -webkit-tap-highlight-color: transparent;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .chart-collapse-toggle.active {
+        .chart-collapse-toggle:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .chart-collapse-toggle:active {
+            transform: scale(0.9);
+        }
+
+        .chart-collapse-toggle svg {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .chart-collapse-toggle.active svg {
             transform: rotate(180deg);
         }
 
@@ -868,6 +905,10 @@
                 gap: 30px;
             }
 
+            .left-panel {
+                gap: 20px;
+            }
+
             .right-panel {
                 position: static;
                 top: auto;
@@ -1003,9 +1044,13 @@
                     <div class="card-header" onclick="toggleCard('saleInfo')">
                         <span class="card-icon">📦</span>
                         <span class="card-title">Sale Information</span>
-                        <button class="collapse-toggle" id="saleInfoToggle">▼</button>
+                        <button class="collapse-toggle" id="saleInfoToggle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
                     </div>
-                    <div class="card-content" id="saleInfoContent">
+                    <div class="card-content collapsed" id="saleInfoContent">
                         <div class="input-grid">
                             <div class="input-group">
                                 <label for="salePrice">Sale Price</label>
@@ -1025,9 +1070,13 @@
                     <div class="card-header" onclick="toggleCard('shipping')">
                         <span class="card-icon">🚚</span>
                         <span class="card-title">Shipping & Packaging</span>
-                        <button class="collapse-toggle" id="shippingToggle">▼</button>
+                        <button class="collapse-toggle" id="shippingToggle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
                     </div>
-                    <div class="card-content" id="shippingContent">
+                    <div class="card-content collapsed" id="shippingContent">
                         <div class="input-grid">
                             <div class="input-group">
                                 <label for="buyerShipping">Buyer Paid Shipping</label>
@@ -1049,12 +1098,18 @@
                 </div>
 
                 <!-- Fees & Discounts Card -->
-                <div class="input-card">
-                    <div class="card-header">
+                <div class="input-card" id="feesCard">
+                    <div class="card-header" onclick="toggleCard('fees')">
                         <span class="card-icon">⚙️</span>
                         <span class="card-title">Fees & Discounts</span>
+                        <button class="collapse-toggle" id="feesToggle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
                     </div>
-                    <div class="input-grid">
+                    <div class="card-content collapsed" id="feesContent">
+                        <div class="input-grid">
                         <div class="input-group">
                             <label for="category">Category</label>
                             <select id="category" class="category-select">
@@ -1155,6 +1210,7 @@
                             </select>
                         </div>
                     </div>
+                    </div>
                 </div>
             </div>
 
@@ -1238,9 +1294,9 @@
                     <div class="profit-chart">
                         <div class="chart-collapse-header" onclick="toggleChart()">
                             <div class="chart-header">💰 Profit Breakdown</div>
-                            <button class="chart-collapse-toggle active" id="chartToggle">▼</button>
+                            <button class="chart-collapse-toggle" id="chartToggle">►</button>
                         </div>
-                        <div class="chart-content" id="chartContent">
+                        <div class="chart-content collapsed" id="chartContent">
                             <div class="chart-bar-container">
                                 <div class="chart-bar" id="itemCostBar" style="background: #ef4444;">
                                     <span class="chart-label">Item Cost</span>
