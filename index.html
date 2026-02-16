@@ -970,6 +970,239 @@
             color: #dc2626 !important;
         }
 
+        /* Bulk Calculator */
+        .bulk-section {
+            margin-top: 20px;
+            padding: 25px;
+            background: var(--input-bg);
+            border-radius: 16px;
+            border: 2px solid var(--input-border);
+            transition: all 0.3s ease;
+        }
+
+        .bulk-section:hover {
+            border-color: rgba(102, 126, 234, 0.3);
+        }
+
+        .bulk-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--section-border);
+        }
+
+        .bulk-title {
+            color: var(--text-primary);
+            font-size: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .bulk-table-wrap {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .bulk-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            min-width: 500px;
+        }
+
+        .bulk-table th {
+            text-align: left;
+            padding: 8px 6px;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid var(--section-border);
+            white-space: nowrap;
+        }
+
+        .bulk-table td {
+            padding: 4px 4px;
+            vertical-align: middle;
+        }
+
+        .bulk-table input {
+            width: 100%;
+            padding: 8px 6px;
+            border: 1px solid var(--input-border);
+            border-radius: 6px;
+            font-size: 12px;
+            background: var(--container-bg);
+            color: var(--text-primary);
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .bulk-table input:focus {
+            outline: none;
+            border-color: var(--input-focus-border);
+            box-shadow: 0 0 0 2px var(--input-focus-shadow);
+        }
+
+        .bulk-table .bulk-result {
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 12px;
+            white-space: nowrap;
+            text-align: right;
+        }
+
+        .bulk-table .bulk-profit-positive {
+            color: #4ade80;
+        }
+
+        .bulk-table .bulk-profit-negative {
+            color: #ef4444;
+        }
+
+        [data-theme="light"] .bulk-table .bulk-profit-positive {
+            color: #16a34a;
+        }
+
+        [data-theme="light"] .bulk-table .bulk-profit-negative {
+            color: #dc2626;
+        }
+
+        .bulk-row-delete {
+            background: none;
+            border: none;
+            color: #ef4444;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 4px 6px;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .bulk-row-delete:hover {
+            opacity: 1;
+        }
+
+        .bulk-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .bulk-summary {
+            margin-top: 14px;
+            padding: 14px;
+            background: var(--fee-details-bg);
+            border-radius: 10px;
+            border-left: 3px solid #667eea;
+        }
+
+        .bulk-summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .bulk-summary-row.bulk-summary-total {
+            font-weight: 700;
+            color: var(--text-primary);
+            font-size: 14px;
+            padding-top: 8px;
+            margin-top: 6px;
+            border-top: 1px solid var(--section-border);
+        }
+
+        /* Onboarding Overlay */
+        .onboarding-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .onboarding-overlay.active {
+            display: flex;
+        }
+
+        .onboarding-card {
+            background: var(--container-bg);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+            border: 2px solid var(--input-border);
+            animation: slideDown 0.4s ease;
+        }
+
+        .onboarding-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .onboarding-title {
+            color: var(--text-primary);
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .onboarding-text {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .onboarding-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .onboarding-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--input-border);
+            transition: all 0.3s ease;
+        }
+
+        .onboarding-dot.active {
+            background: #667eea;
+            width: 24px;
+            border-radius: 4px;
+        }
+
+        .onboarding-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .onboarding-skip {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 13px;
+            cursor: pointer;
+            padding: 10px 16px;
+        }
+
         @media (max-width: 600px) {
             .compare-modal .modal-content {
                 max-width: 100%;
@@ -994,6 +1227,18 @@
             .compare-table th,
             .compare-table td {
                 padding: 6px 6px;
+            }
+
+            .bulk-table {
+                font-size: 11px;
+            }
+
+            .onboarding-card {
+                padding: 30px 24px;
+            }
+
+            .onboarding-title {
+                font-size: 20px;
             }
         }
 
@@ -1442,85 +1687,89 @@
                         <div class="input-group">
                             <label for="category">Category</label>
                             <select id="category" class="category-select">
-                                <optgroup label="Standard Rate (13.6%)">
-                                    <option value="13.6" selected>Most Categories (13.6%)</option>
-                                    <option value="13.6">Antiques (13.6%)</option>
-                                    <option value="13.6">Art (13.6%)</option>
-                                    <option value="13.6">Baby (13.6%)</option>
-                                    <option value="13.6">Business & Industrial (13.6%)</option>
-                                    <option value="13.6">Cameras & Photo (13.6%)</option>
-                                    <option value="13.6">Cell Phones & Accessories (13.6%)</option>
-                                    <option value="13.6">Clothing, Shoes & Accessories (13.6%)</option>
-                                    <option value="13.6">Collectibles (13.6%)</option>
-                                    <option value="13.6">Computers/Tablets & Networking (13.6%)</option>
-                                    <option value="13.6">Consumer Electronics (13.6%)</option>
-                                    <option value="13.6">Crafts (13.6%)</option>
-                                    <option value="13.6">Dolls & Bears (13.6%)</option>
-                                    <option value="13.6">Entertainment Memorabilia (13.6%)</option>
-                                    <option value="13.6">Health & Beauty (13.6%)</option>
-                                    <option value="13.6">Home & Garden (13.6%)</option>
-                                    <option value="13.6">Musical Instruments & Gear (13.6%)</option>
-                                    <option value="13.6">Pet Supplies (13.6%)</option>
-                                    <option value="13.6">Pottery & Glass (13.6%)</option>
-                                    <option value="13.6">Sporting Goods (13.6%)</option>
-                                    <option value="13.6">Stamps (13.6%)</option>
-                                    <option value="13.6">Tickets & Experiences (13.6%)</option>
-                                    <option value="13.6">Toys & Hobbies (13.6%)</option>
-                                    <option value="13.6">Travel (13.6%)</option>
-                                    <option value="13.6">Video Games & Consoles (13.6%)</option>
-                                    <option value="13.6">Vinyl Records (13.6%)</option>
-                                    <option value="13.6">Everything Else (13.6%)</option>
+                                <optgroup label="Standard Categories">
+                                    <option value="most" selected>Most Categories</option>
+                                    <option value="most">Antiques</option>
+                                    <option value="most">Art</option>
+                                    <option value="most">Baby</option>
+                                    <option value="most">Clothing, Shoes & Accessories</option>
+                                    <option value="most">Collectibles</option>
+                                    <option value="most">Consumer Electronics</option>
+                                    <option value="most">Crafts</option>
+                                    <option value="most">Dolls & Bears</option>
+                                    <option value="most">Entertainment Memorabilia</option>
+                                    <option value="most">Health & Beauty</option>
+                                    <option value="most">Home & Garden</option>
+                                    <option value="most">Pet Supplies</option>
+                                    <option value="most">Pottery & Glass</option>
+                                    <option value="most">Sporting Goods</option>
+                                    <option value="most">Tickets & Experiences</option>
+                                    <option value="most">Toys & Hobbies</option>
+                                    <option value="most">Travel</option>
+                                    <option value="most">Video Games & Consoles</option>
+                                    <option value="most">Vinyl Records</option>
+                                    <option value="most">Everything Else</option>
                                 </optgroup>
-                                <optgroup label="Media (15.3%)">
-                                    <option value="15.3">Books & Magazines (15.3%)</option>
-                                    <option value="15.3">Movies & TV (15.3%)</option>
-                                    <option value="15.3">Music (15.3%)</option>
+                                <optgroup label="Electronics & Tech">
+                                    <option value="cameras">Cameras & Photo</option>
+                                    <option value="cellphones">Cell Phones & Smartphones</option>
+                                    <option value="computers">Computers/Tablets & Networking</option>
+                                </optgroup>
+                                <optgroup label="Media">
+                                    <option value="media">Books & Magazines</option>
+                                    <option value="media">Movies & TV</option>
+                                    <option value="media">Music</option>
                                 </optgroup>
                                 <optgroup label="Jewelry, Watches & Handbags">
-                                    <option value="15">Jewelry & Watches ≤$5,000 (15%)</option>
-                                    <option value="9">Jewelry & Watches >$5,000 (9%)</option>
-                                    <option value="15">Watches ≤$1,000 (15%)</option>
-                                    <option value="6.5">Watches $1,000–$7,500 (6.5%)</option>
-                                    <option value="15">Women's Bags & Handbags ≤$2,000 (15%)</option>
-                                    <option value="9">Women's Bags & Handbags >$2,000 (9%)</option>
+                                    <option value="jewelry">Jewelry & Watches</option>
+                                    <option value="watches">Watches, Parts & Accessories</option>
+                                    <option value="handbags">Women's Bags & Handbags</option>
                                 </optgroup>
-                                <optgroup label="Coins & Collectible Cards (13.25%)">
-                                    <option value="13.25">Coins & Paper Money (13.25%)</option>
-                                    <option value="13.6">Coins - Bullion ≤$7,500 (13.6%)</option>
-                                    <option value="7">Coins - Bullion >$7,500 (7%)</option>
-                                    <option value="13.25">Comic Books & Memorabilia (13.25%)</option>
-                                    <option value="13.25">Non-Sport Trading Cards (13.25%)</option>
-                                    <option value="13.25">Sports Trading Cards (13.25%)</option>
-                                    <option value="13.25">Collectible Card Games (13.25%)</option>
+                                <optgroup label="Coins & Collectible Cards">
+                                    <option value="coins">Coins & Paper Money</option>
+                                    <option value="bullion">Coins - Bullion</option>
+                                    <option value="trading_cards">Sports Trading Cards</option>
+                                    <option value="trading_cards">Non-Sport Trading Cards</option>
+                                    <option value="trading_cards">Collectible Card Games</option>
+                                    <option value="trading_cards">Comic Books & Memorabilia</option>
                                 </optgroup>
-                                <optgroup label="Athletic Shoes">
-                                    <option value="13.6">Athletic Shoes under $150 (13.6%)</option>
-                                    <option value="8">Athletic Shoes $150+ (8%)</option>
+                                <optgroup label="Footwear">
+                                    <option value="athletic_shoes">Athletic Shoes</option>
                                 </optgroup>
-                                <optgroup label="Automotive (13.6%)">
-                                    <option value="13.6">eBay Motors Parts & Accessories (13.6%)</option>
-                                    <option value="13.6">Automotive Tools & Supplies (13.6%)</option>
+                                <optgroup label="Automotive">
+                                    <option value="most">eBay Motors Parts & Accessories</option>
+                                    <option value="most">Automotive Tools & Supplies</option>
                                 </optgroup>
-                                <optgroup label="Special Categories">
-                                    <option value="6.7">Guitars & Basses (6.7%)</option>
-                                    <option value="3">Heavy Equipment (3%)</option>
-                                    <option value="3">Commercial Printing Presses (3%)</option>
-                                    <option value="3">Food Trucks & Carts (3%)</option>
-                                    <option value="5">NFTs (5%)</option>
+                                <optgroup label="Musical Instruments">
+                                    <option value="guitars">Guitars & Basses</option>
+                                    <option value="most">Musical Instruments & Gear</option>
+                                </optgroup>
+                                <optgroup label="Business & Industrial">
+                                    <option value="most">Business & Industrial (General)</option>
+                                    <option value="heavy_equipment">Heavy Equipment</option>
+                                    <option value="heavy_equipment">Commercial Printing Presses</option>
+                                    <option value="heavy_equipment">Food Trucks & Carts</option>
+                                </optgroup>
+                                <optgroup label="Stamps">
+                                    <option value="stamps">Stamps</option>
+                                </optgroup>
+                                <optgroup label="Other">
+                                    <option value="nfts">NFTs</option>
                                 </optgroup>
                             </select>
+                            <div class="helper-text">Fees auto-adjust by sale amount (tiered rates)</div>
                         </div>
 
                         <div class="input-group">
                             <label for="storeLevel">eBay Store Level</label>
                             <select id="storeLevel" class="category-select">
-                                <option value="100">No Store (0% discount)</option>
-                                <option value="93.2">Basic Store (~7% off)</option>
-                                <option value="86.8">Premium Store (~13% off)</option>
-                                <option value="62.6">Anchor Store (~37% off)</option>
-                                <option value="22.6">Enterprise (~77% off)</option>
+                                <option value="none">No Store</option>
+                                <option value="basic">Basic Store</option>
+                                <option value="premium">Premium Store</option>
+                                <option value="anchor">Anchor Store</option>
+                                <option value="enterprise">Enterprise Store</option>
                             </select>
-                            <div class="helper-text">Store subscribers get lower FVF rates</div>
+                            <div class="helper-text">Store subscribers get lower tiered rates</div>
                         </div>
 
                         <div class="input-group">
@@ -1742,6 +1991,7 @@
                             <button class="btn btn-primary" onclick="saveCalculation()" aria-label="Save calculation">💾 Save</button>
                             <button class="btn btn-secondary" onclick="toggleHistory()" aria-label="Toggle saved history" aria-expanded="false" id="historyToggleBtn">📋 History</button>
                             <button class="btn btn-secondary" onclick="openCompareView()" aria-label="Compare scenarios">⚖️ Compare</button>
+                            <button class="btn btn-secondary" onclick="openBulkModal()" aria-label="Bulk calculator">📦 Bulk</button>
                             <button class="btn btn-danger" onclick="resetAllFields()" aria-label="Reset all fields">🔄 Reset</button>
                         </div>
                         <div id="savedItemsContainer" style="display: none;">
@@ -1762,6 +2012,62 @@
             <div class="modal-buttons">
                 <button class="btn btn-primary" onclick="confirmSave()">Save</button>
                 <button class="btn btn-secondary" onclick="closeSaveModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bulk Calculator Modal -->
+    <div class="modal" id="bulkModal" role="dialog" aria-modal="true" aria-labelledby="bulkModalTitle">
+        <div class="modal-content" style="max-width: 850px;">
+            <div class="bulk-header">
+                <span class="bulk-title" id="bulkModalTitle">📦 Bulk Calculator</span>
+                <button class="btn btn-secondary" onclick="closeBulkModal()" style="flex: 0;">✕ Close</button>
+            </div>
+            <div class="bulk-table-wrap">
+                <table class="bulk-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 18%">Name</th>
+                            <th style="width: 14%">Sale $</th>
+                            <th style="width: 14%">Cost $</th>
+                            <th style="width: 14%">Ship $</th>
+                            <th style="width: 12%">Fees</th>
+                            <th style="width: 12%">Profit</th>
+                            <th style="width: 10%">Margin</th>
+                            <th style="width: 6%"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="bulkTableBody"></tbody>
+                </table>
+            </div>
+            <div class="bulk-actions">
+                <button class="btn btn-primary" onclick="addBulkRow()">+ Add Row</button>
+                <button class="btn btn-secondary" onclick="clearBulkRows()">Clear All</button>
+            </div>
+            <div class="bulk-summary" id="bulkSummary">
+                <div class="bulk-summary-row"><span>Total Items:</span><span id="bulkTotalItems">0</span></div>
+                <div class="bulk-summary-row"><span>Total Revenue:</span><span id="bulkTotalRevenue">$0.00</span></div>
+                <div class="bulk-summary-row"><span>Total Costs:</span><span id="bulkTotalCosts">$0.00</span></div>
+                <div class="bulk-summary-row"><span>Total Fees:</span><span id="bulkTotalFees">$0.00</span></div>
+                <div class="bulk-summary-row bulk-summary-total"><span>Total Net Profit:</span><span id="bulkTotalProfit">$0.00</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Onboarding Overlay -->
+    <div class="onboarding-overlay" id="onboardingOverlay">
+        <div class="onboarding-card">
+            <div class="onboarding-icon" id="onboardingIcon">💰</div>
+            <div class="onboarding-title" id="onboardingTitle">Welcome!</div>
+            <div class="onboarding-text" id="onboardingText">Loading...</div>
+            <div class="onboarding-dots">
+                <div class="onboarding-dot active" id="dot0"></div>
+                <div class="onboarding-dot" id="dot1"></div>
+                <div class="onboarding-dot" id="dot2"></div>
+            </div>
+            <div class="onboarding-buttons">
+                <button class="onboarding-skip" onclick="closeOnboarding()">Skip</button>
+                <button class="btn btn-primary" id="onboardingNextBtn" onclick="nextOnboardingStep()">Next</button>
             </div>
         </div>
     </div>
@@ -1800,27 +2106,165 @@
     </div>
 
     <script>
-        // Theme Toggle
-        const themeToggle = document.getElementById('themeToggle');
-        const htmlElement = document.documentElement;
+        // ========== TIERED FEE DATA ==========
+        // Structure: categoryId -> { none: tiers, store: tiers }
+        // tier types:
+        //   "progressive" = bracket-style (like tax brackets)
+        //   "threshold"   = entire sale at one rate based on amount
+        //   "flat"        = single rate regardless of amount
+        // Each tier entry: { upTo: amount, rate: percent } (progressive)
+        // or: { threshold: amount, below: rate, above: rate } (threshold)
+        // or: { rate: percent } (flat)
+        // "noPerOrderFee" flag for categories that waive it
 
-        // Function to update theme color meta tag for iOS
+        var FEE_TIERS = {
+            most: {
+                none: { type: 'progressive', tiers: [{ upTo: 7500, rate: 13.6 }, { upTo: Infinity, rate: 2.35 }] },
+                store: { type: 'progressive', tiers: [{ upTo: 2500, rate: 12.7 }, { upTo: Infinity, rate: 2.35 }] }
+            },
+            media: {
+                none: { type: 'progressive', tiers: [{ upTo: 7500, rate: 15.3 }, { upTo: Infinity, rate: 2.35 }] },
+                store: { type: 'progressive', tiers: [{ upTo: 2500, rate: 15.3 }, { upTo: Infinity, rate: 2.35 }] }
+            },
+            cameras: {
+                none: { type: 'progressive', tiers: [{ upTo: 7500, rate: 13.6 }, { upTo: Infinity, rate: 2.35 }] },
+                store: { type: 'progressive', tiers: [{ upTo: 2500, rate: 9.35 }, { upTo: Infinity, rate: 2.35 }] }
+            },
+            cellphones: {
+                none: { type: 'progressive', tiers: [{ upTo: 7500, rate: 13.6 }, { upTo: Infinity, rate: 2.35 }] },
+                store: { type: 'progressive', tiers: [{ upTo: 2500, rate: 9.35 }, { upTo: Infinity, rate: 2.35 }] }
+            },
+            computers: {
+                none: { type: 'progressive', tiers: [{ upTo: 7500, rate: 13.6 }, { upTo: Infinity, rate: 2.35 }] },
+                store: { type: 'progressive', tiers: [{ upTo: 2500, rate: 7.35 }, { upTo: Infinity, rate: 2.35 }] }
+            },
+            jewelry: {
+                none: { type: 'threshold', threshold: 5000, below: 15, above: 9 },
+                store: { type: 'threshold', threshold: 5000, below: 13, above: 7 }
+            },
+            watches: {
+                none: { type: 'progressive', tiers: [{ upTo: 1000, rate: 15 }, { upTo: 7500, rate: 6.5 }, { upTo: Infinity, rate: 3 }] },
+                store: { type: 'progressive', tiers: [{ upTo: 1000, rate: 12.5 }, { upTo: 5000, rate: 4 }, { upTo: Infinity, rate: 3 }] }
+            },
+            handbags: {
+                none: { type: 'threshold', threshold: 2000, below: 15, above: 9 },
+                store: { type: 'threshold', threshold: 2000, below: 13, above: 7 }
+            },
+            coins: {
+                none: { type: 'progressive', tiers: [{ upTo: 7500, rate: 13.25 }, { upTo: Infinity, rate: 2.35 }] },
+                store: { type: 'progressive', tiers: [{ upTo: 4000, rate: 9 }, { upTo: Infinity, rate: 2.35 }] }
+            },
+            bullion: {
+                none: { type: 'threshold', threshold: 7500, below: 13.6, above: 7 },
+                store: { type: 'threshold3', thresholds: [{ upTo: 1500, rate: 7.5 }, { upTo: 10000, rate: 5 }, { upTo: Infinity, rate: 4.5 }] }
+            },
+            trading_cards: {
+                none: { type: 'progressive', tiers: [{ upTo: 7500, rate: 13.25 }, { upTo: Infinity, rate: 2.35 }] },
+                store: { type: 'progressive', tiers: [{ upTo: 7500, rate: 13.25 }, { upTo: Infinity, rate: 2.35 }] }
+            },
+            athletic_shoes: {
+                none: { type: 'athletic', threshold: 150, below: 13.6, above: 8, noPerOrderFeeAbove: true },
+                store: { type: 'athletic', threshold: 150, below: 12.7, above: 7, noPerOrderFeeAbove: true }
+            },
+            guitars: {
+                none: { type: 'progressive', tiers: [{ upTo: 7500, rate: 6.7 }, { upTo: Infinity, rate: 2.35 }] },
+                store: { type: 'progressive', tiers: [{ upTo: 2500, rate: 6.7 }, { upTo: Infinity, rate: 2.35 }] }
+            },
+            stamps: {
+                none: { type: 'progressive', tiers: [{ upTo: 7500, rate: 13.6 }, { upTo: Infinity, rate: 2.35 }] },
+                store: { type: 'progressive', tiers: [{ upTo: 2500, rate: 9.7 }, { upTo: Infinity, rate: 2.35 }] }
+            },
+            heavy_equipment: {
+                none: { type: 'progressive', tiers: [{ upTo: 15000, rate: 3 }, { upTo: Infinity, rate: 0.5 }] },
+                store: { type: 'progressive', tiers: [{ upTo: 15000, rate: 2.5 }, { upTo: Infinity, rate: 0.5 }] }
+            },
+            nfts: {
+                none: { type: 'flat', rate: 5 },
+                store: { type: 'flat', rate: 5 }
+            }
+        };
+
+        // Calculate FVF using tiered data
+        // amount = totalBuyerPays (amount eBay charges FVF on)
+        // Returns { fvf: number, noPerOrderFee: boolean }
+        function calculateTieredFVF(amount, categoryId, storeLevel) {
+            var isStore = storeLevel !== 'none';
+            var tierKey = isStore ? 'store' : 'none';
+            var catData = FEE_TIERS[categoryId];
+            if (!catData) catData = FEE_TIERS['most'];
+            var tier = catData[tierKey];
+
+            var fvf = 0;
+            var noPerOrderFee = false;
+
+            if (tier.type === 'progressive') {
+                var remaining = amount;
+                var prev = 0;
+                for (var i = 0; i < tier.tiers.length; i++) {
+                    var bracket = tier.tiers[i];
+                    var bracketSize = bracket.upTo - prev;
+                    var taxable = Math.min(remaining, bracketSize);
+                    if (taxable <= 0) break;
+                    fvf += taxable * (bracket.rate / 100);
+                    remaining -= taxable;
+                    prev = bracket.upTo;
+                }
+            } else if (tier.type === 'threshold') {
+                // Entire sale at one rate based on whether amount exceeds threshold
+                var rate = amount <= tier.threshold ? tier.below : tier.above;
+                fvf = amount * (rate / 100);
+            } else if (tier.type === 'threshold3') {
+                // Multi-threshold: entire sale at rate determined by which bracket it falls in
+                var rate = tier.thresholds[tier.thresholds.length - 1].rate;
+                for (var i = 0; i < tier.thresholds.length; i++) {
+                    if (amount <= tier.thresholds[i].upTo) {
+                        rate = tier.thresholds[i].rate;
+                        break;
+                    }
+                }
+                fvf = amount * (rate / 100);
+            } else if (tier.type === 'athletic') {
+                var rate = amount >= tier.threshold ? tier.above : tier.below;
+                fvf = amount * (rate / 100);
+                if (amount >= tier.threshold && tier.noPerOrderFeeAbove) {
+                    noPerOrderFee = true;
+                }
+            } else if (tier.type === 'flat') {
+                fvf = amount * (tier.rate / 100);
+            }
+
+            return { fvf: fvf, noPerOrderFee: noPerOrderFee };
+        }
+
+        // Get the effective flat rate for a given amount (used by reverse calc)
+        function getEffectiveFVFRate(amount, categoryId, storeLevel) {
+            if (amount <= 0) return { rate: 0, noPerOrderFee: false };
+            var result = calculateTieredFVF(amount, categoryId, storeLevel);
+            return { rate: result.fvf / amount, noPerOrderFee: result.noPerOrderFee };
+        }
+
+        // ========== HAPTIC FEEDBACK ==========
+        function haptic(style) {
+            if (!navigator.vibrate) return;
+            if (style === 'light') navigator.vibrate(10);
+            else if (style === 'medium') navigator.vibrate(20);
+            else if (style === 'heavy') navigator.vibrate([30, 10, 30]);
+        }
+
+        // ========== THEME TOGGLE ==========
+        var themeToggle = document.getElementById('themeToggle');
+        var htmlElement = document.documentElement;
+
         function updateThemeColor(theme) {
-            // Update all theme-color meta tags to match body background
             var color = theme === 'light' ? '#f5f5f5' : '#000000';
             var metas = document.querySelectorAll('meta[name="theme-color"]');
             for (var i = 0; i < metas.length; i++) {
                 metas[i].content = color;
             }
-
-            // Keep Apple status bar style as black-translucent for PWA
             var metaStatusBar = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
-            if (metaStatusBar) {
-                metaStatusBar.content = 'black-translucent';
-            }
+            if (metaStatusBar) metaStatusBar.content = 'black-translucent';
         }
 
-        // Load saved theme or default to dark
         var savedTheme = localStorage.getItem('theme') || 'dark';
         if (savedTheme === 'light') {
             htmlElement.setAttribute('data-theme', 'light');
@@ -1830,9 +2274,9 @@
         updateThemeColor(savedTheme);
 
         function doThemeToggle() {
+            haptic('light');
             var currentTheme = htmlElement.getAttribute('data-theme');
             var newTheme = currentTheme === 'light' ? 'dark' : 'light';
-
             htmlElement.setAttribute('data-theme', newTheme);
             themeToggle.classList.toggle('active');
             themeToggle.setAttribute('aria-checked', newTheme === 'light' ? 'true' : 'false');
@@ -1848,11 +2292,10 @@
             }
         });
 
-        // Card Collapse Toggle Functions
+        // ========== CARD COLLAPSE TOGGLES ==========
         function toggleCard(cardName) {
             var content = document.getElementById(cardName + 'Content');
             var toggle = document.getElementById(cardName + 'Toggle');
-
             if (content.classList.contains('collapsed')) {
                 content.classList.remove('collapsed');
                 toggle.classList.add('active');
@@ -1864,11 +2307,9 @@
             }
         }
 
-        // Chart Collapse Toggle
         function toggleChart() {
             var content = document.getElementById('chartContent');
             var toggle = document.getElementById('chartToggle');
-
             if (content.classList.contains('collapsed')) {
                 content.classList.remove('collapsed');
                 toggle.classList.add('active');
@@ -1884,7 +2325,6 @@
             var details = document.getElementById('feeDetails');
             var icon = document.getElementById('toggleIcon');
             var card = document.querySelector('.total-fees-card');
-
             if (details.style.display === 'none') {
                 details.style.display = 'block';
                 icon.textContent = '▼';
@@ -1896,10 +2336,11 @@
             }
         }
 
-        // Current calculator mode
+        // ========== MODE TOGGLE ==========
         var currentMode = 'forward';
 
         function setMode(mode) {
+            haptic('medium');
             currentMode = mode;
             var forwardBtn = document.getElementById('forwardModeBtn');
             var reverseBtn = document.getElementById('reverseModeBtn');
@@ -1933,6 +2374,7 @@
             recalculate();
         }
 
+        // ========== CORE CALCULATION ==========
         function recalculate() {
             if (currentMode === 'reverse') {
                 calculateReverse();
@@ -1946,8 +2388,8 @@
             var buyerShipping = parseFloat(document.getElementById('buyerShipping').value) || 0;
             var shipping = parseFloat(document.getElementById('shipping').value) || 0;
             var packagingCost = parseFloat(document.getElementById('packagingCost').value) || 0;
-            var categoryRate = parseFloat(document.getElementById('category').value) / 100;
-            var storeLevelDiscount = parseFloat(document.getElementById('storeLevel').value) / 100;
+            var categoryId = document.getElementById('category').value;
+            var storeLevel = document.getElementById('storeLevel').value;
             var stateTaxRate = parseFloat(document.getElementById('stateTax').value) / 100;
             var adFeeRate = parseFloat(document.getElementById('adFee').value) / 100;
             var taxOnFeesRate = parseFloat(document.getElementById('taxOnFees').value) / 100 || 0;
@@ -1955,133 +2397,99 @@
             var desiredProfit = parseFloat(document.getElementById('desiredProfit').value);
             var desiredMargin = parseFloat(document.getElementById('desiredMargin').value);
 
-            // Determine the target profit
             var targetProfit;
             if (!isNaN(desiredProfit) && desiredProfit > 0) {
                 targetProfit = desiredProfit;
             } else if (!isNaN(desiredMargin) && desiredMargin > 0) {
-                // We'll solve iteratively for margin — start with an estimate
-                targetProfit = null; // flag to use margin approach
+                targetProfit = null;
             } else {
                 targetProfit = 0;
             }
 
-            // Effective rate: the fraction of totalSaleAmount consumed by fees
-            // FVF = totalBuyerPays * categoryRate * storeLevelDiscount
-            // totalBuyerPays = totalSaleAmount * (1 + stateTaxRate)
-            // FVF = totalSaleAmount * (1 + stateTaxRate) * categoryRate * storeLevelDiscount
-            // adFee = totalSaleAmount * (1 + stateTaxRate) * adFeeRate
-            // perOrderFee handled separately
-            // taxOnFees = (FVF + perOrderFee) * taxOnFeesRate
+            // Iterative solver for tiered fees — binary search
+            function solveForSalePrice(targetProfitVal, useMargin) {
+                var lo = 0, hi = 500000, mid, iters = 0;
+                while (hi - lo > 0.005 && iters < 100) {
+                    mid = (lo + hi) / 2;
+                    var totalSaleAmount = mid + buyerShipping;
+                    var salesTax = totalSaleAmount * stateTaxRate;
+                    var totalBuyerPays = totalSaleAmount + salesTax;
 
-            var fvfRate = (1 + stateTaxRate) * categoryRate * storeLevelDiscount;
-            var adRate = (1 + stateTaxRate) * adFeeRate;
-            // effectiveRate = fvfRate + fvfRate*taxOnFeesRate + adRate
-            // But taxOnFees also applies to perOrderFee, which is fixed
-            var effectiveRate = fvfRate * (1 + taxOnFeesRate) + adRate;
+                    var fvfResult = calculateTieredFVF(totalBuyerPays, categoryId, storeLevel);
+                    var ebayFee = fvfResult.fvf;
+                    var perOrderFee = fvfResult.noPerOrderFee ? 0 : (totalSaleAmount <= 10 ? 0.30 : 0.40);
+                    var adFeeCost = totalBuyerPays * adFeeRate;
+                    var taxOnFeesAmt = (ebayFee + perOrderFee) * taxOnFeesRate;
+                    var totalFees = ebayFee + perOrderFee + adFeeCost + taxOnFeesAmt;
+                    var netProfit = totalSaleAmount - totalFees - itemCost - shipping - packagingCost;
 
-            if (effectiveRate >= 1) {
-                // Impossible — fees exceed 100%
-                document.getElementById('listAtValue').textContent = 'N/A';
-                document.getElementById('mobileProfitValue').textContent = 'N/A';
-                return;
-            }
-
-            function solveForSalePrice(profit) {
-                // First try with perOrderFee = $0.40 (totalSaleAmount > $10)
-                var perOrderFee = 0.40;
-                var fixedFees = perOrderFee * (1 + taxOnFeesRate);
-                var totalSaleAmount = (profit + fixedFees + itemCost + shipping + packagingCost) / (1 - effectiveRate);
-
-                // Check if totalSaleAmount <= $10, recompute with $0.30
-                if (totalSaleAmount <= 10) {
-                    perOrderFee = 0.30;
-                    fixedFees = perOrderFee * (1 + taxOnFeesRate);
-                    totalSaleAmount = (profit + fixedFees + itemCost + shipping + packagingCost) / (1 - effectiveRate);
+                    var target;
+                    if (useMargin) {
+                        target = totalSaleAmount > 0 ? (netProfit / totalSaleAmount) : 0;
+                        if (target < desiredMargin / 100) {
+                            lo = mid;
+                        } else {
+                            hi = mid;
+                        }
+                    } else {
+                        if (netProfit < targetProfitVal) {
+                            lo = mid;
+                        } else {
+                            hi = mid;
+                        }
+                    }
+                    iters++;
                 }
-
-                var salePrice = totalSaleAmount - buyerShipping;
-                return Math.max(0, Math.ceil(salePrice * 100) / 100); // round up to nearest cent
+                return Math.ceil(((lo + hi) / 2) * 100) / 100;
             }
 
             var computedSalePrice;
-
             if (targetProfit !== null) {
-                computedSalePrice = solveForSalePrice(targetProfit);
+                computedSalePrice = solveForSalePrice(targetProfit, false);
             } else {
-                // Margin approach: netProfit / totalSaleAmount = desiredMargin/100
-                // netProfit = totalSaleAmount * (desiredMargin/100)
-                // totalSaleAmount * (desiredMargin/100) = totalSaleAmount * (1 - effectiveRate) - fixedFees - itemCost - shipping - packaging
-                // totalSaleAmount * (desiredMargin/100) - totalSaleAmount * (1 - effectiveRate) = -fixedFees - itemCost - shipping - packaging
-                // totalSaleAmount * (desiredMargin/100 - 1 + effectiveRate) = -(fixedFees + itemCost + shipping + packaging)
-                // totalSaleAmount = (fixedFees + itemCost + shipping + packaging) / (1 - effectiveRate - desiredMargin/100)
-                var marginFrac = desiredMargin / 100;
-                var denominator = 1 - effectiveRate - marginFrac;
-
-                if (denominator <= 0) {
-                    document.getElementById('listAtValue').textContent = 'N/A';
-                    document.getElementById('mobileProfitValue').textContent = 'N/A';
-                    return;
-                }
-
-                var perOrderFee = 0.40;
-                var fixedFees = perOrderFee * (1 + taxOnFeesRate);
-                var totalSaleAmount = (fixedFees + itemCost + shipping + packagingCost) / denominator;
-
-                if (totalSaleAmount <= 10) {
-                    perOrderFee = 0.30;
-                    fixedFees = perOrderFee * (1 + taxOnFeesRate);
-                    totalSaleAmount = (fixedFees + itemCost + shipping + packagingCost) / denominator;
-                }
-
-                computedSalePrice = Math.max(0, Math.ceil((totalSaleAmount - buyerShipping) * 100) / 100);
+                computedSalePrice = solveForSalePrice(0, true);
             }
 
-            // Set the computed sale price into the input and run forward calculation
             document.getElementById('salePrice').value = computedSalePrice.toFixed(2);
             document.getElementById('listAtValue').textContent = '$' + computedSalePrice.toFixed(2);
 
-            // Update mobile profit bar to show list price in reverse mode
             var mobileProfitValue = document.getElementById('mobileProfitValue');
             if (mobileProfitValue) {
                 mobileProfitValue.textContent = '$' + computedSalePrice.toFixed(2);
                 mobileProfitValue.style.color = '#a78bfa';
             }
 
-            // Now run the forward calculation to populate the full breakdown
-            calculateFees(true); // pass flag to skip mobile bar update
+            calculateFees(true);
         }
 
         function calculateFees(skipMobileUpdate) {
-            const salePrice = parseFloat(document.getElementById('salePrice').value) || 0;
-            const itemCost = parseFloat(document.getElementById('itemCost').value) || 0;
-            const buyerShipping = parseFloat(document.getElementById('buyerShipping').value) || 0;
-            const shipping = parseFloat(document.getElementById('shipping').value) || 0;
-            const packagingCost = parseFloat(document.getElementById('packagingCost').value) || 0;
-            const categoryRate = parseFloat(document.getElementById('category').value);
-            const storeLevelDiscount = parseFloat(document.getElementById('storeLevel').value);
-            const stateTaxRate = parseFloat(document.getElementById('stateTax').value);
-            const adFeeRate = parseFloat(document.getElementById('adFee').value);
-            const taxOnFeesRate = parseFloat(document.getElementById('taxOnFees').value) || 0;
+            var salePrice = parseFloat(document.getElementById('salePrice').value) || 0;
+            var itemCost = parseFloat(document.getElementById('itemCost').value) || 0;
+            var buyerShipping = parseFloat(document.getElementById('buyerShipping').value) || 0;
+            var shipping = parseFloat(document.getElementById('shipping').value) || 0;
+            var packagingCost = parseFloat(document.getElementById('packagingCost').value) || 0;
+            var categoryId = document.getElementById('category').value;
+            var storeLevel = document.getElementById('storeLevel').value;
+            var stateTaxRate = parseFloat(document.getElementById('stateTax').value);
+            var adFeeRate = parseFloat(document.getElementById('adFee').value);
+            var taxOnFeesRate = parseFloat(document.getElementById('taxOnFees').value) || 0;
 
-            const totalSaleAmount = salePrice + buyerShipping;
-            const salesTaxAmount = totalSaleAmount * (stateTaxRate / 100);
-            const totalBuyerPays = totalSaleAmount + salesTaxAmount;
+            var totalSaleAmount = salePrice + buyerShipping;
+            var salesTaxAmount = totalSaleAmount * (stateTaxRate / 100);
+            var totalBuyerPays = totalSaleAmount + salesTaxAmount;
 
-            // Apply store level discount to final value fee
-            const baseFee = totalBuyerPays * (categoryRate / 100);
-            const ebayFee = baseFee * (storeLevelDiscount / 100);
+            // Tiered FVF calculation
+            var fvfResult = calculateTieredFVF(totalBuyerPays, categoryId, storeLevel);
+            var ebayFee = fvfResult.fvf;
+            var perOrderFee = fvfResult.noPerOrderFee ? 0 : (totalSaleAmount <= 10 ? 0.30 : 0.40);
+            var adFeeCost = totalBuyerPays * (adFeeRate / 100);
+            var taxOnFeesAmount = (ebayFee + perOrderFee) * (taxOnFeesRate / 100);
 
-            const perOrderFee = totalSaleAmount <= 10 ? 0.30 : 0.40;
-            const adFeeCost = totalBuyerPays * (adFeeRate / 100);
-            const taxOnFeesAmount = (ebayFee + perOrderFee) * (taxOnFeesRate / 100);
+            var totalFees = ebayFee + perOrderFee + adFeeCost + taxOnFeesAmount;
+            var netProfit = totalSaleAmount - totalFees - itemCost - shipping - packagingCost;
+            var profitMargin = totalSaleAmount > 0 ? (netProfit / totalSaleAmount) * 100 : 0;
+            var revenueAfterFees = totalSaleAmount - totalFees;
 
-            const totalFees = ebayFee + perOrderFee + adFeeCost + taxOnFeesAmount;
-            const netProfit = totalSaleAmount - totalFees - itemCost - shipping - packagingCost;
-            const profitMargin = totalSaleAmount > 0 ? (netProfit / totalSaleAmount) * 100 : 0;
-            const revenueAfterFees = totalSaleAmount - totalFees;
-
-            // Update displays
             document.getElementById('displaySalePrice').textContent = '$' + salePrice.toFixed(2);
             document.getElementById('displayBuyerShipping').textContent = '$' + buyerShipping.toFixed(2);
             document.getElementById('totalSaleAmount').textContent = '$' + totalSaleAmount.toFixed(2);
@@ -2096,13 +2504,12 @@
             document.getElementById('displayShipping').textContent = '$' + shipping.toFixed(2);
             document.getElementById('displayPackaging').textContent = '$' + packagingCost.toFixed(2);
 
-            const profitElement = document.getElementById('netProfit');
+            var profitElement = document.getElementById('netProfit');
             profitElement.textContent = '$' + netProfit.toFixed(2);
             profitElement.className = 'result-value ' + (netProfit >= 0 ? 'profit' : 'loss');
 
-            // Update mobile profit bar (unless called from reverse mode)
             if (!skipMobileUpdate) {
-                const mobileProfitValue = document.getElementById('mobileProfitValue');
+                var mobileProfitValue = document.getElementById('mobileProfitValue');
                 if (mobileProfitValue) {
                     mobileProfitValue.textContent = '$' + netProfit.toFixed(2);
                     mobileProfitValue.style.color = netProfit >= 0 ? '#10b981' : '#ef4444';
@@ -2111,56 +2518,44 @@
 
             document.getElementById('profitMargin').textContent = profitMargin.toFixed(2) + '%';
             document.getElementById('revenueAfterFees').textContent = '$' + revenueAfterFees.toFixed(2);
-
-            // Update Visual Breakdown Chart
             updateProfitChart(itemCost, totalFees, shipping, packagingCost, netProfit, totalSaleAmount);
         }
 
         function updateProfitChart(itemCost, fees, shipping, packaging, profit, total) {
             if (total <= 0) return;
+            var itemCostPercent = (itemCost / total) * 100;
+            var feesPercent = (fees / total) * 100;
+            var shippingPercent = (shipping / total) * 100;
+            var packagingPercent = (packaging / total) * 100;
+            var profitPercent = (profit / total) * 100;
 
-            const itemCostPercent = (itemCost / total) * 100;
-            const feesPercent = (fees / total) * 100;
-            const shippingPercent = (shipping / total) * 100;
-            const packagingPercent = (packaging / total) * 100;
-            const profitPercent = (profit / total) * 100;
-
-            // Update bar widths
             document.getElementById('itemCostBar').style.setProperty('--bar-width', Math.max(itemCostPercent, 5) + '%');
             document.getElementById('ebayFeesBar').style.setProperty('--bar-width', Math.max(feesPercent, 5) + '%');
             document.getElementById('shippingBar').style.setProperty('--bar-width', Math.max(shippingPercent, 5) + '%');
             document.getElementById('packagingBar').style.setProperty('--bar-width', Math.max(packagingPercent, 5) + '%');
             document.getElementById('profitBar').style.setProperty('--bar-width', Math.max(Math.abs(profitPercent), 5) + '%');
 
-            // Update percentages
             document.getElementById('itemCostPercent').textContent = itemCostPercent.toFixed(1) + '%';
             document.getElementById('ebayFeesPercent').textContent = feesPercent.toFixed(1) + '%';
             document.getElementById('shippingPercent').textContent = shippingPercent.toFixed(1) + '%';
             document.getElementById('packagingPercent').textContent = packagingPercent.toFixed(1) + '%';
             document.getElementById('profitPercent').textContent = profitPercent.toFixed(1) + '%';
 
-            // Change profit bar color if negative
-            const profitBar = document.getElementById('profitBar');
-            if (profit < 0) {
-                profitBar.style.background = '#ef4444';
-            } else {
-                profitBar.style.background = '#10b981';
-            }
+            var profitBar = document.getElementById('profitBar');
+            profitBar.style.background = profit < 0 ? '#ef4444' : '#10b981';
         }
 
-        // Debounce wrapper — delays recalculation until user stops typing (150ms)
+        // ========== DEBOUNCE & VALIDATION ==========
         var _debounceTimer = null;
         function debouncedRecalculate() {
             clearTimeout(_debounceTimer);
             _debounceTimer = setTimeout(recalculate, 150);
         }
 
-        // Input validation — highlights invalid inputs with red border
         function validateInput(el) {
             var val = parseFloat(el.value);
             var min = parseFloat(el.getAttribute('min'));
             var max = parseFloat(el.getAttribute('max'));
-
             if (el.value !== '' && (isNaN(val) || (!isNaN(min) && val < min) || (!isNaN(max) && val > max))) {
                 el.classList.add('input-error');
             } else {
@@ -2168,7 +2563,6 @@
             }
         }
 
-        // Attach debounced listeners + validation to number inputs
         ['salePrice', 'itemCost', 'buyerShipping', 'shipping', 'packagingCost', 'taxOnFees', 'desiredProfit', 'desiredMargin'].forEach(function(id) {
             var el = document.getElementById(id);
             el.addEventListener('input', function() {
@@ -2177,17 +2571,16 @@
             });
         });
 
-        // Select dropdowns fire immediately (no debounce needed)
         ['category', 'storeLevel', 'stateTax', 'adFee'].forEach(function(id) {
             document.getElementById(id).addEventListener('change', recalculate);
         });
 
-        // Save/History Functionality
-        let savedCalculations = JSON.parse(localStorage.getItem('ebayCalcSaved')) || [];
-
+        // ========== SAVE / HISTORY ==========
+        var savedCalculations = JSON.parse(localStorage.getItem('ebayCalcSaved')) || [];
         var _lastFocusedElement = null;
 
         function saveCalculation() {
+            haptic('light');
             _lastFocusedElement = document.activeElement;
             document.getElementById('saveModal').classList.add('active');
             document.getElementById('saveName').value = '';
@@ -2200,13 +2593,14 @@
         }
 
         function confirmSave() {
-            const name = document.getElementById('saveName').value.trim();
+            haptic('medium');
+            var name = document.getElementById('saveName').value.trim();
             if (!name) {
                 alert('Please enter a name for this calculation');
                 return;
             }
 
-            const calculation = {
+            var calculation = {
                 name: name,
                 timestamp: new Date().toISOString(),
                 data: {
@@ -2231,12 +2625,9 @@
             if (savedCalculations.length > 20) {
                 savedCalculations = savedCalculations.slice(0, 20);
             }
-
             localStorage.setItem('ebayCalcSaved', JSON.stringify(savedCalculations));
             closeSaveModal();
             renderSavedItems();
-
-            // Show history after saving
             document.getElementById('savedItemsContainer').style.display = 'block';
         }
 
@@ -2254,46 +2645,49 @@
         }
 
         function renderSavedItems() {
-            const container = document.getElementById('savedItems');
+            var container = document.getElementById('savedItems');
             if (savedCalculations.length === 0) {
                 container.innerHTML = '<div style="text-align: center; padding: 20px; color: var(--text-muted); font-size: 12px;">No saved calculations yet</div>';
                 return;
             }
-
-            container.innerHTML = savedCalculations.map((calc, index) => {
-                const safeName = calc.name.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-                const safeProfit = (calc.data.netProfit || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-                return `
-                <div class="saved-item">
-                    <div onclick="loadCalculation(${index})" style="flex: 1;">
-                        <div class="saved-item-name">${safeName}</div>
-                        <div style="font-size: 10px; color: var(--text-muted); margin-top: 2px;">
-                            ${new Date(calc.timestamp).toLocaleDateString()} - Profit: ${safeProfit}
-                        </div>
-                    </div>
-                    <button class="saved-item-delete" onclick="deleteCalculation(${index})" title="Delete">✕</button>
-                </div>
-            `}).join('');
+            container.innerHTML = savedCalculations.map(function(calc, index) {
+                var safeName = calc.name.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+                var safeProfit = (calc.data.netProfit || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                return '<div class="saved-item">' +
+                    '<div onclick="loadCalculation(' + index + ')" style="flex: 1;">' +
+                        '<div class="saved-item-name">' + safeName + '</div>' +
+                        '<div style="font-size: 10px; color: var(--text-muted); margin-top: 2px;">' +
+                            new Date(calc.timestamp).toLocaleDateString() + ' - Profit: ' + safeProfit +
+                        '</div>' +
+                    '</div>' +
+                    '<button class="saved-item-delete" onclick="deleteCalculation(' + index + ')" title="Delete">&#10005;</button>' +
+                '</div>';
+            }).join('');
         }
 
         function loadCalculation(index) {
-            const calc = savedCalculations[index];
+            var calc = savedCalculations[index];
             if (!calc) return;
-
             document.getElementById('salePrice').value = calc.data.salePrice;
             document.getElementById('itemCost').value = calc.data.itemCost;
             document.getElementById('buyerShipping').value = calc.data.buyerShipping;
             document.getElementById('shipping').value = calc.data.shipping;
             document.getElementById('packagingCost').value = calc.data.packagingCost || 0;
-            document.getElementById('category').value = calc.data.category;
-            document.getElementById('storeLevel').value = calc.data.storeLevel || 100;
+            // Handle legacy saves that stored numeric category rates
+            var catVal = calc.data.category;
+            var catEl = document.getElementById('category');
+            catEl.value = catVal;
+            // If the value didn't match (legacy numeric), fall back to 'most'
+            if (catEl.value !== catVal) catEl.value = 'most';
+            var storeVal = calc.data.storeLevel;
+            var storeEl = document.getElementById('storeLevel');
+            storeEl.value = storeVal;
+            if (storeEl.value !== storeVal) storeEl.value = 'none';
             document.getElementById('stateTax').value = calc.data.stateTax;
             document.getElementById('adFee').value = calc.data.adFee;
             document.getElementById('taxOnFees').value = calc.data.taxOnFees || 0;
             document.getElementById('desiredProfit').value = calc.data.desiredProfit || 25;
             document.getElementById('desiredMargin').value = calc.data.desiredMargin || '';
-
-            // Restore mode
             if (calc.data.mode && calc.data.mode !== currentMode) {
                 setMode(calc.data.mode);
             } else {
@@ -2309,8 +2703,9 @@
             }
         }
 
-        // Reset All Fields
+        // ========== RESET ==========
         function resetAllFields() {
+            haptic('heavy');
             document.getElementById('salePrice').value = 100;
             document.getElementById('itemCost').value = 50;
             document.getElementById('buyerShipping').value = 0;
@@ -2323,69 +2718,27 @@
             document.getElementById('taxOnFees').value = 0;
             document.getElementById('desiredProfit').value = 25;
             document.getElementById('desiredMargin').value = '';
-
-            // Reset to forward mode
             if (currentMode !== 'forward') {
                 setMode('forward');
             } else {
                 recalculate();
             }
-
-            // Shake animation on results
             var results = document.getElementById('results');
             results.classList.add('reset-shake');
             setTimeout(function() { results.classList.remove('reset-shake'); }, 400);
         }
 
-        // ========== Comparison View ==========
-        function getCalculationSnapshot() {
-            var salePrice = parseFloat(document.getElementById('salePrice').value) || 0;
-            var itemCost = parseFloat(document.getElementById('itemCost').value) || 0;
-            var buyerShipping = parseFloat(document.getElementById('buyerShipping').value) || 0;
-            var shipping = parseFloat(document.getElementById('shipping').value) || 0;
-            var packagingCost = parseFloat(document.getElementById('packagingCost').value) || 0;
-            var categoryRate = parseFloat(document.getElementById('category').value);
-            var storeLevelDiscount = parseFloat(document.getElementById('storeLevel').value);
-            var stateTaxRate = parseFloat(document.getElementById('stateTax').value);
-            var adFeeRate = parseFloat(document.getElementById('adFee').value);
-            var taxOnFeesRate = parseFloat(document.getElementById('taxOnFees').value) || 0;
-
-            return computeValues({
-                salePrice: salePrice,
-                itemCost: itemCost,
-                buyerShipping: buyerShipping,
-                shipping: shipping,
-                packagingCost: packagingCost,
-                categoryRate: categoryRate,
-                storeLevelDiscount: storeLevelDiscount,
-                stateTaxRate: stateTaxRate,
-                adFeeRate: adFeeRate,
-                taxOnFeesRate: taxOnFeesRate
-            });
-        }
-
-        function computeFromSaved(data) {
-            return computeValues({
-                salePrice: parseFloat(data.salePrice) || 0,
-                itemCost: parseFloat(data.itemCost) || 0,
-                buyerShipping: parseFloat(data.buyerShipping) || 0,
-                shipping: parseFloat(data.shipping) || 0,
-                packagingCost: parseFloat(data.packagingCost) || 0,
-                categoryRate: parseFloat(data.category) || 13.6,
-                storeLevelDiscount: parseFloat(data.storeLevel) || 100,
-                stateTaxRate: parseFloat(data.stateTax) || 0,
-                adFeeRate: parseFloat(data.adFee) || 0,
-                taxOnFeesRate: parseFloat(data.taxOnFees) || 0
-            });
-        }
-
+        // ========== COMPARISON VIEW ==========
         function computeValues(p) {
             var totalSaleAmount = p.salePrice + p.buyerShipping;
             var salesTaxAmount = totalSaleAmount * (p.stateTaxRate / 100);
             var totalBuyerPays = totalSaleAmount + salesTaxAmount;
-            var baseFee = totalBuyerPays * (p.categoryRate / 100);
-            var ebayFee = baseFee * (p.storeLevelDiscount / 100);
-            var perOrderFee = totalSaleAmount <= 10 ? 0.30 : 0.40;
+
+            var catId = p.categoryId || 'most';
+            var storeLvl = p.storeLevel || 'none';
+            var fvfResult = calculateTieredFVF(totalBuyerPays, catId, storeLvl);
+            var ebayFee = fvfResult.fvf;
+            var perOrderFee = fvfResult.noPerOrderFee ? 0 : (totalSaleAmount <= 10 ? 0.30 : 0.40);
             var adFeeCost = totalBuyerPays * (p.adFeeRate / 100);
             var taxOnFeesAmount = (ebayFee + perOrderFee) * (p.taxOnFeesRate / 100);
             var totalFees = ebayFee + perOrderFee + adFeeCost + taxOnFeesAmount;
@@ -2393,20 +2746,50 @@
             var profitMargin = totalSaleAmount > 0 ? (netProfit / totalSaleAmount) * 100 : 0;
 
             return {
-                salePrice: p.salePrice,
-                itemCost: p.itemCost,
-                totalSaleAmount: totalSaleAmount,
-                totalFees: totalFees,
-                netProfit: netProfit,
-                profitMargin: profitMargin,
-                shipping: p.shipping,
-                packagingCost: p.packagingCost,
-                ebayFee: ebayFee,
-                adFeeCost: adFeeCost
+                salePrice: p.salePrice, itemCost: p.itemCost, totalSaleAmount: totalSaleAmount,
+                totalFees: totalFees, netProfit: netProfit, profitMargin: profitMargin,
+                shipping: p.shipping, packagingCost: p.packagingCost, ebayFee: ebayFee, adFeeCost: adFeeCost
             };
         }
 
+        function getCalculationSnapshot() {
+            return computeValues({
+                salePrice: parseFloat(document.getElementById('salePrice').value) || 0,
+                itemCost: parseFloat(document.getElementById('itemCost').value) || 0,
+                buyerShipping: parseFloat(document.getElementById('buyerShipping').value) || 0,
+                shipping: parseFloat(document.getElementById('shipping').value) || 0,
+                packagingCost: parseFloat(document.getElementById('packagingCost').value) || 0,
+                categoryId: document.getElementById('category').value,
+                storeLevel: document.getElementById('storeLevel').value,
+                stateTaxRate: parseFloat(document.getElementById('stateTax').value) || 0,
+                adFeeRate: parseFloat(document.getElementById('adFee').value) || 0,
+                taxOnFeesRate: parseFloat(document.getElementById('taxOnFees').value) || 0
+            });
+        }
+
+        function computeFromSaved(data) {
+            // Handle both new format (categoryId string) and legacy (numeric rate)
+            var catId = data.category;
+            if (!isNaN(parseFloat(catId)) && !FEE_TIERS[catId]) catId = 'most';
+            var storeLvl = data.storeLevel;
+            if (!isNaN(parseFloat(storeLvl))) storeLvl = 'none';
+
+            return computeValues({
+                salePrice: parseFloat(data.salePrice) || 0,
+                itemCost: parseFloat(data.itemCost) || 0,
+                buyerShipping: parseFloat(data.buyerShipping) || 0,
+                shipping: parseFloat(data.shipping) || 0,
+                packagingCost: parseFloat(data.packagingCost) || 0,
+                categoryId: catId,
+                storeLevel: storeLvl,
+                stateTaxRate: parseFloat(data.stateTax) || 0,
+                adFeeRate: parseFloat(data.adFee) || 0,
+                taxOnFeesRate: parseFloat(data.taxOnFees) || 0
+            });
+        }
+
         function openCompareView() {
+            haptic('light');
             _lastFocusedElement = document.activeElement;
             populateCompareDropdowns();
             updateComparison();
@@ -2429,7 +2812,6 @@
             });
             selA.innerHTML = html;
             selB.innerHTML = html;
-            // Default: A = current, B = first saved (if any)
             selA.value = 'current';
             selB.value = savedCalculations.length > 0 ? '0' : 'current';
         }
@@ -2437,7 +2819,6 @@
         function updateComparison() {
             var selA = document.getElementById('compareA').value;
             var selB = document.getElementById('compareB').value;
-
             var dataA = selA === 'current' ? getCalculationSnapshot() : computeFromSaved(savedCalculations[parseInt(selA)].data);
             var dataB = selB === 'current' ? getCalculationSnapshot() : computeFromSaved(savedCalculations[parseInt(selB)].data);
 
@@ -2455,93 +2836,206 @@
             var tbody = document.getElementById('compareTableBody');
             var rows = '';
             metrics.forEach(function(m) {
-                var valA = dataA[m.key];
-                var valB = dataB[m.key];
+                var valA = dataA[m.key]; var valB = dataB[m.key];
                 var delta = valB - valA;
                 var deltaClass = 'delta-neutral';
-
                 if (Math.abs(delta) > 0.005) {
-                    if (m.higherBetter) {
-                        deltaClass = delta > 0 ? 'delta-positive' : 'delta-negative';
-                    } else {
-                        deltaClass = delta < 0 ? 'delta-positive' : 'delta-negative';
-                    }
+                    deltaClass = m.higherBetter ? (delta > 0 ? 'delta-positive' : 'delta-negative') : (delta < 0 ? 'delta-positive' : 'delta-negative');
                 }
-
-                var fmt = m.format === '$' ?
-                    function(v) { return '$' + v.toFixed(2); } :
-                    function(v) { return v.toFixed(2) + '%'; };
-
+                var fmt = m.format === '$' ? function(v) { return '$' + v.toFixed(2); } : function(v) { return v.toFixed(2) + '%'; };
                 var deltaStr = (delta >= 0 ? '+' : '') + fmt(delta);
                 var rowClass = m.highlight ? ' class="highlight-row"' : '';
-
-                rows += '<tr' + rowClass + '>';
-                rows += '<td>' + m.label + '</td>';
-                rows += '<td>' + fmt(valA) + '</td>';
-                rows += '<td>' + fmt(valB) + '</td>';
-                rows += '<td class="' + deltaClass + '">' + deltaStr + '</td>';
-                rows += '</tr>';
+                rows += '<tr' + rowClass + '><td>' + m.label + '</td><td>' + fmt(valA) + '</td><td>' + fmt(valB) + '</td><td class="' + deltaClass + '">' + deltaStr + '</td></tr>';
             });
             tbody.innerHTML = rows;
         }
 
-        // Close modal when clicking outside
-        document.getElementById('saveModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeSaveModal();
-            }
-        });
+        // ========== BULK CALCULATOR ==========
+        var bulkRowCounter = 0;
 
-        document.getElementById('compareModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeCompareModal();
+        function openBulkModal() {
+            haptic('light');
+            _lastFocusedElement = document.activeElement;
+            if (document.getElementById('bulkTableBody').children.length === 0) {
+                for (var i = 0; i < 3; i++) addBulkRow();
             }
-        });
+            document.getElementById('bulkModal').classList.add('active');
+        }
 
-        // Escape key closes active modal + focus trapping
+        function closeBulkModal() {
+            document.getElementById('bulkModal').classList.remove('active');
+            if (_lastFocusedElement) _lastFocusedElement.focus();
+        }
+
+        function addBulkRow() {
+            var tbody = document.getElementById('bulkTableBody');
+            var tr = document.createElement('tr');
+            var rowId = bulkRowCounter++;
+            tr.id = 'bulkRow' + rowId;
+            tr.innerHTML = '<td><input type="text" placeholder="Item name" data-field="name"></td>' +
+                '<td><input type="number" placeholder="0.00" step="0.01" min="0" data-field="sale" value=""></td>' +
+                '<td><input type="number" placeholder="0.00" step="0.01" min="0" data-field="cost" value=""></td>' +
+                '<td><input type="number" placeholder="0.00" step="0.01" min="0" data-field="ship" value=""></td>' +
+                '<td class="bulk-result" data-field="fees">$0.00</td>' +
+                '<td class="bulk-result" data-field="profit">$0.00</td>' +
+                '<td class="bulk-result" data-field="margin">0%</td>' +
+                '<td><button class="bulk-row-delete" onclick="deleteBulkRow(' + rowId + ')">&#10005;</button></td>';
+            tbody.appendChild(tr);
+
+            // Attach input listeners
+            var inputs = tr.querySelectorAll('input[type="number"]');
+            for (var i = 0; i < inputs.length; i++) {
+                inputs[i].addEventListener('input', function() { recalcBulkRow(tr); });
+            }
+        }
+
+        function deleteBulkRow(rowId) {
+            var row = document.getElementById('bulkRow' + rowId);
+            if (row) row.remove();
+            updateBulkSummary();
+        }
+
+        function clearBulkRows() {
+            document.getElementById('bulkTableBody').innerHTML = '';
+            bulkRowCounter = 0;
+            for (var i = 0; i < 3; i++) addBulkRow();
+            updateBulkSummary();
+        }
+
+        function recalcBulkRow(tr) {
+            var sale = parseFloat(tr.querySelector('[data-field="sale"]').value) || 0;
+            var cost = parseFloat(tr.querySelector('[data-field="cost"]').value) || 0;
+            var ship = parseFloat(tr.querySelector('[data-field="ship"]').value) || 0;
+
+            // Use current category/store/tax settings from main calculator
+            var categoryId = document.getElementById('category').value;
+            var storeLevel = document.getElementById('storeLevel').value;
+            var stateTaxRate = parseFloat(document.getElementById('stateTax').value) || 0;
+            var adFeeRate = parseFloat(document.getElementById('adFee').value) || 0;
+            var taxOnFeesRate = parseFloat(document.getElementById('taxOnFees').value) || 0;
+
+            var totalSaleAmount = sale;
+            var salesTax = totalSaleAmount * (stateTaxRate / 100);
+            var totalBuyerPays = totalSaleAmount + salesTax;
+
+            var fvfResult = calculateTieredFVF(totalBuyerPays, categoryId, storeLevel);
+            var ebayFee = fvfResult.fvf;
+            var perOrderFee = fvfResult.noPerOrderFee ? 0 : (totalSaleAmount <= 10 ? 0.30 : 0.40);
+            var adFeeCost = totalBuyerPays * (adFeeRate / 100);
+            var taxOnFeesAmt = (ebayFee + perOrderFee) * (taxOnFeesRate / 100);
+            var totalFees = ebayFee + perOrderFee + adFeeCost + taxOnFeesAmt;
+            var netProfit = totalSaleAmount - totalFees - cost - ship;
+            var margin = totalSaleAmount > 0 ? (netProfit / totalSaleAmount) * 100 : 0;
+
+            tr.querySelector('[data-field="fees"]').textContent = '$' + totalFees.toFixed(2);
+            var profitCell = tr.querySelector('[data-field="profit"]');
+            profitCell.textContent = '$' + netProfit.toFixed(2);
+            profitCell.className = 'bulk-result ' + (netProfit >= 0 ? 'bulk-profit-positive' : 'bulk-profit-negative');
+            tr.querySelector('[data-field="margin"]').textContent = margin.toFixed(1) + '%';
+
+            updateBulkSummary();
+        }
+
+        function updateBulkSummary() {
+            var rows = document.getElementById('bulkTableBody').querySelectorAll('tr');
+            var totalItems = 0, totalRevenue = 0, totalCosts = 0, totalFees = 0, totalProfit = 0;
+
+            for (var i = 0; i < rows.length; i++) {
+                var sale = parseFloat(rows[i].querySelector('[data-field="sale"]').value) || 0;
+                var cost = parseFloat(rows[i].querySelector('[data-field="cost"]').value) || 0;
+                var ship = parseFloat(rows[i].querySelector('[data-field="ship"]').value) || 0;
+                var fees = parseFloat(rows[i].querySelector('[data-field="fees"]').textContent.replace('$', '')) || 0;
+                var profit = parseFloat(rows[i].querySelector('[data-field="profit"]').textContent.replace('$', '')) || 0;
+
+                if (sale > 0) totalItems++;
+                totalRevenue += sale;
+                totalCosts += cost + ship;
+                totalFees += fees;
+                totalProfit += profit;
+            }
+
+            document.getElementById('bulkTotalItems').textContent = totalItems;
+            document.getElementById('bulkTotalRevenue').textContent = '$' + totalRevenue.toFixed(2);
+            document.getElementById('bulkTotalCosts').textContent = '$' + totalCosts.toFixed(2);
+            document.getElementById('bulkTotalFees').textContent = '$' + totalFees.toFixed(2);
+            var profitEl = document.getElementById('bulkTotalProfit');
+            profitEl.textContent = '$' + totalProfit.toFixed(2);
+            profitEl.style.color = totalProfit >= 0 ? '#4ade80' : '#ef4444';
+        }
+
+        // ========== MODAL MANAGEMENT ==========
+        document.getElementById('saveModal').addEventListener('click', function(e) { if (e.target === this) closeSaveModal(); });
+        document.getElementById('compareModal').addEventListener('click', function(e) { if (e.target === this) closeCompareModal(); });
+        document.getElementById('bulkModal').addEventListener('click', function(e) { if (e.target === this) closeBulkModal(); });
+
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
-                if (document.getElementById('saveModal').classList.contains('active')) {
-                    closeSaveModal();
-                } else if (document.getElementById('compareModal').classList.contains('active')) {
-                    closeCompareModal();
-                }
+                if (document.getElementById('saveModal').classList.contains('active')) closeSaveModal();
+                else if (document.getElementById('compareModal').classList.contains('active')) closeCompareModal();
+                else if (document.getElementById('bulkModal').classList.contains('active')) closeBulkModal();
+                else if (document.getElementById('onboardingOverlay').classList.contains('active')) closeOnboarding();
                 return;
             }
-
-            // Focus trap inside active modals
             if (e.key === 'Tab') {
                 var activeModal = document.querySelector('.modal.active .modal-content');
                 if (!activeModal) return;
-
                 var focusable = activeModal.querySelectorAll('input, select, button, [tabindex]:not([tabindex="-1"])');
                 if (focusable.length === 0) return;
-
-                var first = focusable[0];
-                var last = focusable[focusable.length - 1];
-
+                var first = focusable[0]; var last = focusable[focusable.length - 1];
                 if (e.shiftKey) {
-                    if (document.activeElement === first) {
-                        e.preventDefault();
-                        last.focus();
-                    }
+                    if (document.activeElement === first) { e.preventDefault(); last.focus(); }
                 } else {
-                    if (document.activeElement === last) {
-                        e.preventDefault();
-                        first.focus();
-                    }
+                    if (document.activeElement === last) { e.preventDefault(); first.focus(); }
                 }
             }
         });
 
-        // Enter key to save
         document.getElementById('saveName').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                confirmSave();
-            }
+            if (e.key === 'Enter') confirmSave();
         });
 
-        // Collapse input cards on mobile by default
+        // ========== ONBOARDING ==========
+        var onboardingStep = 0;
+        var onboardingSteps = [
+            { icon: '💰', title: 'Welcome to eBay Fee Calculator!', text: 'The most comprehensive eBay fee calculator available. Accurately calculate your net profit with tiered fee rates, store-level pricing, and more.' },
+            { icon: '🔄', title: 'Two Powerful Modes', text: 'Use Calculate Profit to see fees on a known sale price, or Find List Price to reverse-calculate the price needed to hit your profit target.' },
+            { icon: '📦', title: 'Bulk & Compare', text: 'Calculate fees for multiple items at once with Bulk mode, save scenarios, and compare them side-by-side. All your data is saved locally on your device.' }
+        ];
+
+        function showOnboardingStep() {
+            var step = onboardingSteps[onboardingStep];
+            document.getElementById('onboardingIcon').textContent = step.icon;
+            document.getElementById('onboardingTitle').textContent = step.title;
+            document.getElementById('onboardingText').textContent = step.text;
+            for (var i = 0; i < 3; i++) {
+                document.getElementById('dot' + i).className = 'onboarding-dot' + (i === onboardingStep ? ' active' : '');
+            }
+            document.getElementById('onboardingNextBtn').textContent = onboardingStep === 2 ? 'Get Started' : 'Next';
+        }
+
+        function nextOnboardingStep() {
+            haptic('light');
+            onboardingStep++;
+            if (onboardingStep >= onboardingSteps.length) {
+                closeOnboarding();
+                return;
+            }
+            showOnboardingStep();
+        }
+
+        function closeOnboarding() {
+            document.getElementById('onboardingOverlay').classList.remove('active');
+            localStorage.setItem('ebayCalcOnboarded', 'true');
+        }
+
+        // Show onboarding for first-time users
+        if (!localStorage.getItem('ebayCalcOnboarded')) {
+            onboardingStep = 0;
+            showOnboardingStep();
+            document.getElementById('onboardingOverlay').classList.add('active');
+        }
+
+        // ========== INIT ==========
         if (window.innerWidth <= 1024) {
             ['saleInfo', 'shipping', 'fees'].forEach(function(cardName) {
                 document.getElementById(cardName + 'Content').classList.add('collapsed');
@@ -2551,6 +3045,11 @@
         }
 
         recalculate();
+
+        // ========== SERVICE WORKER ==========
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').catch(function() {});
+        }
     </script>
 </body>
 </html>
