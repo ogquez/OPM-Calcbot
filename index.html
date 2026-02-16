@@ -196,12 +196,12 @@
             background: none;
             border: none;
             cursor: pointer;
-            padding: 8px;
+            padding: 12px;
             transition: transform 0.3s ease;
             -webkit-tap-highlight-color: transparent;
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
             align-items: center;
             justify-content: center;
             color: #ffffff;
@@ -274,12 +274,12 @@
             background: none;
             border: none;
             cursor: pointer;
-            padding: 8px;
+            padding: 12px;
             transition: all 0.3s ease;
             -webkit-tap-highlight-color: transparent;
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -334,6 +334,16 @@
             transition: background 0.3s ease;
             -webkit-tap-highlight-color: transparent;
             touch-action: manipulation;
+        }
+
+        /* Expand touch target to 44px without changing visual size */
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: -9px;
+            left: -4px;
+            right: -4px;
+            bottom: -9px;
         }
 
         .toggle-switch:active {
@@ -401,6 +411,16 @@
             border-color: var(--input-focus-border);
             box-shadow: 0 0 0 3px var(--input-focus-shadow), 0 0 20px rgba(102, 126, 234, 0.15);
             background: var(--input-bg);
+        }
+
+        input[type="number"].input-error {
+            border-color: #ef4444;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+        }
+
+        input[type="number"].input-error:focus {
+            border-color: #ef4444;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3), 0 0 15px rgba(239, 68, 68, 0.1);
         }
 
         input[type="number"]::placeholder {
@@ -1303,10 +1323,10 @@
                 <h1>💰 eBay Fee Calculator</h1>
                 <p class="subtitle">Calculate your net profit after eBay fees with precision</p>
             </div>
-            <div class="theme-toggle">
-                <span class="theme-toggle-label">🌙</span>
-                <div class="toggle-switch" id="themeToggle"></div>
-                <span class="theme-toggle-label">☀️</span>
+            <div class="theme-toggle" role="group" aria-label="Theme toggle">
+                <span class="theme-toggle-label" aria-hidden="true">🌙</span>
+                <div class="toggle-switch" id="themeToggle" role="switch" aria-checked="false" aria-label="Toggle light or dark theme" tabindex="0"></div>
+                <span class="theme-toggle-label" aria-hidden="true">☀️</span>
             </div>
         </div>
 
@@ -1321,9 +1341,9 @@
 
             <div class="left-panel">
                 <!-- Mode Toggle -->
-                <div class="mode-toggle-container">
-                    <button class="mode-btn active" id="forwardModeBtn" onclick="setMode('forward')">💰 Calculate Profit</button>
-                    <button class="mode-btn" id="reverseModeBtn" onclick="setMode('reverse')">🎯 Find List Price</button>
+                <div class="mode-toggle-container" role="tablist" aria-label="Calculator mode">
+                    <button class="mode-btn active" id="forwardModeBtn" onclick="setMode('forward')" role="tab" aria-selected="true" aria-controls="saleInfoCard">💰 Calculate Profit</button>
+                    <button class="mode-btn" id="reverseModeBtn" onclick="setMode('reverse')" role="tab" aria-selected="false" aria-controls="profitTargetCard">🎯 Find List Price</button>
                 </div>
 
                 <!-- Profit Target Card (Reverse Mode Only) -->
@@ -1353,13 +1373,13 @@
                     <div class="card-header" onclick="toggleCard('saleInfo')">
                         <span class="card-icon">📦</span>
                         <span class="card-title">Sale Information</span>
-                        <button class="collapse-toggle" id="saleInfoToggle">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <button class="collapse-toggle" id="saleInfoToggle" aria-expanded="true" aria-controls="saleInfoContent" aria-label="Toggle Sale Information">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                 <polyline points="6 9 12 15 18 9"></polyline>
                             </svg>
                         </button>
                     </div>
-                    <div class="card-content" id="saleInfoContent">
+                    <div class="card-content" id="saleInfoContent" role="region" aria-labelledby="saleInfoToggle">
                         <div class="input-grid">
                             <div class="input-group">
                                 <label for="salePrice">Sale Price</label>
@@ -1379,13 +1399,13 @@
                     <div class="card-header" onclick="toggleCard('shipping')">
                         <span class="card-icon">🚚</span>
                         <span class="card-title">Shipping & Packaging</span>
-                        <button class="collapse-toggle" id="shippingToggle">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <button class="collapse-toggle" id="shippingToggle" aria-expanded="true" aria-controls="shippingContent" aria-label="Toggle Shipping & Packaging">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                 <polyline points="6 9 12 15 18 9"></polyline>
                             </svg>
                         </button>
                     </div>
-                    <div class="card-content" id="shippingContent">
+                    <div class="card-content" id="shippingContent" role="region" aria-labelledby="shippingToggle">
                         <div class="input-grid">
                             <div class="input-group">
                                 <label for="buyerShipping">Buyer Paid Shipping</label>
@@ -1411,13 +1431,13 @@
                     <div class="card-header" onclick="toggleCard('fees')">
                         <span class="card-icon">⚙️</span>
                         <span class="card-title">Fees & Discounts</span>
-                        <button class="collapse-toggle" id="feesToggle">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <button class="collapse-toggle" id="feesToggle" aria-expanded="true" aria-controls="feesContent" aria-label="Toggle Fees & Discounts">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                 <polyline points="6 9 12 15 18 9"></polyline>
                             </svg>
                         </button>
                     </div>
-                    <div class="card-content" id="feesContent">
+                    <div class="card-content" id="feesContent" role="region" aria-labelledby="feesToggle">
                         <div class="input-grid">
                         <div class="input-group">
                             <label for="category">Category</label>
@@ -1619,10 +1639,10 @@
                     </div>
                     
                     <!-- Consolidated Total Fees with Dropdown -->
-                    <div class="total-fees-card" onclick="toggleFeeDetails()">
+                    <div class="total-fees-card" onclick="toggleFeeDetails()" role="button" tabindex="0" aria-expanded="false" aria-controls="feeDetails" aria-label="Toggle fee breakdown details">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <span class="result-label">
-                                <span id="toggleIcon" class="toggle-icon">▶</span>
+                                <span id="toggleIcon" class="toggle-icon" aria-hidden="true">▶</span>
                                 Total eBay Fees
                             </span>
                             <span class="result-value" id="totalFees">$0.00</span>
@@ -1630,7 +1650,7 @@
                     </div>
 
                     <!-- Detailed Fee Breakdown (Hidden by default) -->
-                    <div id="feeDetails" class="fee-details" style="display: none;">
+                    <div id="feeDetails" class="fee-details" style="display: none;" role="region" aria-label="Detailed fee breakdown">
                         <div class="result-row">
                             <span class="result-label">eBay Final Value Fee:</span>
                             <span class="result-value" id="ebayFee">$0.00</span>
@@ -1663,20 +1683,20 @@
                     </div>
                     <div class="result-row" style="padding-top: 14px; margin-top: 10px; border-top: 2px solid var(--section-border);">
                         <span class="result-label" style="font-size: 14px; font-weight: 700;">NET PROFIT:</span>
-                        <span class="result-value profit" id="netProfit">$0.00</span>
+                        <span class="result-value profit" id="netProfit" aria-live="polite" aria-atomic="true">$0.00</span>
                     </div>
 
                     <!-- Visual Profit Breakdown Chart -->
                     <div class="profit-chart">
                         <div class="chart-collapse-header" onclick="toggleChart()">
                             <div class="chart-header">💰 Profit Breakdown</div>
-                            <button class="chart-collapse-toggle" id="chartToggle">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <button class="chart-collapse-toggle" id="chartToggle" aria-expanded="false" aria-controls="chartContent" aria-label="Toggle Profit Breakdown chart">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                     <polyline points="6 9 12 15 18 9"></polyline>
                                 </svg>
                             </button>
                         </div>
-                        <div class="chart-content collapsed" id="chartContent">
+                        <div class="chart-content collapsed" id="chartContent" role="region" aria-labelledby="chartToggle">
                             <div class="chart-bar-container">
                                 <div class="chart-bar" id="itemCostBar" style="background: #ef4444;">
                                     <span class="chart-label">Item Cost</span>
@@ -1718,11 +1738,11 @@
 
                     <!-- Save/History Section -->
                     <div class="save-section">
-                        <div class="save-buttons">
-                            <button class="btn btn-primary" onclick="saveCalculation()">💾 Save</button>
-                            <button class="btn btn-secondary" onclick="toggleHistory()">📋 History</button>
-                            <button class="btn btn-secondary" onclick="openCompareView()">⚖️ Compare</button>
-                            <button class="btn btn-danger" onclick="resetAllFields()">🔄 Reset</button>
+                        <div class="save-buttons" role="toolbar" aria-label="Calculation actions">
+                            <button class="btn btn-primary" onclick="saveCalculation()" aria-label="Save calculation">💾 Save</button>
+                            <button class="btn btn-secondary" onclick="toggleHistory()" aria-label="Toggle saved history" aria-expanded="false" id="historyToggleBtn">📋 History</button>
+                            <button class="btn btn-secondary" onclick="openCompareView()" aria-label="Compare scenarios">⚖️ Compare</button>
+                            <button class="btn btn-danger" onclick="resetAllFields()" aria-label="Reset all fields">🔄 Reset</button>
                         </div>
                         <div id="savedItemsContainer" style="display: none;">
                             <div style="font-size: 11px; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase;">Saved Calculations</div>
@@ -1735,9 +1755,9 @@
     </div>
 
     <!-- Save Modal -->
-    <div class="modal" id="saveModal">
+    <div class="modal" id="saveModal" role="dialog" aria-modal="true" aria-labelledby="saveModalTitle">
         <div class="modal-content">
-            <div class="modal-header">💾 Save Calculation</div>
+            <div class="modal-header" id="saveModalTitle">💾 Save Calculation</div>
             <input type="text" id="saveName" class="modal-input" placeholder="Enter a name (e.g., iPhone 15 Pro Max)">
             <div class="modal-buttons">
                 <button class="btn btn-primary" onclick="confirmSave()">Save</button>
@@ -1747,9 +1767,9 @@
     </div>
 
     <!-- Compare Modal -->
-    <div class="modal compare-modal" id="compareModal">
+    <div class="modal compare-modal" id="compareModal" role="dialog" aria-modal="true" aria-labelledby="compareModalTitle">
         <div class="modal-content">
-            <div class="modal-header">⚖️ Compare Scenarios</div>
+            <div class="modal-header" id="compareModalTitle">⚖️ Compare Scenarios</div>
             <div class="compare-selectors">
                 <div class="compare-selector">
                     <label for="compareA">Scenario A</label>
@@ -1801,61 +1821,78 @@
         }
 
         // Load saved theme or default to dark
-        const savedTheme = localStorage.getItem('theme') || 'dark';
+        var savedTheme = localStorage.getItem('theme') || 'dark';
         if (savedTheme === 'light') {
             htmlElement.setAttribute('data-theme', 'light');
             themeToggle.classList.add('active');
+            themeToggle.setAttribute('aria-checked', 'true');
         }
         updateThemeColor(savedTheme);
 
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = htmlElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-            
+        function doThemeToggle() {
+            var currentTheme = htmlElement.getAttribute('data-theme');
+            var newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
             htmlElement.setAttribute('data-theme', newTheme);
             themeToggle.classList.toggle('active');
+            themeToggle.setAttribute('aria-checked', newTheme === 'light' ? 'true' : 'false');
             localStorage.setItem('theme', newTheme);
             updateThemeColor(newTheme);
+        }
+
+        themeToggle.addEventListener('click', doThemeToggle);
+        themeToggle.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                doThemeToggle();
+            }
         });
 
         // Card Collapse Toggle Functions
         function toggleCard(cardName) {
-            const content = document.getElementById(cardName + 'Content');
-            const toggle = document.getElementById(cardName + 'Toggle');
-            
+            var content = document.getElementById(cardName + 'Content');
+            var toggle = document.getElementById(cardName + 'Toggle');
+
             if (content.classList.contains('collapsed')) {
                 content.classList.remove('collapsed');
                 toggle.classList.add('active');
+                toggle.setAttribute('aria-expanded', 'true');
             } else {
                 content.classList.add('collapsed');
                 toggle.classList.remove('active');
+                toggle.setAttribute('aria-expanded', 'false');
             }
         }
 
         // Chart Collapse Toggle
         function toggleChart() {
-            const content = document.getElementById('chartContent');
-            const toggle = document.getElementById('chartToggle');
-            
+            var content = document.getElementById('chartContent');
+            var toggle = document.getElementById('chartToggle');
+
             if (content.classList.contains('collapsed')) {
                 content.classList.remove('collapsed');
                 toggle.classList.add('active');
+                toggle.setAttribute('aria-expanded', 'true');
             } else {
                 content.classList.add('collapsed');
                 toggle.classList.remove('active');
+                toggle.setAttribute('aria-expanded', 'false');
             }
         }
 
         function toggleFeeDetails() {
-            const details = document.getElementById('feeDetails');
-            const icon = document.getElementById('toggleIcon');
-            
+            var details = document.getElementById('feeDetails');
+            var icon = document.getElementById('toggleIcon');
+            var card = document.querySelector('.total-fees-card');
+
             if (details.style.display === 'none') {
                 details.style.display = 'block';
                 icon.textContent = '▼';
+                card.setAttribute('aria-expanded', 'true');
             } else {
                 details.style.display = 'none';
                 icon.textContent = '▶';
+                card.setAttribute('aria-expanded', 'false');
             }
         }
 
@@ -1874,7 +1911,9 @@
 
             if (mode === 'reverse') {
                 forwardBtn.classList.remove('active');
+                forwardBtn.setAttribute('aria-selected', 'false');
                 reverseBtn.classList.add('active');
+                reverseBtn.setAttribute('aria-selected', 'true');
                 for (var i = 0; i < reverseEls.length; i++) reverseEls[i].style.display = 'block';
                 salePriceGroup.style.display = 'none';
                 listAtCard.style.display = 'block';
@@ -1882,7 +1921,9 @@
                 if (mobileProfitLabel) mobileProfitLabel.textContent = 'List At';
             } else {
                 reverseBtn.classList.remove('active');
+                reverseBtn.setAttribute('aria-selected', 'false');
                 forwardBtn.classList.add('active');
+                forwardBtn.setAttribute('aria-selected', 'true');
                 for (var i = 0; i < reverseEls.length; i++) reverseEls[i].style.display = 'none';
                 salePriceGroup.style.display = 'block';
                 listAtCard.style.display = 'none';
@@ -2107,23 +2148,47 @@
             }
         }
 
-        document.getElementById('salePrice').addEventListener('input', recalculate);
-        document.getElementById('itemCost').addEventListener('input', recalculate);
-        document.getElementById('buyerShipping').addEventListener('input', recalculate);
-        document.getElementById('shipping').addEventListener('input', recalculate);
-        document.getElementById('packagingCost').addEventListener('input', recalculate);
-        document.getElementById('category').addEventListener('change', recalculate);
-        document.getElementById('storeLevel').addEventListener('change', recalculate);
-        document.getElementById('stateTax').addEventListener('change', recalculate);
-        document.getElementById('adFee').addEventListener('change', recalculate);
-        document.getElementById('taxOnFees').addEventListener('input', recalculate);
-        document.getElementById('desiredProfit').addEventListener('input', recalculate);
-        document.getElementById('desiredMargin').addEventListener('input', recalculate);
+        // Debounce wrapper — delays recalculation until user stops typing (150ms)
+        var _debounceTimer = null;
+        function debouncedRecalculate() {
+            clearTimeout(_debounceTimer);
+            _debounceTimer = setTimeout(recalculate, 150);
+        }
+
+        // Input validation — highlights invalid inputs with red border
+        function validateInput(el) {
+            var val = parseFloat(el.value);
+            var min = parseFloat(el.getAttribute('min'));
+            var max = parseFloat(el.getAttribute('max'));
+
+            if (el.value !== '' && (isNaN(val) || (!isNaN(min) && val < min) || (!isNaN(max) && val > max))) {
+                el.classList.add('input-error');
+            } else {
+                el.classList.remove('input-error');
+            }
+        }
+
+        // Attach debounced listeners + validation to number inputs
+        ['salePrice', 'itemCost', 'buyerShipping', 'shipping', 'packagingCost', 'taxOnFees', 'desiredProfit', 'desiredMargin'].forEach(function(id) {
+            var el = document.getElementById(id);
+            el.addEventListener('input', function() {
+                validateInput(el);
+                debouncedRecalculate();
+            });
+        });
+
+        // Select dropdowns fire immediately (no debounce needed)
+        ['category', 'storeLevel', 'stateTax', 'adFee'].forEach(function(id) {
+            document.getElementById(id).addEventListener('change', recalculate);
+        });
 
         // Save/History Functionality
         let savedCalculations = JSON.parse(localStorage.getItem('ebayCalcSaved')) || [];
 
+        var _lastFocusedElement = null;
+
         function saveCalculation() {
+            _lastFocusedElement = document.activeElement;
             document.getElementById('saveModal').classList.add('active');
             document.getElementById('saveName').value = '';
             document.getElementById('saveName').focus();
@@ -2131,6 +2196,7 @@
 
         function closeSaveModal() {
             document.getElementById('saveModal').classList.remove('active');
+            if (_lastFocusedElement) _lastFocusedElement.focus();
         }
 
         function confirmSave() {
@@ -2175,12 +2241,15 @@
         }
 
         function toggleHistory() {
-            const container = document.getElementById('savedItemsContainer');
+            var container = document.getElementById('savedItemsContainer');
+            var btn = document.getElementById('historyToggleBtn');
             if (container.style.display === 'none') {
                 container.style.display = 'block';
+                if (btn) btn.setAttribute('aria-expanded', 'true');
                 renderSavedItems();
             } else {
                 container.style.display = 'none';
+                if (btn) btn.setAttribute('aria-expanded', 'false');
             }
         }
 
@@ -2338,13 +2407,16 @@
         }
 
         function openCompareView() {
+            _lastFocusedElement = document.activeElement;
             populateCompareDropdowns();
             updateComparison();
             document.getElementById('compareModal').classList.add('active');
+            document.getElementById('compareA').focus();
         }
 
         function closeCompareModal() {
             document.getElementById('compareModal').classList.remove('active');
+            if (_lastFocusedElement) _lastFocusedElement.focus();
         }
 
         function populateCompareDropdowns() {
@@ -2426,6 +2498,42 @@
             }
         });
 
+        // Escape key closes active modal + focus trapping
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                if (document.getElementById('saveModal').classList.contains('active')) {
+                    closeSaveModal();
+                } else if (document.getElementById('compareModal').classList.contains('active')) {
+                    closeCompareModal();
+                }
+                return;
+            }
+
+            // Focus trap inside active modals
+            if (e.key === 'Tab') {
+                var activeModal = document.querySelector('.modal.active .modal-content');
+                if (!activeModal) return;
+
+                var focusable = activeModal.querySelectorAll('input, select, button, [tabindex]:not([tabindex="-1"])');
+                if (focusable.length === 0) return;
+
+                var first = focusable[0];
+                var last = focusable[focusable.length - 1];
+
+                if (e.shiftKey) {
+                    if (document.activeElement === first) {
+                        e.preventDefault();
+                        last.focus();
+                    }
+                } else {
+                    if (document.activeElement === last) {
+                        e.preventDefault();
+                        first.focus();
+                    }
+                }
+            }
+        });
+
         // Enter key to save
         document.getElementById('saveName').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
@@ -2437,6 +2545,8 @@
         if (window.innerWidth <= 1024) {
             ['saleInfo', 'shipping', 'fees'].forEach(function(cardName) {
                 document.getElementById(cardName + 'Content').classList.add('collapsed');
+                var toggle = document.getElementById(cardName + 'Toggle');
+                if (toggle) toggle.setAttribute('aria-expanded', 'false');
             });
         }
 
