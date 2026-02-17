@@ -8,611 +8,393 @@
     <meta name="apple-mobile-web-app-title" content="eBay Fee Calculator">
     <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
     <meta name="theme-color" content="#f5f5f5" media="(prefers-color-scheme: light)">
-    <title>eBay Fee Calculator</title>
+    <title>eBay Fee Calculator - Modern</title>
     <style>
-        :root {
-            --bg-gradient-start: #000000;
-            --bg-gradient-end: #000000;
-            --container-bg: #1e1e1e;
-            --text-primary: #ffffff;
-            --text-secondary: #a0a0a0;
-            --text-muted: #888888;
-            --input-bg: #2a2a2a;
-            --input-border: #333333;
-            --input-focus-border: #667eea;
-            --input-focus-shadow: rgba(102, 126, 234, 0.3);
-            --section-border: #333333;
-            --result-bg-start: rgba(102, 126, 234, 0.05);
-            --result-bg-end: rgba(118, 75, 162, 0.05);
-            --result-border: rgba(102, 126, 234, 0.15);
-            --card-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --fee-details-bg: #252525;
-            --divider-color: #333333;
-            --border-subtle: #2a2a2a;
-        }
-
-        [data-theme="light"] {
-            --bg-gradient-start: #e0e7ff;
-            --bg-gradient-end: #ddd6fe;
-            --container-bg: #ffffff;
-            --text-primary: #1a1a2e;
-            --text-secondary: #6b7280;
-            --text-muted: #4b5563;
-            --input-bg: #f9fafb;
-            --input-border: #e5e7eb;
-            --input-focus-border: #667eea;
-            --input-focus-shadow: rgba(102, 126, 234, 0.3);
-            --section-border: #e5e7eb;
-            --result-bg-start: rgba(102, 126, 234, 0.05);
-            --result-bg-end: rgba(118, 75, 162, 0.05);
-            --result-border: rgba(102, 126, 234, 0.15);
-            --card-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --fee-details-bg: #f3f4f6;
-            --divider-color: #e5e7eb;
-            --border-subtle: #e5e7eb;
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
+            touch-action: pan-x pan-y;
+        }
+        button, input, select, label { touch-action: manipulation; }
+
+        :root {
+            /* Modern color system */
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --success-gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --danger-gradient: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            --warning-gradient: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-muted: #6b7280;
+            
+            --bg-primary: #000000;
+            --bg-secondary: #0a0a0a;
+            --bg-tertiary: #1a1a1a;
+            
+            --accent-purple: #667eea;
+            --accent-purple-light: #8b9cff;
+            
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            
+            /* Spacing scale (8px base) */
+            --space-1: 0.5rem;   /* 8px */
+            --space-2: 1rem;     /* 16px */
+            --space-3: 1.5rem;   /* 24px */
+            --space-4: 2rem;     /* 32px */
+            --space-5: 2.5rem;   /* 40px */
+            --space-6: 3rem;     /* 48px */
+            
+            /* Border radius scale */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --radius-2xl: 24px;
+            --radius-full: 9999px;
+            
+            /* Typography */
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-weight-normal: 400;
+            --font-weight-medium: 500;
+            --font-weight-semibold: 600;
+            --font-weight-bold: 700;
+        }
+
+        [data-theme="light"] {
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(0, 0, 0, 0.1);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+            
+            --text-primary: #1a1a2e;
+            --text-secondary: #6b7280;
+            --text-muted: #9ca3af;
+            
+            --bg-primary: #f5f5f5;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #f9fafb;
         }
 
         html {
             height: 100%;
             min-height: 100vh;
             min-height: -webkit-fill-available;
-            transition: background 0.3s ease;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: #000000;
-            min-height: 100vh;
-            min-height: -webkit-fill-available;
-            max-width: 100vw;
+            font-family: var(--font-sans);
+            background: var(--bg-primary);
+            height: 100vh;
+            height: 100dvh;
+            max-height: 100vh;
+            max-height: 100dvh;
+            overflow: hidden;
+            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+            color: var(--text-primary);
             overflow-x: hidden;
-            padding: max(15px, env(safe-area-inset-top)) max(15px, env(safe-area-inset-right)) max(15px, env(safe-area-inset-bottom)) max(15px, env(safe-area-inset-left));
-            transition: background 0.3s ease;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            -webkit-overflow-scrolling: touch;
-            touch-action: pan-y;
-            margin: 0;
-            position: relative;
+            transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
         }
 
-        html[data-theme="light"] body {
-            background: #f5f5f5;
+        /* Animated gradient background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(102, 126, 234, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(118, 75, 162, 0.15) 0%, transparent 50%);
+            animation: gradientShift 20s ease infinite;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(10%, -5%) rotate(120deg); }
+            66% { transform: translate(-5%, 10%) rotate(240deg); }
         }
 
         .container {
-            background: var(--container-bg);
-            border-radius: 24px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(102, 126, 234, 0.1);
-            padding: 40px;
-            max-width: 1400px;
-            width: 100%;
-            border: 1px solid var(--border-subtle);
-            transition: all 0.3s ease;
-            overflow-x: hidden;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 12px;
         }
 
+        /* Header with glassmorphism */
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 35px;
+            margin-bottom: 10px;
+            padding: 10px 16px;
+            background: var(--glass-bg);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.1);
             position: relative;
-            z-index: 101;
+            z-index: 10;
         }
 
         .header-left h1 {
-            color: var(--text-primary);
-            margin-bottom: 6px;
-            font-size: 32px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-size: 1.2rem;
+            font-weight: var(--font-weight-bold);
+            background: var(--primary-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            transition: color 0.3s ease;
+            margin-bottom: 2px;
+            letter-spacing: -0.02em;
         }
 
         .subtitle {
+            font-size: 0.75rem;
             color: var(--text-secondary);
-            font-size: 14px;
-            font-weight: 400;
-            transition: color 0.3s ease;
+            font-weight: var(--font-weight-medium);
         }
 
-        /* Card-Based Grid Layout */
-        .content-wrapper {
-            display: grid;
-            grid-template-columns: 1fr 480px;
-            gap: 40px;
-            align-items: start;
-        }
-
-        .left-panel {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            min-width: 0;
-        }
-
-        .right-panel {
-            position: sticky;
-            top: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            min-width: 0;
-        }
-
-        /* Input Cards */
-        .input-card {
-            background: var(--input-bg);
-            border: 2px solid var(--input-border);
-            border-radius: 16px;
-            padding: 25px;
-            margin: 0;
-            transition: all 0.3s ease;
-            overflow: hidden;
-        }
-
-        .input-card:hover {
-            border-color: rgba(102, 126, 234, 0.3);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .card-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid var(--section-border);
-        }
-
-        .card-icon {
-            font-size: 20px;
-        }
-
-        .card-title {
-            color: var(--text-primary);
-            font-size: 16px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            flex: 1;
-        }
-
-        /* Collapsible Cards for Mobile */
-        .collapse-toggle {
-            display: none;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 12px;
-            transition: transform 0.3s ease;
-            -webkit-tap-highlight-color: transparent;
-            width: 44px;
-            height: 44px;
-            border-radius: 10px;
-            align-items: center;
-            justify-content: center;
-            color: #ffffff;
-        }
-
-        .collapse-toggle:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .collapse-toggle:active {
-            transform: scale(0.9);
-        }
-
-        .collapse-toggle svg {
-            width: 20px;
-            height: 20px;
-            transition: transform 0.3s ease;
-            stroke: #ffffff;
-            opacity: 0.9;
-            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
-        }
-
-        .collapse-toggle:hover svg {
-            opacity: 1;
-        }
-
-        .collapse-toggle.active svg {
-            transform: rotate(180deg);
-        }
-
-        .card-content {
-            transition: all 0.3s ease;
-        }
-
-        .card-content.collapsed {
-            display: none;
-        }
-
-        /* Chart Collapse */
-        .chart-collapse-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            cursor: pointer;
-            -webkit-tap-highlight-color: transparent;
-            margin-bottom: 0;
-        }
-
-        .chart-header {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 0;
-            text-align: left;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .chart-content {
-            transition: all 0.3s ease;
-            overflow: hidden;
-            margin-top: 18px;
-        }
-
-        .chart-content.collapsed {
-            display: none;
-        }
-
-        .chart-collapse-toggle {
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 12px;
-            transition: all 0.3s ease;
-            -webkit-tap-highlight-color: transparent;
-            width: 44px;
-            height: 44px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .chart-collapse-toggle:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .chart-collapse-toggle:active {
-            transform: scale(0.9);
-        }
-
-        .chart-collapse-toggle svg {
-            width: 20px;
-            height: 20px;
-            transition: transform 0.3s ease;
-            stroke: #ffffff;
-            opacity: 0.9;
-            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
-        }
-
-        .chart-collapse-toggle:hover svg {
-            opacity: 1;
-        }
-
-        .chart-collapse-toggle.active svg {
-            transform: rotate(180deg);
-        }
-
-        /* Toggle Switch */
+        /* Theme toggle */
         .theme-toggle {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: var(--space-2);
         }
 
         .theme-toggle-label {
-            color: var(--text-muted);
-            font-size: 12px;
-            font-weight: 600;
-            transition: color 0.3s ease;
+            font-size: 1.25rem;
+            opacity: 0.6;
+            transition: all 0.3s;
         }
 
         .toggle-switch {
             position: relative;
-            width: 50px;
-            height: 26px;
-            background: var(--input-border);
-            border-radius: 13px;
+            width: 56px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-full);
             cursor: pointer;
-            transition: background 0.3s ease;
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
-        }
-
-        /* Expand touch target to 44px without changing visual size */
-        .toggle-switch::after {
-            content: '';
-            position: absolute;
-            top: -9px;
-            left: -4px;
-            right: -4px;
-            bottom: -9px;
-        }
-
-        .toggle-switch:active {
-            transform: scale(0.95);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--glass-border);
         }
 
         .toggle-switch::before {
             content: '';
             position: absolute;
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            top: 3px;
+            background: var(--primary-gradient);
+            top: 2px;
             left: 3px;
-            transition: transform 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
         }
 
         .toggle-switch.active::before {
-            transform: translateX(24px);
+            transform: translateX(26px);
         }
 
-        .input-grid {
+        .toggle-switch:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: scale(1.05);
+        }
+
+        /* Main content grid */
+        .content-wrapper {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-
-        .input-group {
-            margin-bottom: 0;
-            min-width: 0;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--text-secondary);
-            font-weight: 600;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-            transition: color 0.3s ease;
-        }
-
-        input[type="number"] {
-            width: 100%;
-            max-width: 100%;
-            padding: 12px 16px;
-            border: 2px solid var(--input-border);
-            border-radius: 12px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            background: var(--container-bg);
-            color: var(--text-primary);
-            font-weight: 500;
-            -webkit-appearance: none;
-            appearance: none;
-            touch-action: manipulation;
-            box-sizing: border-box;
-        }
-
-        input[type="number"]:focus {
-            outline: none;
-            border-color: var(--input-focus-border);
-            box-shadow: 0 0 0 3px var(--input-focus-shadow), 0 0 20px rgba(102, 126, 234, 0.15);
-            background: var(--input-bg);
-        }
-
-        input[type="number"].input-error {
-            border-color: #ef4444;
-            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
-        }
-
-        input[type="number"].input-error:focus {
-            border-color: #ef4444;
-            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3), 0 0 15px rgba(239, 68, 68, 0.1);
-        }
-
-        input[type="number"]::placeholder {
-            color: var(--text-secondary);
-            opacity: 0.5;
-        }
-
-        /* Remove spinner arrows on iOS and other browsers */
-        input[type="number"]::-webkit-inner-spin-button,
-        input[type="number"]::-webkit-outer-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-
-        .category-select {
-            width: 100%;
-            max-width: 100%;
-            padding: 12px 16px;
-            border: 2px solid var(--input-border);
-            border-radius: 12px;
-            font-size: 16px;
-            background: var(--container-bg);
-            color: var(--text-primary);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
-            -webkit-appearance: none;
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23667eea' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 16px center;
-            padding-right: 45px;
-            touch-action: manipulation;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .category-select:focus {
-            outline: none;
-            border-color: var(--input-focus-border);
-            box-shadow: 0 0 0 3px var(--input-focus-shadow), 0 0 20px rgba(102, 126, 234, 0.15);
-        }
-
-        .category-select option {
-            background: var(--container-bg);
-            color: var(--text-primary);
-            padding: 10px;
-        }
-
-        .category-select optgroup {
-            font-weight: 700;
-            font-size: 13px;
-            color: #667eea;
-            background: var(--input-bg);
-            padding: 8px 0;
-        }
-
-        .helper-text {
-            font-size: 11px;
-            color: var(--text-secondary);
-            margin-top: 6px;
-            line-height: 1.4;
-            transition: color 0.3s ease;
-        }
-
-        .results {
-            padding: 25px;
-            background: linear-gradient(135deg, var(--result-bg-start) 0%, var(--result-bg-end) 100%);
-            border-radius: 16px;
-            border: 2px solid var(--result-border);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(102, 126, 234, 0.1);
-            transition: all 0.3s ease;
-            overflow: hidden;
-        }
-
-        .results-header {
-            display: flex;
-            align-items: center;
+            grid-template-columns: 1fr 360px;
             gap: 10px;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid var(--section-border);
+            align-items: start;
         }
 
-        .results-title {
-            color: var(--text-primary);
-            font-size: 16px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .result-row {
+        /* Left/Right panels */
+        .left-panel {
             display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid var(--input-border);
-            align-items: center;
+            flex-direction: column;
+            gap: 8px;
         }
 
-        .result-row:last-child {
-            border-bottom: none;
+        /* Glassmorphism cards */
+        .glass-card {
+            background: var(--glass-bg);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: 14px 16px;
+            box-shadow: var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .result-label {
-            color: var(--text-muted);
-            font-weight: 500;
-            font-size: 12px;
-            transition: color 0.3s ease;
+        .glass-card:hover {
+            border-color: rgba(102, 126, 234, 0.3);
+            box-shadow: 
+                0 12px 40px rgba(0, 0, 0, 0.15),
+                0 0 0 1px rgba(102, 126, 234, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            transform: translateY(-1px);
         }
 
-        .result-value {
-            color: var(--text-primary);
-            font-weight: 700;
-            font-size: 13px;
-            transition: color 0.3s ease;
+        /* Mode toggle pills */
+        .mode-toggle {
+            display: flex;
+            gap: 6px;
+            padding: 4px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: var(--radius-full);
+            margin-bottom: 10px;
         }
 
-        .profit {
-            font-size: 22px;
-            color: #4ade80;
-            text-shadow: 0 0 15px rgba(74, 222, 128, 0.3);
-        }
-
-        [data-theme="light"] .profit {
-            color: #16a34a;
-            text-shadow: none;
-        }
-
-        .loss {
-            font-size: 22px;
-            color: #ef4444;
-            text-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
-        }
-
-        [data-theme="light"] .loss {
-            color: #dc2626;
-            text-shadow: none;
-        }
-
-        .total-fees-card {
+        .mode-btn {
+            flex: 1;
+            padding: 7px 14px;
+            border: none;
+            border-radius: var(--radius-full);
+            font-size: 0.8125rem;
+            font-weight: var(--font-weight-semibold);
+            color: var(--text-secondary);
+            background: transparent;
             cursor: pointer;
-            background: var(--card-bg);
-            padding: 16px 20px;
-            margin: 16px 0;
-            border-radius: 14px;
-            transition: all 0.3s ease;
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
         }
 
-        .total-fees-card:active {
-            transform: translateY(0px);
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        .mode-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--primary-gradient);
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: -1;
         }
 
-        @media (hover: hover) {
-            .total-fees-card:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-            }
+        .mode-btn.active {
+            color: white;
+            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
         }
 
-        .total-fees-card .result-label {
-            color: rgba(255, 255, 255, 0.95);
+        .mode-btn.active::before {
+            opacity: 1;
+        }
+
+        /* Quick mode vs Advanced toggle */
+        .complexity-toggle {
             display: flex;
             align-items: center;
-            font-size: 13px;
-            font-weight: 600;
+            gap: 8px;
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(102, 126, 234, 0.2);
         }
 
-        .total-fees-card .result-value {
-            font-size: 18px;
-            color: #ffffff;
+        .complexity-toggle label {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-size: 0.875rem;
+            font-weight: var(--font-weight-semibold);
+            color: var(--accent-purple-light);
+            cursor: pointer;
         }
 
-        .toggle-icon {
-            margin-right: 10px;
-            transition: transform 0.3s ease;
-            display: inline-block;
-            font-size: 12px;
+        .complexity-toggle input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: var(--accent-purple);
         }
 
-        .fee-details {
-            margin: 10px 0;
-            padding: 14px;
-            background: var(--fee-details-bg);
-            border-radius: 10px;
-            border-left: 3px solid #667eea;
+        /* Smart category search */
+        .category-search-wrapper {
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .category-search {
+            width: 100%;
+            padding: 9px 36px 9px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-size: 0.9375rem;
+            font-weight: var(--font-weight-medium);
+            transition: all 0.3s;
+        }
+
+        .category-search:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.2);
+        }
+
+        .category-search::placeholder {
+            color: var(--text-muted);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+
+        .category-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            margin-top: 8px;
+            background: rgba(14, 14, 24, 0.97);
+            -webkit-backdrop-filter: blur(40px) saturate(200%);
+            backdrop-filter: blur(40px) saturate(200%);
+            border: 1px solid rgba(102, 126, 234, 0.35);
+            border-radius: var(--radius-lg);
+            box-shadow: 0 24px 64px rgba(0,0,0,0.55);
+            max-height: 320px;
+            overflow-y: auto;
+            z-index: 200;
+            display: none;
+        }
+        [data-theme="light"] .category-suggestions {
+            background: rgba(255,255,255,0.97);
+            border-color: rgba(102,126,234,0.3);
+            box-shadow: 0 24px 64px rgba(0,0,0,0.14);
+        }
+        .category-suggestion-name { color: #e8e8f5; }
+        .category-suggestion-rate { color: rgba(160,160,200,0.85); }
+        [data-theme="light"] .category-suggestion-name { color: var(--text-primary); }
+        [data-theme="light"] .category-suggestion-rate { color: var(--text-secondary);
+        }
+
+        .category-suggestions.active {
+            display: block;
             animation: slideDown 0.3s ease;
-            transition: background 0.3s ease;
         }
 
         @keyframes slideDown {
@@ -626,2430 +408,1482 @@
             }
         }
 
-        .fee-details .result-row {
-            padding: 6px 0;
-        }
-
-        .fee-details .result-label {
-            font-size: 11px;
-        }
-
-        .fee-details .result-value {
-            font-size: 12px;
-        }
-
-        .fee-breakdown {
-            margin-top: 14px;
-            padding: 14px;
-            background: var(--fee-details-bg);
-            border-radius: 12px;
-            font-size: 11px;
-            border: 1px solid var(--input-border);
-            transition: all 0.3s ease;
-        }
-
-        .fee-item {
+        .category-suggestion {
+            padding: var(--space-2) var(--space-3);
+            cursor: pointer;
+            transition: all 0.2s;
             display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            color: var(--text-muted);
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .fee-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .divider {
-            height: 1px;
-            background: var(--divider-color);
-            margin: 15px 0;
-            transition: background 0.3s ease;
-        }
-
-        .note-text {
-            margin-top: 12px;
-            padding-top: 12px;
-            border-top: 1px solid var(--input-border);
-            font-size: 10px;
-            color: var(--text-secondary);
-            line-height: 1.5;
-            transition: all 0.3s ease;
-        }
-
-        /* Visual Profit Breakdown Chart */
-        .profit-chart {
-            margin-top: 20px;
-            padding: 25px;
-            background: var(--input-bg);
-            border-radius: 16px;
-            border: 2px solid var(--input-border);
-            transition: all 0.3s ease;
-        }
-
-        .profit-chart:hover {
-            border-color: rgba(102, 126, 234, 0.3);
-        }
-
-        .chart-bar-container {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .chart-bar {
-            display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 10px 14px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            min-width: 80px;
-            position: relative;
-            overflow: hidden;
+            gap: var(--space-2);
         }
 
-        .chart-bar:hover {
-            transform: translateX(4px);
+        .category-suggestion:hover {
+            background: rgba(102, 126, 234, 0.2);
         }
 
-        .chart-bar::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: var(--bar-width, 0%);
-            background: currentColor;
-            opacity: 0.3;
-            transition: width 0.5s ease;
+        .category-suggestion-icon {
+            font-size: 1.25rem;
         }
 
-        .chart-label {
-            font-size: 11px;
-            font-weight: 600;
-            color: white;
-            position: relative;
-            z-index: 1;
-        }
-
-        .chart-value {
-            font-size: 11px;
-            font-weight: 700;
-            color: white;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Save/History Section */
-        .save-section {
-            margin-top: 20px;
-            padding: 25px;
-            background: var(--input-bg);
-            border-radius: 16px;
-            border: 2px solid var(--input-border);
-            transition: all 0.3s ease;
-        }
-
-        .save-section:hover {
-            border-color: rgba(102, 126, 234, 0.3);
-        }
-
-        .save-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 15px;
-        }
-
-        .btn {
-            flex: 1 1 auto;
-            min-width: 0;
-            padding: 10px 12px;
-            border: none;
-            border-radius: 8px;
-            font-size: 11px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-            white-space: nowrap;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-secondary {
-            background: var(--input-bg);
-            color: var(--text-primary);
-            border: 2px solid var(--input-border);
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--input-focus-border);
-        }
-
-        .btn-danger {
-            background: transparent;
-            color: #ef4444;
-            border: 2px solid #ef4444;
-        }
-
-        .btn-danger:hover {
-            background: #ef4444;
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
-        }
-
-        @keyframes resetShake {
-            0%, 100% { transform: translateX(0); }
-            20% { transform: translateX(-4px); }
-            40% { transform: translateX(4px); }
-            60% { transform: translateX(-3px); }
-            80% { transform: translateX(3px); }
-        }
-
-        .reset-shake {
-            animation: resetShake 0.4s ease;
-        }
-
-        /* Mode Toggle */
-        .mode-toggle-container {
-            display: flex;
-            background: var(--input-bg);
-            border: 2px solid var(--input-border);
-            border-radius: 12px;
-            padding: 4px;
-            gap: 4px;
-            max-width: 100%;
-        }
-
-        .mode-btn {
+        .category-suggestion-text {
             flex: 1;
-            min-width: 0;
-            padding: 10px 12px;
-            border: none;
-            border-radius: 8px;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-            background: transparent;
-            color: var(--text-muted);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
 
-        .mode-btn.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
-        }
-
-        .mode-btn:not(.active):hover {
+        .category-suggestion-name {
+            font-size: 0.875rem;
+            font-weight: var(--font-weight-semibold);
             color: var(--text-primary);
+        }
+
+        .category-suggestion-rate {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .suggestion-group-label {
+            padding: var(--space-1) var(--space-3);
+            font-size: 0.75rem;
+            font-weight: var(--font-weight-bold);
+            color: var(--accent-purple);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
             background: rgba(102, 126, 234, 0.1);
         }
 
-        /* Reverse Mode - Profit Target Card */
-        .reverse-only {
-            display: none;
-        }
-
-        .forward-only {
-            display: block;
-        }
-
-        .list-at-card {
-            background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
-            padding: 20px;
-            border-radius: 14px;
-            margin-bottom: 16px;
-            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.3);
-            display: none;
-        }
-
-        .list-at-card .list-at-label {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 13px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 4px;
-        }
-
-        .list-at-card .list-at-value {
-            color: #ffffff;
-            font-size: 28px;
-            font-weight: 700;
-        }
-
-        /* Compare Modal */
-        .compare-modal .modal-content {
-            max-width: 700px;
-        }
-
-        .compare-selectors {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 20px;
-        }
-
-        .compare-selector {
-            flex: 1;
-        }
-
-        .compare-selector label {
-            margin-bottom: 6px;
-            font-size: 11px;
-        }
-
-        .compare-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 12px;
-            table-layout: fixed;
-        }
-
-        .compare-table th {
-            text-align: left;
-            padding: 8px 10px;
-            color: var(--text-muted);
-            font-weight: 600;
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            border-bottom: 2px solid var(--section-border);
-        }
-
-        .compare-table td {
-            padding: 8px 10px;
-            color: var(--text-primary);
-            font-weight: 500;
-            border-bottom: 1px solid var(--input-border);
-        }
-
-        .compare-table tr.highlight-row {
-            background: rgba(102, 126, 234, 0.05);
-        }
-
-        .compare-table tr.highlight-row td {
-            font-weight: 700;
-        }
-
-        .delta-positive {
-            color: #4ade80 !important;
-        }
-
-        .delta-negative {
-            color: #ef4444 !important;
-        }
-
-        .delta-neutral {
-            color: var(--text-muted) !important;
-        }
-
-        [data-theme="light"] .delta-positive {
-            color: #16a34a !important;
-        }
-
-        [data-theme="light"] .delta-negative {
-            color: #dc2626 !important;
-        }
-
-        /* Bulk Calculator */
-        .bulk-section {
-            margin-top: 20px;
-            padding: 25px;
-            background: var(--input-bg);
-            border-radius: 16px;
-            border: 2px solid var(--input-border);
-            transition: all 0.3s ease;
-        }
-
-        .bulk-section:hover {
-            border-color: rgba(102, 126, 234, 0.3);
-        }
-
-        .bulk-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-            padding-bottom: 12px;
-            border-bottom: 2px solid var(--section-border);
-        }
-
-        .bulk-title {
-            color: var(--text-primary);
-            font-size: 16px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .bulk-table-wrap {
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .bulk-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 12px;
-            min-width: 500px;
-        }
-
-        .bulk-table th {
-            text-align: left;
-            padding: 8px 6px;
-            color: var(--text-muted);
-            font-weight: 600;
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            border-bottom: 2px solid var(--section-border);
-            white-space: nowrap;
-        }
-
-        .bulk-table td {
-            padding: 4px 4px;
-            vertical-align: middle;
-        }
-
-        .bulk-table input {
-            width: 100%;
-            padding: 8px 6px;
-            border: 1px solid var(--input-border);
-            border-radius: 6px;
-            font-size: 12px;
-            background: var(--container-bg);
-            color: var(--text-primary);
-            -webkit-appearance: none;
-            appearance: none;
-        }
-
-        .bulk-table input:focus {
-            outline: none;
-            border-color: var(--input-focus-border);
-            box-shadow: 0 0 0 2px var(--input-focus-shadow);
-        }
-
-        .bulk-table .bulk-result {
-            color: var(--text-primary);
-            font-weight: 600;
-            font-size: 12px;
-            white-space: nowrap;
-            text-align: right;
-        }
-
-        .bulk-table .bulk-profit-positive {
-            color: #4ade80;
-        }
-
-        .bulk-table .bulk-profit-negative {
-            color: #ef4444;
-        }
-
-        [data-theme="light"] .bulk-table .bulk-profit-positive {
-            color: #16a34a;
-        }
-
-        [data-theme="light"] .bulk-table .bulk-profit-negative {
-            color: #dc2626;
-        }
-
-        .bulk-row-delete {
-            background: none;
-            border: none;
-            color: #ef4444;
-            cursor: pointer;
-            font-size: 14px;
-            padding: 4px 6px;
-            opacity: 0.7;
-            transition: opacity 0.2s;
-        }
-
-        .bulk-row-delete:hover {
-            opacity: 1;
-        }
-
-        .bulk-actions {
-            display: flex;
-            gap: 8px;
-            margin-top: 12px;
-        }
-
-        .bulk-summary {
-            margin-top: 14px;
-            padding: 14px;
-            background: var(--fee-details-bg);
-            border-radius: 10px;
-            border-left: 3px solid #667eea;
-        }
-
-        .bulk-summary-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 4px 0;
-            font-size: 12px;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        .bulk-summary-row.bulk-summary-total {
-            font-weight: 700;
-            color: var(--text-primary);
-            font-size: 14px;
-            padding-top: 8px;
-            margin-top: 6px;
-            border-top: 1px solid var(--section-border);
-        }
-
-        /* Onboarding Overlay */
-        .onboarding-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.85);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .onboarding-overlay.active {
-            display: flex;
-        }
-
-        .onboarding-card {
-            background: var(--container-bg);
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 420px;
-            width: 90%;
-            text-align: center;
-            border: 2px solid var(--input-border);
-            animation: slideDown 0.4s ease;
-        }
-
-        .onboarding-icon {
-            font-size: 48px;
-            margin-bottom: 16px;
-        }
-
-        .onboarding-title {
-            color: var(--text-primary);
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-
-        .onboarding-text {
-            color: var(--text-secondary);
-            font-size: 14px;
-            line-height: 1.6;
-            margin-bottom: 24px;
-        }
-
-        .onboarding-dots {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-bottom: 24px;
-        }
-
-        .onboarding-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--input-border);
-            transition: all 0.3s ease;
-        }
-
-        .onboarding-dot.active {
-            background: #667eea;
-            width: 24px;
-            border-radius: 4px;
-        }
-
-        .onboarding-buttons {
-            display: flex;
+        /* Input groups */
+        .input-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 10px;
-            justify-content: center;
+            margin-bottom: 10px;
         }
 
-        .onboarding-skip {
-            background: none;
-            border: none;
+        .input-group {
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 0.6875rem;
+            font-weight: var(--font-weight-bold);
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-size: 0.9375rem;
+            font-weight: var(--font-weight-medium);
+            transition: all 0.3s;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.2);
+        }
+
+        .input-group input::placeholder {
             color: var(--text-muted);
-            font-size: 13px;
+        }
+
+        /* Remove spinner arrows */
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .input-helper {
+            margin-top: 6px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Advanced section (collapsible) */
+        .advanced-section {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: none;
+        }
+
+        .advanced-section.active {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        /* Profit health indicator */
+        .profit-health {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            padding: 10px 12px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+        }
+
+        .health-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .health-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .health-dot.active {
+            background: var(--success);
+            box-shadow: 0 0 12px var(--success);
+            animation: pulse 2s ease infinite;
+        }
+
+        .health-dot.active.warning {
+            background: var(--warning);
+            box-shadow: 0 0 12px var(--warning);
+        }
+
+        .health-dot.active.danger {
+            background: var(--danger);
+            box-shadow: 0 0 12px var(--danger);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .health-label {
+            flex: 1;
+            font-size: 0.875rem;
+            font-weight: var(--font-weight-semibold);
+        }
+
+        .health-score {
+            font-size: 1.1rem;
+            font-weight: var(--font-weight-bold);
+            background: var(--success-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Results card */
+        .results-card {
+            position: sticky;
+            top: 0;
+        }
+
+        .result-hero {
+            padding: 14px 16px;
+            background: var(--primary-gradient);
+            border-radius: var(--radius-lg);
+            text-align: center;
+            margin-bottom: 10px;
+            box-shadow: 0 12px 40px rgba(102, 126, 234, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: shimmer 3s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .result-label {
+            font-size: 0.6875rem;
+            font-weight: var(--font-weight-semibold);
+            color: rgba(255, 255, 255, 0.8);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 2px;
+        }
+
+        .result-value {
+            font-size: 2rem;
+            font-weight: var(--font-weight-bold);
+            color: white;
+            line-height: 1;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .result-margin {
+            margin-top: 4px;
+            font-size: 0.875rem;
+            font-weight: var(--font-weight-semibold);
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Result rows */
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 7px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .result-row:last-child {
+            border-bottom: none;
+        }
+
+        .result-row-label {
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+            font-weight: var(--font-weight-medium);
+        }
+
+        .result-row-value {
+            font-size: 0.8125rem;
+            font-weight: var(--font-weight-bold);
+            color: var(--text-primary);
+        }
+
+        /* Fee breakdown accordion */
+        .fee-accordion {
+            margin: 8px 0;
+            padding: 8px 12px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: var(--radius-md);
             cursor: pointer;
-            padding: 10px 16px;
+            transition: all 0.3s;
         }
 
-        @media (max-width: 600px) {
-            .compare-modal .modal-content {
-                max-width: 100%;
-                border-radius: 20px 20px 0 0;
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                max-height: 85vh;
-                overflow-y: auto;
-            }
-
-            .compare-selectors {
-                flex-direction: column;
-                gap: 12px;
-            }
-
-            .compare-table {
-                font-size: 11px;
-            }
-
-            .compare-table th,
-            .compare-table td {
-                padding: 6px 6px;
-            }
-
-            .bulk-table {
-                font-size: 11px;
-            }
-
-            .onboarding-card {
-                padding: 30px 24px;
-            }
-
-            .onboarding-title {
-                font-size: 20px;
-            }
+        .fee-accordion:hover {
+            background: rgba(102, 126, 234, 0.15);
         }
 
-        .saved-items {
-            max-height: 200px;
-            overflow-y: auto;
+        .fee-accordion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .fee-accordion-icon {
+            transition: transform 0.3s;
+        }
+
+        .fee-accordion.active .fee-accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .fee-accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .fee-accordion.active .fee-accordion-content {
+            max-height: 500px;
+            padding-top: var(--space-3);
+        }
+
+        /* Quick actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
             margin-top: 10px;
         }
 
-        .saved-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 10px;
-            margin-bottom: 6px;
-            background: var(--input-bg);
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .saved-item:hover {
-            background: rgba(102, 126, 234, 0.1);
-            transform: translateX(4px);
-        }
-
-        .saved-item-name {
-            font-size: 12px;
-            font-weight: 600;
+        .action-btn {
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
             color: var(--text-primary);
-        }
-
-        .saved-item-profit {
-            font-size: 11px;
-            font-weight: 700;
-        }
-
-        .saved-item-delete {
-            background: none;
-            border: none;
-            color: #ef4444;
+            font-size: 0.8125rem;
+            font-weight: var(--font-weight-semibold);
             cursor: pointer;
-            font-size: 16px;
-            padding: 4px 8px;
-            opacity: 0.7;
-            transition: opacity 0.3s ease;
-        }
-
-        .saved-item-delete:hover {
-            opacity: 1;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 1000;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
             justify-content: center;
-            align-items: center;
+            gap: 6px;
         }
 
-        .modal.active {
-            display: flex;
+        .action-btn:hover {
+            background: rgba(102, 126, 234, 0.2);
+            border-color: var(--accent-purple);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
         }
 
-        .modal-content {
-            background: var(--container-bg);
-            padding: 30px;
-            border-radius: 16px;
-            max-width: 400px;
-            width: 90%;
-            border: 2px solid var(--input-border);
+        .action-btn:active {
+            transform: scale(0.96);
         }
 
-        .modal-header {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 20px;
-        }
 
-        .modal-input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid var(--input-border);
-            border-radius: 8px;
-            font-size: 14px;
-            background: var(--input-bg);
-            color: var(--text-primary);
-            margin-bottom: 20px;
-        }
 
-        .modal-buttons {
-            display: flex;
-            gap: 10px;
-        }
-
-        /* Mobile Sticky Profit Bar */
+        /* Mobile enhancements */
         .mobile-profit-bar {
             display: none;
             position: sticky;
             top: 0;
             z-index: 100;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 12px 20px;
-            margin: -40px -40px 12px -40px;
-            border-radius: 24px 24px 0 0;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            background: var(--primary-gradient);
+            padding: 12px 16px;
+            margin: -12px -12px 12px;
+            border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.4);
         }
 
-        .mobile-profit-content {
+        .mobile-profit-main {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: var(--space-2);
         }
 
         .mobile-profit-label {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 12px;
-            font-weight: 600;
+            font-size: 0.75rem;
+            font-weight: var(--font-weight-bold);
+            color: rgba(255, 255, 255, 0.8);
             text-transform: uppercase;
+            letter-spacing: 0.1em;
         }
 
         .mobile-profit-value {
+            font-size: 1.75rem;
+            font-weight: var(--font-weight-bold);
             color: white;
-            font-size: 20px;
-            font-weight: 700;
         }
 
+        .mobile-profit-details {
+            display: flex;
+            gap: var(--space-3);
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .mobile-profit-stat {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Responsive */
         @media (max-width: 1024px) {
+            /* Restore scrolling on mobile — desktop uses overflow:hidden */
+            body {
+                height: auto;
+                min-height: 100vh;
+                min-height: -webkit-fill-available;
+                max-height: none;
+                overflow: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
             .content-wrapper {
                 grid-template-columns: 1fr;
-                gap: 30px;
+                gap: 12px;
             }
 
-            .left-panel {
-                gap: 20px;
-            }
-
-            .right-panel {
+            .results-card {
                 position: static;
-                top: auto;
-            }
-
-            .header {
-                margin-bottom: 15px;
-                background: transparent;
-            }
-
-            .header-left h1 {
-                margin-bottom: 10px;
             }
 
             .mobile-profit-bar {
                 display: block;
             }
-
-            /* Show collapse toggles on mobile */
-            .collapse-toggle {
-                display: flex;
-            }
-
-            /* Make card header clickable */
-            .card-header {
-                cursor: pointer;
-                -webkit-tap-highlight-color: transparent;
-            }
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 640px) {
             .container {
-                padding: 0 20px 30px 20px;
-                border-radius: 20px;
-                margin-top: 0;
-                padding-top: 0;
+                padding: 10px;
             }
 
             .header {
-                padding: 30px 0 20px 0;
-                background: transparent;
+                padding: 10px 12px;
             }
 
             .header-left h1 {
-                font-size: 26px;
+                font-size: 1.1rem;
             }
 
             .subtitle {
-                font-size: 13px;
+                font-size: 0.6875rem;
             }
 
-            .input-grid {
+            .input-row {
                 grid-template-columns: 1fr;
-                gap: 15px;
-            }
-
-            .input-card {
-                padding: 20px;
-            }
-
-            .card-header {
-                margin-bottom: 15px;
-                padding-bottom: 12px;
-            }
-
-            body {
-                padding: max(10px, env(safe-area-inset-top)) max(10px, env(safe-area-inset-right)) max(10px, env(safe-area-inset-bottom)) max(10px, env(safe-area-inset-left));
-            }
-
-            .mobile-profit-bar {
-                margin: -30px -20px 12px -20px;
-                border-radius: 20px 20px 0 0;
-            }
-
-            .save-buttons {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
                 gap: 8px;
             }
 
-            .mode-btn {
-                font-size: 11px;
-                padding: 10px 8px;
-                letter-spacing: 0;
+            .quick-actions {
+                grid-template-columns: 1fr 1fr;
             }
 
-            .results {
-                padding: 20px;
+            .result-value {
+                font-size: 1.75rem;
             }
         }
 
-        /* Landscape phone fixes */
-        @media (max-height: 500px) and (orientation: landscape) {
-            .header {
-                margin-bottom: 10px;
-                z-index: 102;
-                position: relative;
-            }
-
-            .header-left h1 {
-                font-size: 20px;
-                margin-bottom: 0;
-            }
-
-            .subtitle {
-                display: none;
-            }
-
-            .mobile-profit-bar {
-                position: relative;
-                z-index: 99;
-                margin-top: 0;
-                padding: 8px 20px;
-            }
-
-            .container {
-                padding: 15px 20px 20px 20px;
-                border-radius: 16px;
-            }
-
-            .content-wrapper {
-                gap: 15px;
-            }
-
-            .left-panel {
-                gap: 12px;
-            }
-
-            .input-card {
-                padding: 15px;
-            }
-
-            .card-header {
-                margin-bottom: 10px;
-                padding-bottom: 8px;
-            }
-
-            .mode-toggle-container {
-                padding: 3px;
-            }
-
-            .mode-btn {
-                padding: 8px 8px;
-                font-size: 10px;
-            }
+        /* Loading shimmer */
+        .shimmer {
+            background: linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.1) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            background-size: 200% 100%;
+            animation: shimmer-animation 2s infinite;
         }
 
-        /* iOS specific fixes */
+        @keyframes shimmer-animation {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        /* Tooltips */
+        .tooltip-trigger {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px;
+            height: 16px;
+            margin-left: 6px;
+            background: rgba(102, 126, 234, 0.2);
+            border-radius: 50%;
+            font-size: 0.625rem;
+            font-weight: var(--font-weight-bold);
+            color: var(--accent-purple);
+            cursor: help;
+            transition: all 0.3s;
+        }
+
+        .tooltip-trigger:hover {
+            background: rgba(102, 126, 234, 0.3);
+            transform: scale(1.1);
+        }
+
+        .tooltip-content {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-8px);
+            padding: var(--space-2);
+            background: rgba(0, 0, 0, 0.95);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-md);
+            font-size: 0.75rem;
+            line-height: 1.4;
+            color: white;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .tooltip-trigger:hover .tooltip-content {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-12px);
+        }
+
+        /* Success animation */
+        @keyframes success-bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .success-animation {
+            animation: success-bounce 0.6s ease;
+        }
+
+        /* ========== iOS SPECIFIC COMPATIBILITY ========== */
+        
+        /* iOS Safari support */
         @supports (-webkit-touch-callout: none) {
+            /* Ensure body fills viewport on iOS */
             html {
-                min-height: 100%;
                 height: 100%;
+                min-height: 100%;
             }
-
+            
             body {
                 min-height: -webkit-fill-available;
+                -webkit-overflow-scrolling: touch;
             }
-
-            /* Mobile profit bar notch transparency */
-            .mobile-profit-bar {
-                padding-top: max(12px, calc(env(safe-area-inset-top) + 12px));
+            
+            /* Fix iOS input zoom */
+            input[type="text"],
+            input[type="number"],
+            select {
+                font-size: 16px; /* Prevents iOS zoom on focus */
             }
-
-            /* Fix for iOS notch/Dynamic Island */
+            
+            /* Smooth scrolling for iOS */
+            .category-suggestions {
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            /* Fix for iOS notch in landscape */
             @media (orientation: landscape) {
                 body {
-                    padding-top: 10px;
-                    padding-left: max(20px, env(safe-area-inset-left));
-                    padding-right: max(20px, env(safe-area-inset-right));
-                    align-items: flex-start;
+                    padding-left: max(env(safe-area-inset-left), 20px);
+                    padding-right: max(env(safe-area-inset-right), 20px);
                 }
-
-                .mobile-profit-bar {
-                    padding-top: 8px;
+                /* Two-column on landscape phones */
+                .content-wrapper {
+                    grid-template-columns: 1fr 300px;
+                    gap: 10px;
                 }
+                .results-card { position: sticky; top: 0; }
+                .mobile-profit-bar { display: none; }
+            }
+            
+            /* Fix iOS button appearance */
+            button {
+                -webkit-appearance: none;
+                appearance: none;
+            }
+            
+            /* Fix iOS select appearance */
+            select {
+                -webkit-appearance: none;
+                appearance: none;
             }
         }
+        
+        /* Fallback for browsers without backdrop-filter support (older iOS) */
+        @supports not (backdrop-filter: blur(1px)) and not (-webkit-backdrop-filter: blur(1px)) {
+            .header,
+            .glass-card,
+            .category-suggestions {
+                background: var(--bg-secondary);
+                border: 1px solid var(--glass-border);
+            }
+            
+            .tooltip-content {
+                background: rgba(0, 0, 0, 1);
+            }
+        }
+        
+        /* Enhanced safe area handling for all iOS devices */
+        @media (max-width: 1024px) {
+            /* Ensure container respects safe areas */
+            .container {
+                padding-left: max(var(--space-3), env(safe-area-inset-left));
+                padding-right: max(var(--space-3), env(safe-area-inset-right));
+                padding-bottom: max(var(--space-3), env(safe-area-inset-bottom));
+            }
+            
+            /* Mobile profit bar with safe area */
+            .mobile-profit-bar {
+                padding-top: max(12px, calc(env(safe-area-inset-top) + 8px));
+            }
+        }
+        
+        /* Fix for older iOS versions (iOS 9-11) */
+        @media (max-width: 640px) {
+            /* Ensure minimum font size */
+            * {
+                -webkit-text-size-adjust: 100%;
+                text-size-adjust: 100%;
+            }
+            
+            /* iOS touch targets - minimum 44px per Apple HIG */
+            input,
+            select {
+                min-height: 44px;
+            }
+            
+            button,
+            .action-btn,
+            .mode-btn,
+            .toggle-switch {
+                min-height: 44px;
+                touch-action: manipulation; /* prevent 300ms tap delay */
+            }
+        }
+        
+        /* Prevent iOS rubber band scrolling on fixed elements */
+        .mobile-profit-bar {
+            position: -webkit-sticky;
+            position: sticky;
+        }
+        
+        /* Fix iOS transform performance */
+        .glass-card,
+        .action-btn,
+        .mode-btn,
+        .toggle-switch {
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+        
+        /* Optimize iOS animations */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* save panel */
+        .save-panel {
+            margin-top: var(--space-3);
+            padding: var(--space-3);
+            background: rgba(102, 126, 234, 0.08);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            border-radius: var(--radius-lg);
+            animation: slideDown 0.25s ease;
+            overflow: hidden;
+            box-sizing: border-box;
+            width: 100%;
+        }
+        .save-panel-label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: var(--font-weight-bold);
+            color: var(--accent-purple-light);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: var(--space-2);
+        }
+        .save-panel-input {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 11px 12px;
+            margin-bottom: var(--space-2);
+            background: rgba(255,255,255,0.07);
+            border: 1.5px solid rgba(102,126,234,0.4);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-size: 0.9375rem;
+            font-weight: var(--font-weight-medium);
+            font-family: var(--font-sans);
+        }
+        .save-panel-input:focus {
+            outline: none;
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 0 3px rgba(102,126,234,0.2);
+        }
+        .save-panel-btns {
+            display: flex;
+            gap: var(--space-2);
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .save-confirm-btn {
+            flex: 1;
+            padding: 11px 12px;
+            background: var(--primary-gradient);
+            border: none;
+            border-radius: var(--radius-md);
+            color: white;
+            font-size: 0.875rem;
+            font-weight: var(--font-weight-bold);
+            font-family: var(--font-sans);
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(102,126,234,0.35);
+        }
+        .save-confirm-btn:hover  { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(102,126,234,0.45); }
+        .save-confirm-btn:active { transform: scale(0.97); }
+        .save-cancel-btn {
+            padding: 11px 20px;
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: var(--radius-md);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: var(--font-weight-semibold);
+            font-family: var(--font-sans);
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .save-cancel-btn:hover { background: rgba(255,255,255,0.12); color: var(--text-primary); }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- Header -->
         <div class="header">
             <div class="header-left">
                 <h1>💰 eBay Fee Calculator</h1>
-                <p class="subtitle">Calculate your net profit after eBay fees with precision</p>
+                <p class="subtitle">Modern, accurate, and beautiful</p>
             </div>
-            <div class="theme-toggle" role="group" aria-label="Theme toggle">
-                <span class="theme-toggle-label" aria-hidden="true">🌙</span>
-                <div class="toggle-switch" id="themeToggle" role="switch" aria-checked="false" aria-label="Toggle light or dark theme" tabindex="0"></div>
-                <span class="theme-toggle-label" aria-hidden="true">☀️</span>
+            <div class="theme-toggle">
+                <span class="theme-toggle-label">🌙</span>
+                <div class="toggle-switch" id="themeToggle"></div>
+                <span class="theme-toggle-label">☀️</span>
             </div>
         </div>
 
         <div class="content-wrapper">
-            <!-- Mobile Sticky Profit Bar -->
-            <div class="mobile-profit-bar">
-                <div class="mobile-profit-content">
-                    <span class="mobile-profit-label">Net Profit</span>
-                    <span class="mobile-profit-value" id="mobileProfitValue">$0.00</span>
-                </div>
-            </div>
-
+            <!-- Left Panel: Inputs -->
             <div class="left-panel">
-                <!-- Mode Toggle -->
-                <div class="mode-toggle-container" role="tablist" aria-label="Calculator mode">
-                    <button class="mode-btn active" id="forwardModeBtn" onclick="setMode('forward')" role="tab" aria-selected="true" aria-controls="saleInfoCard">💰 Calculate Profit</button>
-                    <button class="mode-btn" id="reverseModeBtn" onclick="setMode('reverse')" role="tab" aria-selected="false" aria-controls="profitTargetCard">🎯 Find List Price</button>
-                </div>
-
-                <!-- Profit Target Card (Reverse Mode Only) -->
-                <div class="input-card reverse-only" id="profitTargetCard">
-                    <div class="card-header">
-                        <span class="card-icon">🎯</span>
-                        <span class="card-title">Profit Target</span>
+                <!-- Mobile Sticky Bar -->
+                <div class="mobile-profit-bar">
+                    <div class="mobile-profit-main">
+                        <span class="mobile-profit-label">Net Profit</span>
+                        <span class="mobile-profit-value" id="mobileProfitValue">$0.00</span>
                     </div>
-                    <div class="card-content">
-                        <div class="input-grid">
-                            <div class="input-group">
-                                <label for="desiredProfit">Desired Profit ($)</label>
-                                <input type="number" id="desiredProfit" placeholder="25.00" step="0.01" min="0" value="25">
-                                <div class="helper-text">Takes priority over margin</div>
-                            </div>
-                            <div class="input-group">
-                                <label for="desiredMargin">Desired Margin (%)</label>
-                                <input type="number" id="desiredMargin" placeholder="20" step="0.1" min="0" max="100" value="">
-                                <div class="helper-text">Used if profit $ is empty</div>
-                            </div>
+                    <div class="mobile-profit-details">
+                        <div class="mobile-profit-stat">
+                            <span>📊</span>
+                            <span id="mobileMargin">0% margin</span>
+                        </div>
+                        <div class="mobile-profit-stat">
+                            <span>💳</span>
+                            <span id="mobileFees">$0 fees</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Sale Information Card -->
-                <div class="input-card" id="saleInfoCard">
-                    <div class="card-header" onclick="toggleCard('saleInfo')">
-                        <span class="card-icon">📦</span>
-                        <span class="card-title">Sale Information</span>
-                        <button class="collapse-toggle" id="saleInfoToggle" aria-expanded="true" aria-controls="saleInfoContent" aria-label="Toggle Sale Information">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
+                <!-- Inputs Card -->
+                <div class="glass-card">
+                    <!-- Mode Toggle -->
+                    <div class="mode-toggle">
+                        <button class="mode-btn active" id="forwardBtn">
+                            💰 Calculate Profit
+                        </button>
+                        <button class="mode-btn" id="reverseBtn">
+                            🎯 Find List Price
                         </button>
                     </div>
-                    <div class="card-content" id="saleInfoContent" role="region" aria-labelledby="saleInfoToggle">
-                        <div class="input-grid">
-                            <div class="input-group">
-                                <label for="salePrice">Sale Price</label>
-                                <input type="number" id="salePrice" placeholder="0.00" step="0.01" min="0" value="100">
-                            </div>
 
-                            <div class="input-group">
-                                <label for="itemCost">Item Cost</label>
-                                <input type="number" id="itemCost" placeholder="0.00" step="0.01" min="0" value="50">
-                            </div>
+                    <div style="height:1px;background:rgba(255,255,255,0.08);margin-bottom:10px;"></div>
+
+                    <div class="complexity-toggle">
+                        <label>
+                            <input type="checkbox" id="showAdvanced">
+                            <span>⚙️ Show Advanced Options</span>
+                        </label>
+                    </div>
+
+                    <!-- Smart Category Search -->
+                    <div class="category-search-wrapper">
+                        <input 
+                            type="text" 
+                            class="category-search" 
+                            id="categorySearch"
+                            placeholder="Search category (e.g., 'iPhone', 'sneakers')..."
+                            autocomplete="off"
+                        >
+                        <span class="search-icon">🔍</span>
+                        <div class="category-suggestions" id="categorySuggestions"></div>
+                    </div>
+
+                    <!-- Essential Inputs -->
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label>Sale Price</label>
+                            <input type="number" id="salePrice" placeholder="100.00" step="0.01" value="100">
+                        </div>
+                        <div class="input-group">
+                            <label>Item Cost</label>
+                            <input type="number" id="itemCost" placeholder="50.00" step="0.01" value="50">
                         </div>
                     </div>
-                </div>
 
-                <!-- Shipping & Packaging Card -->
-                <div class="input-card" id="shippingCard">
-                    <div class="card-header" onclick="toggleCard('shipping')">
-                        <span class="card-icon">🚚</span>
-                        <span class="card-title">Shipping & Packaging</span>
-                        <button class="collapse-toggle" id="shippingToggle" aria-expanded="true" aria-controls="shippingContent" aria-label="Toggle Shipping & Packaging">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="card-content" id="shippingContent" role="region" aria-labelledby="shippingToggle">
-                        <div class="input-grid">
+                    <!-- Advanced Section -->
+                    <div class="advanced-section" id="advancedSection">
+                        <div class="input-row">
                             <div class="input-group">
-                                <label for="buyerShipping">Buyer Paid Shipping</label>
-                                <input type="number" id="buyerShipping" placeholder="0.00" step="0.01" min="0" value="0">
+                                <label>Buyer Paid Shipping</label>
+                                <input type="number" id="buyerShipping" placeholder="0.00" step="0.01" value="0">
                             </div>
-
                             <div class="input-group">
-                                <label for="shipping">Shipping Cost You Pay</label>
-                                <input type="number" id="shipping" placeholder="0.00" step="0.01" min="0" value="0">
-                            </div>
-
-                            <div class="input-group">
-                                <label for="packagingCost">Packaging Cost</label>
-                                <input type="number" id="packagingCost" placeholder="0.00" step="0.01" min="0" value="0">
-                                <div class="helper-text">Box, bubble wrap, tape, labels</div>
+                                <label>Your Shipping Cost</label>
+                                <input type="number" id="shipping" placeholder="0.00" step="0.01" value="0">
                             </div>
                         </div>
-                    </div>
-                </div>
 
-                <!-- Fees & Discounts Card -->
-                <div class="input-card" id="feesCard">
-                    <div class="card-header" onclick="toggleCard('fees')">
-                        <span class="card-icon">⚙️</span>
-                        <span class="card-title">Fees & Discounts</span>
-                        <button class="collapse-toggle" id="feesToggle" aria-expanded="true" aria-controls="feesContent" aria-label="Toggle Fees & Discounts">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="card-content" id="feesContent" role="region" aria-labelledby="feesToggle">
-                        <div class="input-grid">
-                        <div class="input-group">
-                            <label for="category">Category</label>
-                            <select id="category" class="category-select">
-                                <optgroup label="Standard Categories">
-                                    <option value="most" selected>Most Categories</option>
-                                    <option value="most">Antiques</option>
-                                    <option value="most">Art</option>
-                                    <option value="most">Baby</option>
-                                    <option value="most">Clothing, Shoes & Accessories</option>
-                                    <option value="most">Collectibles</option>
-                                    <option value="most">Consumer Electronics</option>
-                                    <option value="most">Crafts</option>
-                                    <option value="most">Dolls & Bears</option>
-                                    <option value="most">Entertainment Memorabilia</option>
-                                    <option value="most">Health & Beauty</option>
-                                    <option value="most">Home & Garden</option>
-                                    <option value="most">Pet Supplies</option>
-                                    <option value="most">Pottery & Glass</option>
-                                    <option value="most">Sporting Goods</option>
-                                    <option value="most">Tickets & Experiences</option>
-                                    <option value="most">Toys & Hobbies</option>
-                                    <option value="most">Travel</option>
-                                    <option value="most">Video Games & Consoles</option>
-                                    <option value="most">Vinyl Records</option>
-                                    <option value="most">Everything Else</option>
-                                </optgroup>
-                                <optgroup label="Electronics & Tech">
-                                    <option value="cameras">Cameras & Photo</option>
-                                    <option value="cellphones">Cell Phones & Smartphones</option>
-                                    <option value="computers">Computers/Tablets & Networking</option>
-                                </optgroup>
-                                <optgroup label="Media">
-                                    <option value="media">Books & Magazines</option>
-                                    <option value="media">Movies & TV</option>
-                                    <option value="media">Music</option>
-                                </optgroup>
-                                <optgroup label="Jewelry, Watches & Handbags">
-                                    <option value="jewelry">Jewelry & Watches</option>
-                                    <option value="watches">Watches, Parts & Accessories</option>
-                                    <option value="handbags">Women's Bags & Handbags</option>
-                                </optgroup>
-                                <optgroup label="Coins & Collectible Cards">
-                                    <option value="coins">Coins & Paper Money</option>
-                                    <option value="bullion">Coins - Bullion</option>
-                                    <option value="trading_cards">Sports Trading Cards</option>
-                                    <option value="trading_cards">Non-Sport Trading Cards</option>
-                                    <option value="trading_cards">Collectible Card Games</option>
-                                    <option value="trading_cards">Comic Books & Memorabilia</option>
-                                </optgroup>
-                                <optgroup label="Footwear">
-                                    <option value="athletic_shoes">Athletic Shoes</option>
-                                </optgroup>
-                                <optgroup label="Automotive">
-                                    <option value="most">eBay Motors Parts & Accessories</option>
-                                    <option value="most">Automotive Tools & Supplies</option>
-                                </optgroup>
-                                <optgroup label="Musical Instruments">
-                                    <option value="guitars">Guitars & Basses</option>
-                                    <option value="most">Musical Instruments & Gear</option>
-                                </optgroup>
-                                <optgroup label="Business & Industrial">
-                                    <option value="most">Business & Industrial (General)</option>
-                                    <option value="heavy_equipment">Heavy Equipment</option>
-                                    <option value="heavy_equipment">Commercial Printing Presses</option>
-                                    <option value="heavy_equipment">Food Trucks & Carts</option>
-                                </optgroup>
-                                <optgroup label="Stamps">
-                                    <option value="stamps">Stamps</option>
-                                </optgroup>
-                                <optgroup label="Other">
-                                    <option value="nfts">NFTs</option>
-                                </optgroup>
-                            </select>
-                            <div class="helper-text">Fees auto-adjust by sale amount (tiered rates)</div>
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label>Packaging Cost</label>
+                                <input type="number" id="packagingCost" placeholder="0.00" step="0.01" value="0">
+                                <div class="input-helper">Box, tape, labels</div>
+                            </div>
+                            <div class="input-group">
+                                <label>
+                                    Store Level
+                                    <span class="tooltip-trigger">
+                                        ⓘ
+                                        <span class="tooltip-content">Store subscribers get lower fees!</span>
+                                    </span>
+                                </label>
+                                <select id="storeLevel" class="category-select">
+                                    <option value="none">No Store</option>
+                                    <option value="basic">Basic Store</option>
+                                    <option value="premium">Premium Store</option>
+                                    <option value="anchor">Anchor Store</option>
+                                    <option value="enterprise">Enterprise Store</option>
+                                </select>
+                            </div>
                         </div>
 
-                        <div class="input-group">
-                            <label for="storeLevel">eBay Store Level</label>
-                            <select id="storeLevel" class="category-select">
-                                <option value="none">No Store</option>
-                                <option value="basic">Basic Store</option>
-                                <option value="premium">Premium Store</option>
-                                <option value="anchor">Anchor Store</option>
-                                <option value="enterprise">Enterprise Store</option>
-                            </select>
-                            <div class="helper-text">Store subscribers get lower tiered rates</div>
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label>State Sales Tax</label>
+                                <select id="stateTax">
+                                    <option value="0">None — No Sales Tax</option>
+                                    <option value="4.00">Alabama (4.00%)</option>
+                                    <option value="0">Alaska — No Sales Tax</option>
+                                    <option value="5.60">Arizona (5.60%)</option>
+                                    <option value="6.50">Arkansas (6.50%)</option>
+                                    <option value="7.25">California (7.25%)</option>
+                                    <option value="2.90">Colorado (2.90%)</option>
+                                    <option value="6.35">Connecticut (6.35%)</option>
+                                    <option value="0">Delaware — No Sales Tax</option>
+                                    <option value="6.00">Florida (6.00%)</option>
+                                    <option value="4.00">Georgia (4.00%)</option>
+                                    <option value="4.00">Hawaii (4.00%)</option>
+                                    <option value="6.00">Idaho (6.00%)</option>
+                                    <option value="6.25">Illinois (6.25%)</option>
+                                    <option value="7.00">Indiana (7.00%)</option>
+                                    <option value="6.00">Iowa (6.00%)</option>
+                                    <option value="6.50">Kansas (6.50%)</option>
+                                    <option value="6.00">Kentucky (6.00%)</option>
+                                    <option value="4.45">Louisiana (4.45%)</option>
+                                    <option value="5.50">Maine (5.50%)</option>
+                                    <option value="6.00">Maryland (6.00%)</option>
+                                    <option value="6.25">Massachusetts (6.25%)</option>
+                                    <option value="6.00">Michigan (6.00%)</option>
+                                    <option value="6.875">Minnesota (6.875%)</option>
+                                    <option value="7.00">Mississippi (7.00%)</option>
+                                    <option value="4.225">Missouri (4.225%)</option>
+                                    <option value="0">Montana — No Sales Tax</option>
+                                    <option value="5.50">Nebraska (5.50%)</option>
+                                    <option value="6.85">Nevada (6.85%)</option>
+                                    <option value="0">New Hampshire — No Sales Tax</option>
+                                    <option value="6.625">New Jersey (6.625%)</option>
+                                    <option value="5.125">New Mexico (5.125%)</option>
+                                    <option value="4.00">New York (4.00%)</option>
+                                    <option value="4.75">North Carolina (4.75%)</option>
+                                    <option value="5.00">North Dakota (5.00%)</option>
+                                    <option value="5.75">Ohio (5.75%)</option>
+                                    <option value="4.50">Oklahoma (4.50%)</option>
+                                    <option value="0">Oregon — No Sales Tax</option>
+                                    <option value="6.00">Pennsylvania (6.00%)</option>
+                                    <option value="7.00">Rhode Island (7.00%)</option>
+                                    <option value="6.00">South Carolina (6.00%)</option>
+                                    <option value="4.50">South Dakota (4.50%)</option>
+                                    <option value="7.00">Tennessee (7.00%)</option>
+                                    <option value="6.25">Texas (6.25%)</option>
+                                    <option value="4.85">Utah (4.85%)</option>
+                                    <option value="6.00">Vermont (6.00%)</option>
+                                    <option value="5.30">Virginia (5.30%)</option>
+                                    <option value="6.50">Washington (6.50%)</option>
+                                    <option value="6.00">West Virginia (6.00%)</option>
+                                    <option value="5.00">Wisconsin (5.00%)</option>
+                                    <option value="4.00">Wyoming (4.00%)</option>
+                                    <option value="5.75">Washington D.C. (5.75%)</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>
+                                    Tax on Fees
+                                    <span class="tooltip-trigger">
+                                        ⓘ
+                                        <span class="tooltip-content">Texas: ~2.44%</span>
+                                    </span>
+                                </label>
+                                <input type="number" id="taxOnFees" placeholder="2.44" step="0.01" value="0">
+                            </div>
                         </div>
 
-                        <div class="input-group">
-                            <label for="stateTax">State Sales Tax</label>
-                            <select id="stateTax" class="category-select">
-                                <option value="0">None / No Tax (0%)</option>
-                                <option value="4.00">Alabama (4.00%)</option>
-                                <option value="0">Alaska (0% - Local Only)</option>
-                                <option value="5.60">Arizona (5.60%)</option>
-                                <option value="6.50">Arkansas (6.50%)</option>
-                                <option value="7.25">California (7.25%)</option>
-                                <option value="2.90">Colorado (2.90%)</option>
-                                <option value="6.35">Connecticut (6.35%)</option>
-                                <option value="0">Delaware (0%)</option>
-                                <option value="6.00">Florida (6.00%)</option>
-                                <option value="4.00">Georgia (4.00%)</option>
-                                <option value="4.50">Hawaii (4.50%)</option>
-                                <option value="6.00">Idaho (6.00%)</option>
-                                <option value="6.25">Illinois (6.25%)</option>
-                                <option value="7.00">Indiana (7.00%)</option>
-                                <option value="6.00">Iowa (6.00%)</option>
-                                <option value="6.50">Kansas (6.50%)</option>
-                                <option value="6.00">Kentucky (6.00%)</option>
-                                <option value="5.00">Louisiana (5.00%)</option>
-                                <option value="5.50">Maine (5.50%)</option>
-                                <option value="6.00">Maryland (6.00%)</option>
-                                <option value="6.25">Massachusetts (6.25%)</option>
-                                <option value="6.00">Michigan (6.00%)</option>
-                                <option value="6.875">Minnesota (6.875%)</option>
-                                <option value="7.00">Mississippi (7.00%)</option>
-                                <option value="4.225">Missouri (4.225%)</option>
-                                <option value="0">Montana (0%)</option>
-                                <option value="5.50">Nebraska (5.50%)</option>
-                                <option value="6.85">Nevada (6.85%)</option>
-                                <option value="0">New Hampshire (0%)</option>
-                                <option value="6.625">New Jersey (6.625%)</option>
-                                <option value="4.875">New Mexico (4.875%)</option>
-                                <option value="4.00">New York (4.00%)</option>
-                                <option value="4.75">North Carolina (4.75%)</option>
-                                <option value="5.00">North Dakota (5.00%)</option>
-                                <option value="5.75">Ohio (5.75%)</option>
-                                <option value="4.50">Oklahoma (4.50%)</option>
-                                <option value="0">Oregon (0%)</option>
-                                <option value="6.00">Pennsylvania (6.00%)</option>
-                                <option value="7.00">Rhode Island (7.00%)</option>
-                                <option value="6.00">South Carolina (6.00%)</option>
-                                <option value="4.20">South Dakota (4.20%)</option>
-                                <option value="7.00">Tennessee (7.00%)</option>
-                                <option value="6.25">Texas (6.25%)</option>
-                                <option value="6.10">Utah (6.10%)</option>
-                                <option value="6.00">Vermont (6.00%)</option>
-                                <option value="5.30">Virginia (5.30%)</option>
-                                <option value="6.50">Washington (6.50%)</option>
-                                <option value="6.00">West Virginia (6.00%)</option>
-                                <option value="5.50">Wisconsin (5.50%)</option>
-                                <option value="4.00">Wyoming (4.00%)</option>
-                                <option value="6.00">Washington D.C. (6.00%)</option>
-                            </select>
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label>Promoted Listings</label>
+                                <select id="adFee">
+                                    <option value="0">None (0%)</option>
+                                    <option value="2">2% - Minimum</option>
+                                    <option value="5">5%</option>
+                                    <option value="10">10% - Suggested</option>
+                                    <option value="15">15%</option>
+                                    <option value="20">20%</option>
+                                </select>
+                            </div>
                         </div>
-
-                        <div class="input-group">
-                            <label for="taxOnFees">Tax on eBay Fees</label>
-                            <input type="number" id="taxOnFees" placeholder="0.00" step="0.01" min="0" max="100" value="0">
-                            <div class="helper-text">Texas: ~2.44% | Enter actual rate</div>
-                        </div>
-
-                        <div class="input-group">
-                            <label for="adFee">Promoted Listings</label>
-                            <select id="adFee" class="category-select">
-                                <option value="0">None (0%)</option>
-                                <option value="2">2% - Minimum</option>
-                                <option value="5">5%</option>
-                                <option value="8">8%</option>
-                                <option value="10">10% - Suggested</option>
-                                <option value="12">12%</option>
-                                <option value="15">15%</option>
-                                <option value="20">20%</option>
-                            </select>
-                        </div>
-                    </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Right Panel - Sticky Results -->
+            <!-- Right Panel: Results -->
             <div class="right-panel">
-                <div class="results" id="results">
-                    <div class="results-header">
-                        <span class="card-icon">📊</span>
-                        <span class="results-title" id="resultsTitle">Results</span>
-                    </div>
-                    <!-- List At Card (Reverse Mode Only) -->
-                    <div class="list-at-card" id="listAtCard">
-                        <div class="list-at-label">List At Price</div>
-                        <div class="list-at-value" id="listAtValue">$0.00</div>
-                    </div>
-                    <div class="result-row">
-                        <span class="result-label">Item Price:</span>
-                        <span class="result-value" id="displaySalePrice">$0.00</span>
-                    </div>
-                    <div class="result-row">
-                        <span class="result-label">Buyer Paid Shipping:</span>
-                        <span class="result-value" id="displayBuyerShipping">$0.00</span>
-                    </div>
-                    <div class="result-row">
-                        <span class="result-label">Total Sale Amount:</span>
-                        <span class="result-value" id="totalSaleAmount">$0.00</span>
-                    </div>
-                    <div class="result-row">
-                        <span class="result-label">Sales Tax:</span>
-                        <span class="result-value" id="salesTaxAmount">$0.00</span>
-                    </div>
-                    <div class="result-row">
-                        <span class="result-label">Total Buyer Pays:</span>
-                        <span class="result-value" id="totalBuyerPays">$0.00</span>
-                    </div>
-                    
-                    <!-- Consolidated Total Fees with Dropdown -->
-                    <div class="total-fees-card" onclick="toggleFeeDetails()" role="button" tabindex="0" aria-expanded="false" aria-controls="feeDetails" aria-label="Toggle fee breakdown details">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span class="result-label">
-                                <span id="toggleIcon" class="toggle-icon" aria-hidden="true">▶</span>
-                                Total eBay Fees
-                            </span>
-                            <span class="result-value" id="totalFees">$0.00</span>
+                <div class="glass-card results-card">
+                    <!-- Profit Health Indicator -->
+                    <div class="profit-health">
+                        <div class="health-dots">
+                            <div class="health-dot" id="healthDot1"></div>
+                            <div class="health-dot" id="healthDot2"></div>
+                            <div class="health-dot" id="healthDot3"></div>
                         </div>
+                        <div class="health-label" id="healthLabel">Calculating...</div>
+                        <div class="health-score" id="healthScore">—</div>
                     </div>
 
-                    <!-- Detailed Fee Breakdown (Hidden by default) -->
-                    <div id="feeDetails" class="fee-details" style="display: none;" role="region" aria-label="Detailed fee breakdown">
-                        <div class="result-row">
-                            <span class="result-label">eBay Final Value Fee:</span>
-                            <span class="result-value" id="ebayFee">$0.00</span>
-                        </div>
-                        <div class="result-row">
-                            <span class="result-label">Per Order Fee:</span>
-                            <span class="result-value" id="perOrderFee">$0.00</span>
-                        </div>
-                        <div class="result-row">
-                            <span class="result-label">Promoted Listings Ad Fee:</span>
-                            <span class="result-value" id="adFeeCost">$0.00</span>
-                        </div>
-                        <div class="result-row">
-                            <span class="result-label">Tax on eBay Fees:</span>
-                            <span class="result-value" id="taxOnFeesAmount">$0.00</span>
-                        </div>
+                    <!-- Hero Result -->
+                    <div class="result-hero">
+                        <div class="result-label">Net Profit</div>
+                        <div class="result-value" id="netProfit">$0.00</div>
+                        <div class="result-margin" id="profitMarginDisplay">0% margin</div>
                     </div>
 
+                    <!-- Result Breakdown -->
                     <div class="result-row">
-                        <span class="result-label">Item Cost:</span>
-                        <span class="result-value" id="displayItemCost">$0.00</span>
+                        <span class="result-row-label">Item Price</span>
+                        <span class="result-row-value" id="displaySalePrice">$0.00</span>
                     </div>
                     <div class="result-row">
-                        <span class="result-label">Shipping Cost:</span>
-                        <span class="result-value" id="displayShipping">$0.00</span>
+                        <span class="result-row-label">Total Sale Amount</span>
+                        <span class="result-row-value" id="totalSaleAmount">$0.00</span>
                     </div>
                     <div class="result-row">
-                        <span class="result-label">Packaging Cost:</span>
-                        <span class="result-value" id="displayPackaging">$0.00</span>
-                    </div>
-                    <div class="result-row" style="padding-top: 14px; margin-top: 10px; border-top: 2px solid var(--section-border);">
-                        <span class="result-label" style="font-size: 14px; font-weight: 700;">NET PROFIT:</span>
-                        <span class="result-value profit" id="netProfit" aria-live="polite" aria-atomic="true">$0.00</span>
+                        <span class="result-row-label">Sales Tax</span>
+                        <span class="result-row-value" id="salesTaxAmount">$0.00</span>
                     </div>
 
-                    <!-- Visual Profit Breakdown Chart -->
-                    <div class="profit-chart">
-                        <div class="chart-collapse-header" onclick="toggleChart()">
-                            <div class="chart-header">💰 Profit Breakdown</div>
-                            <button class="chart-collapse-toggle" id="chartToggle" aria-expanded="false" aria-controls="chartContent" aria-label="Toggle Profit Breakdown chart">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                    <polyline points="6 9 12 15 18 9"></polyline>
-                                </svg>
-                            </button>
+                    <!-- Fee Accordion -->
+                    <div class="fee-accordion" id="feeAccordion">
+                        <div class="fee-accordion-header">
+                            <div>
+                                <div class="result-row-label">Total eBay Fees</div>
+                                <div class="result-row-value" id="totalFees">$0.00</div>
+                            </div>
+                            <span class="fee-accordion-icon">▼</span>
                         </div>
-                        <div class="chart-content collapsed" id="chartContent" role="region" aria-labelledby="chartToggle">
-                            <div class="chart-bar-container">
-                                <div class="chart-bar" id="itemCostBar" style="background: #ef4444;">
-                                    <span class="chart-label">Item Cost</span>
-                                    <span class="chart-value" id="itemCostPercent">0%</span>
-                                </div>
-                                <div class="chart-bar" id="ebayFeesBar" style="background: #f59e0b;">
-                                    <span class="chart-label">eBay Fees</span>
-                                    <span class="chart-value" id="ebayFeesPercent">0%</span>
-                                </div>
-                                <div class="chart-bar" id="shippingBar" style="background: #3b82f6;">
-                                    <span class="chart-label">Shipping</span>
-                                    <span class="chart-value" id="shippingPercent">0%</span>
-                                </div>
-                                <div class="chart-bar" id="packagingBar" style="background: #8b5cf6;">
-                                    <span class="chart-label">Packaging</span>
-                                    <span class="chart-value" id="packagingPercent">0%</span>
-                                </div>
-                                <div class="chart-bar" id="profitBar" style="background: #10b981;">
-                                    <span class="chart-label">Net Profit</span>
-                                    <span class="chart-value" id="profitPercent">0%</span>
-                                </div>
+                        <div class="fee-accordion-content">
+                            <div class="result-row">
+                                <span class="result-row-label">Final Value Fee</span>
+                                <span class="result-row-value" id="ebayFee">$0.00</span>
+                            </div>
+                            <div class="result-row">
+                                <span class="result-row-label">Per Order Fee</span>
+                                <span class="result-row-value" id="perOrderFee">$0.00</span>
+                            </div>
+                            <div class="result-row">
+                                <span class="result-row-label">Ad Fee</span>
+                                <span class="result-row-value" id="adFeeCost">$0.00</span>
+                            </div>
+                            <div class="result-row">
+                                <span class="result-row-label">Tax on Fees</span>
+                                <span class="result-row-value" id="taxOnFeesAmount">$0.00</span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="fee-breakdown">
-                        <div class="fee-item">
-                            <span>📊 Profit Margin:</span>
-                            <span id="profitMargin" style="color: #4ade80; font-weight: 700;">0%</span>
-                        </div>
-                        <div class="fee-item">
-                            <span>💳 Revenue After Fees:</span>
-                            <span id="revenueAfterFees" style="color: #60a5fa; font-weight: 700;">$0.00</span>
-                        </div>
-                        <div class="note-text">
-                            <strong>Note:</strong> As of October 2025, Texas charges sales tax on eBay seller fees (~2.44% effective rate). Enter your actual tax rate from your eBay invoice for accurate calculations.
-                        </div>
+                    <div class="result-row">
+                        <span class="result-row-label">Item Cost</span>
+                        <span class="result-row-value" id="displayItemCost">$0.00</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-row-label">Shipping Cost</span>
+                        <span class="result-row-value" id="displayShipping">$0.00</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-row-label">Packaging Cost</span>
+                        <span class="result-row-value" id="displayPackaging">$0.00</span>
                     </div>
 
-                    <!-- Save/History Section -->
-                    <div class="save-section">
-                        <div class="save-buttons" role="toolbar" aria-label="Calculation actions">
-                            <button class="btn btn-primary" onclick="saveCalculation()" aria-label="Save calculation">💾 Save</button>
-                            <button class="btn btn-secondary" onclick="toggleHistory()" aria-label="Toggle saved history" aria-expanded="false" id="historyToggleBtn">📋 History</button>
-                            <button class="btn btn-secondary" onclick="openCompareView()" aria-label="Compare scenarios">⚖️ Compare</button>
-                            <button class="btn btn-secondary" onclick="openBulkModal()" aria-label="Bulk calculator">📦 Bulk</button>
-                            <button class="btn btn-danger" onclick="resetAllFields()" aria-label="Reset all fields">🔄 Reset</button>
-                        </div>
-                        <div id="savedItemsContainer" style="display: none;">
-                            <div style="font-size: 11px; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase;">Saved Calculations</div>
-                            <div class="saved-items" id="savedItems"></div>
-                        </div>
+                    <!-- Quick Actions -->
+                    <div class="quick-actions">
+                        <button class="action-btn" id="saveBtn">💾 Save</button>
+                        <button class="action-btn" id="compareBtn">⚖️ Compare</button>
+                        <button class="action-btn" id="historyBtn">📋 History</button>
+                        <button class="action-btn" id="resetBtn">🔄 Reset</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Save Modal -->
-    <div class="modal" id="saveModal" role="dialog" aria-modal="true" aria-labelledby="saveModalTitle">
-        <div class="modal-content">
-            <div class="modal-header" id="saveModalTitle">💾 Save Calculation</div>
-            <input type="text" id="saveName" class="modal-input" placeholder="Enter a name (e.g., iPhone 15 Pro Max)">
-            <div class="modal-buttons">
-                <button class="btn btn-primary" onclick="confirmSave()">Save</button>
-                <button class="btn btn-secondary" onclick="closeSaveModal()">Cancel</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Bulk Calculator Modal -->
-    <div class="modal" id="bulkModal" role="dialog" aria-modal="true" aria-labelledby="bulkModalTitle">
-        <div class="modal-content" style="max-width: 850px;">
-            <div class="bulk-header">
-                <span class="bulk-title" id="bulkModalTitle">📦 Bulk Calculator</span>
-                <button class="btn btn-secondary" onclick="closeBulkModal()" style="flex: 0;">✕ Close</button>
-            </div>
-            <div class="bulk-table-wrap">
-                <table class="bulk-table">
-                    <thead>
-                        <tr>
-                            <th style="width: 18%">Name</th>
-                            <th style="width: 14%">Sale $</th>
-                            <th style="width: 14%">Cost $</th>
-                            <th style="width: 14%">Ship $</th>
-                            <th style="width: 12%">Fees</th>
-                            <th style="width: 12%">Profit</th>
-                            <th style="width: 10%">Margin</th>
-                            <th style="width: 6%"></th>
-                        </tr>
-                    </thead>
-                    <tbody id="bulkTableBody"></tbody>
-                </table>
-            </div>
-            <div class="bulk-actions">
-                <button class="btn btn-primary" onclick="addBulkRow()">+ Add Row</button>
-                <button class="btn btn-secondary" onclick="clearBulkRows()">Clear All</button>
-            </div>
-            <div class="bulk-summary" id="bulkSummary">
-                <div class="bulk-summary-row"><span>Total Items:</span><span id="bulkTotalItems">0</span></div>
-                <div class="bulk-summary-row"><span>Total Revenue:</span><span id="bulkTotalRevenue">$0.00</span></div>
-                <div class="bulk-summary-row"><span>Total Costs:</span><span id="bulkTotalCosts">$0.00</span></div>
-                <div class="bulk-summary-row"><span>Total Fees:</span><span id="bulkTotalFees">$0.00</span></div>
-                <div class="bulk-summary-row bulk-summary-total"><span>Total Net Profit:</span><span id="bulkTotalProfit">$0.00</span></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Onboarding Overlay -->
-    <div class="onboarding-overlay" id="onboardingOverlay">
-        <div class="onboarding-card">
-            <div class="onboarding-icon" id="onboardingIcon">💰</div>
-            <div class="onboarding-title" id="onboardingTitle">Welcome!</div>
-            <div class="onboarding-text" id="onboardingText">Loading...</div>
-            <div class="onboarding-dots">
-                <div class="onboarding-dot active" id="dot0"></div>
-                <div class="onboarding-dot" id="dot1"></div>
-                <div class="onboarding-dot" id="dot2"></div>
-            </div>
-            <div class="onboarding-buttons">
-                <button class="onboarding-skip" onclick="closeOnboarding()">Skip</button>
-                <button class="btn btn-primary" id="onboardingNextBtn" onclick="nextOnboardingStep()">Next</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Compare Modal -->
-    <div class="modal compare-modal" id="compareModal" role="dialog" aria-modal="true" aria-labelledby="compareModalTitle">
-        <div class="modal-content">
-            <div class="modal-header" id="compareModalTitle">⚖️ Compare Scenarios</div>
-            <div class="compare-selectors">
-                <div class="compare-selector">
-                    <label for="compareA">Scenario A</label>
-                    <select id="compareA" class="category-select" onchange="updateComparison()"></select>
-                </div>
-                <div class="compare-selector">
-                    <label for="compareB">Scenario B</label>
-                    <select id="compareB" class="category-select" onchange="updateComparison()"></select>
-                </div>
-            </div>
-            <div id="compareTableContainer">
-                <table class="compare-table">
-                    <thead>
-                        <tr>
-                            <th>Metric</th>
-                            <th>A</th>
-                            <th>B</th>
-                            <th>Delta</th>
-                        </tr>
-                    </thead>
-                    <tbody id="compareTableBody"></tbody>
-                </table>
-            </div>
-            <div class="modal-buttons" style="margin-top: 20px;">
-                <button class="btn btn-secondary" onclick="closeCompareModal()">Close</button>
-            </div>
-        </div>
-    </div>
 
     <script>
-        // ========== TIERED FEE DATA ==========
-        // Structure: categoryId -> { none: tiers, store: tiers }
-        // tier types:
-        //   "progressive" = bracket-style (like tax brackets)
-        //   "threshold"   = entire sale at one rate based on amount
-        //   "flat"        = single rate regardless of amount
-        // Each tier entry: { upTo: amount, rate: percent } (progressive)
-        // or: { threshold: amount, below: rate, above: rate } (threshold)
-        // or: { rate: percent } (flat)
-        // "noPerOrderFee" flag for categories that waive it
+        // ========== CATEGORY DATA ==========
+        const CATEGORIES = [
+            { id: 'most',          name: 'Most Categories',           icon: '📦', rate: 13.6,  popular: true },
+            { id: 'cellphones',    name: 'Cell Phones & Smartphones', icon: '📱', rate: 13.6,  popular: true },
+            { id: 'computers',     name: 'Computers & Tablets',       icon: '💻', rate: 13.6,  popular: true },
+            { id: 'cameras',       name: 'Cameras & Photo',           icon: '📷', rate: 13.6 },
+            { id: 'media',         name: 'Books, Movies & Music',     icon: '📚', rate: 15.3,  popular: true },
+            { id: 'jewelry',       name: 'Jewelry & Watches',         icon: '💎', rate: 15 },
+            { id: 'athletic_shoes',name: 'Athletic Shoes',            icon: '👟', rate: 13.6,  popular: true },
+            { id: 'guitars',       name: 'Guitars & Instruments',     icon: '🎸', rate: 6.7 },
+            { id: 'trading_cards', name: 'Trading Cards',             icon: '🎴', rate: 13.25 },
+            { id: 'clothing',      name: 'Clothing, Shoes & Accessories', icon: '👕', rate: 13.6, popular: true },
+            { id: 'home',          name: 'Home & Garden',             icon: '🏡', rate: 13.6 },
+            { id: 'toys',          name: 'Toys & Hobbies',            icon: '🧸', rate: 13.6 },
+            { id: 'sporting',      name: 'Sporting Goods',            icon: '⚽', rate: 13.6 },
+            { id: 'auto',          name: 'Auto Parts & Accessories',  icon: '🔧', rate: 13.6 },
+            { id: 'coins',         name: 'Coins & Paper Money',       icon: '🪙', rate: 13.25 },
+            { id: 'stamps',        name: 'Stamps',                    icon: '✉️', rate: 13.6 },
+            { id: 'health',        name: 'Health & Beauty',           icon: '💊', rate: 13.6 },
+            { id: 'pet',           name: 'Pet Supplies',              icon: '🐾', rate: 13.6 },
+        ];
 
-        var FEE_TIERS = {
-            most: {
-                none: { type: 'progressive', tiers: [{ upTo: 7500, rate: 13.6 }, { upTo: Infinity, rate: 2.35 }] },
-                store: { type: 'progressive', tiers: [{ upTo: 2500, rate: 12.7 }, { upTo: Infinity, rate: 2.35 }] }
-            },
-            media: {
-                none: { type: 'progressive', tiers: [{ upTo: 7500, rate: 15.3 }, { upTo: Infinity, rate: 2.35 }] },
-                store: { type: 'progressive', tiers: [{ upTo: 2500, rate: 15.3 }, { upTo: Infinity, rate: 2.35 }] }
-            },
-            cameras: {
-                none: { type: 'progressive', tiers: [{ upTo: 7500, rate: 13.6 }, { upTo: Infinity, rate: 2.35 }] },
-                store: { type: 'progressive', tiers: [{ upTo: 2500, rate: 9.35 }, { upTo: Infinity, rate: 2.35 }] }
-            },
-            cellphones: {
-                none: { type: 'progressive', tiers: [{ upTo: 7500, rate: 13.6 }, { upTo: Infinity, rate: 2.35 }] },
-                store: { type: 'progressive', tiers: [{ upTo: 2500, rate: 9.35 }, { upTo: Infinity, rate: 2.35 }] }
-            },
-            computers: {
-                none: { type: 'progressive', tiers: [{ upTo: 7500, rate: 13.6 }, { upTo: Infinity, rate: 2.35 }] },
-                store: { type: 'progressive', tiers: [{ upTo: 2500, rate: 7.35 }, { upTo: Infinity, rate: 2.35 }] }
-            },
-            jewelry: {
-                none: { type: 'threshold', threshold: 5000, below: 15, above: 9 },
-                store: { type: 'threshold', threshold: 5000, below: 13, above: 7 }
-            },
-            watches: {
-                none: { type: 'progressive', tiers: [{ upTo: 1000, rate: 15 }, { upTo: 7500, rate: 6.5 }, { upTo: Infinity, rate: 3 }] },
-                store: { type: 'progressive', tiers: [{ upTo: 1000, rate: 12.5 }, { upTo: 5000, rate: 4 }, { upTo: Infinity, rate: 3 }] }
-            },
-            handbags: {
-                none: { type: 'threshold', threshold: 2000, below: 15, above: 9 },
-                store: { type: 'threshold', threshold: 2000, below: 13, above: 7 }
-            },
-            coins: {
-                none: { type: 'progressive', tiers: [{ upTo: 7500, rate: 13.25 }, { upTo: Infinity, rate: 2.35 }] },
-                store: { type: 'progressive', tiers: [{ upTo: 4000, rate: 9 }, { upTo: Infinity, rate: 2.35 }] }
-            },
-            bullion: {
-                none: { type: 'threshold', threshold: 7500, below: 13.6, above: 7 },
-                store: { type: 'threshold3', thresholds: [{ upTo: 1500, rate: 7.5 }, { upTo: 10000, rate: 5 }, { upTo: Infinity, rate: 4.5 }] }
-            },
-            trading_cards: {
-                none: { type: 'progressive', tiers: [{ upTo: 7500, rate: 13.25 }, { upTo: Infinity, rate: 2.35 }] },
-                store: { type: 'progressive', tiers: [{ upTo: 7500, rate: 13.25 }, { upTo: Infinity, rate: 2.35 }] }
-            },
-            athletic_shoes: {
-                none: { type: 'athletic', threshold: 150, below: 13.6, above: 8, noPerOrderFeeAbove: true },
-                store: { type: 'athletic', threshold: 150, below: 12.7, above: 7, noPerOrderFeeAbove: true }
-            },
-            guitars: {
-                none: { type: 'progressive', tiers: [{ upTo: 7500, rate: 6.7 }, { upTo: Infinity, rate: 2.35 }] },
-                store: { type: 'progressive', tiers: [{ upTo: 2500, rate: 6.7 }, { upTo: Infinity, rate: 2.35 }] }
-            },
-            stamps: {
-                none: { type: 'progressive', tiers: [{ upTo: 7500, rate: 13.6 }, { upTo: Infinity, rate: 2.35 }] },
-                store: { type: 'progressive', tiers: [{ upTo: 2500, rate: 9.7 }, { upTo: Infinity, rate: 2.35 }] }
-            },
-            heavy_equipment: {
-                none: { type: 'progressive', tiers: [{ upTo: 15000, rate: 3 }, { upTo: Infinity, rate: 0.5 }] },
-                store: { type: 'progressive', tiers: [{ upTo: 15000, rate: 2.5 }, { upTo: Infinity, rate: 0.5 }] }
-            },
-            nfts: {
-                none: { type: 'flat', rate: 5 },
-                store: { type: 'flat', rate: 5 }
-            }
-        };
-
-        // Calculate FVF using tiered data
-        // amount = totalBuyerPays (amount eBay charges FVF on)
-        // Returns { fvf: number, noPerOrderFee: boolean }
-        function calculateTieredFVF(amount, categoryId, storeLevel) {
-            var isStore = storeLevel !== 'none';
-            var tierKey = isStore ? 'store' : 'none';
-            var catData = FEE_TIERS[categoryId];
-            if (!catData) catData = FEE_TIERS['most'];
-            var tier = catData[tierKey];
-
-            var fvf = 0;
-            var noPerOrderFee = false;
-
-            if (tier.type === 'progressive') {
-                var remaining = amount;
-                var prev = 0;
-                for (var i = 0; i < tier.tiers.length; i++) {
-                    var bracket = tier.tiers[i];
-                    var bracketSize = bracket.upTo - prev;
-                    var taxable = Math.min(remaining, bracketSize);
-                    if (taxable <= 0) break;
-                    fvf += taxable * (bracket.rate / 100);
-                    remaining -= taxable;
-                    prev = bracket.upTo;
-                }
-            } else if (tier.type === 'threshold') {
-                // Entire sale at one rate based on whether amount exceeds threshold
-                var rate = amount <= tier.threshold ? tier.below : tier.above;
-                fvf = amount * (rate / 100);
-            } else if (tier.type === 'threshold3') {
-                // Multi-threshold: entire sale at rate determined by which bracket it falls in
-                var rate = tier.thresholds[tier.thresholds.length - 1].rate;
-                for (var i = 0; i < tier.thresholds.length; i++) {
-                    if (amount <= tier.thresholds[i].upTo) {
-                        rate = tier.thresholds[i].rate;
-                        break;
-                    }
-                }
-                fvf = amount * (rate / 100);
-            } else if (tier.type === 'athletic') {
-                var rate = amount >= tier.threshold ? tier.above : tier.below;
-                fvf = amount * (rate / 100);
-                if (amount >= tier.threshold && tier.noPerOrderFeeAbove) {
-                    noPerOrderFee = true;
-                }
-            } else if (tier.type === 'flat') {
-                fvf = amount * (tier.rate / 100);
-            }
-
-            return { fvf: fvf, noPerOrderFee: noPerOrderFee };
-        }
-
-        // Get the effective flat rate for a given amount (used by reverse calc)
-        function getEffectiveFVFRate(amount, categoryId, storeLevel) {
-            if (amount <= 0) return { rate: 0, noPerOrderFee: false };
-            var result = calculateTieredFVF(amount, categoryId, storeLevel);
-            return { rate: result.fvf / amount, noPerOrderFee: result.noPerOrderFee };
-        }
-
-        // ========== HAPTIC FEEDBACK ==========
-        function haptic(style) {
-            if (!navigator.vibrate) return;
-            if (style === 'light') navigator.vibrate(10);
-            else if (style === 'medium') navigator.vibrate(20);
-            else if (style === 'heavy') navigator.vibrate([30, 10, 30]);
-        }
+        let selectedCategory = CATEGORIES[0];
+        let currentMode = 'forward';
+        let savedCalculations = JSON.parse(localStorage.getItem('modernCalcSaved') || '[]');
 
         // ========== THEME TOGGLE ==========
-        var themeToggle = document.getElementById('themeToggle');
-        var htmlElement = document.documentElement;
+        const themeToggle = document.getElementById('themeToggle');
+        const htmlElement = document.documentElement;
 
-        function updateThemeColor(theme) {
-            var color = theme === 'light' ? '#f5f5f5' : '#000000';
-            var metas = document.querySelectorAll('meta[name="theme-color"]');
-            for (var i = 0; i < metas.length; i++) {
-                metas[i].content = color;
-            }
-            var metaStatusBar = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
-            if (metaStatusBar) metaStatusBar.content = 'black-translucent';
-        }
-
-        var savedTheme = localStorage.getItem('theme') || 'dark';
+        const savedTheme = localStorage.getItem('theme') || 'dark';
         if (savedTheme === 'light') {
             htmlElement.setAttribute('data-theme', 'light');
             themeToggle.classList.add('active');
-            themeToggle.setAttribute('aria-checked', 'true');
         }
-        updateThemeColor(savedTheme);
 
-        function doThemeToggle() {
-            haptic('light');
-            var currentTheme = htmlElement.getAttribute('data-theme');
-            var newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        themeToggle.addEventListener('click', () => {
+            const newTheme = htmlElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
             htmlElement.setAttribute('data-theme', newTheme);
             themeToggle.classList.toggle('active');
-            themeToggle.setAttribute('aria-checked', newTheme === 'light' ? 'true' : 'false');
             localStorage.setItem('theme', newTheme);
-            updateThemeColor(newTheme);
-        }
-
-        themeToggle.addEventListener('click', doThemeToggle);
-        themeToggle.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                doThemeToggle();
-            }
         });
-
-        // ========== CARD COLLAPSE TOGGLES ==========
-        function toggleCard(cardName) {
-            var content = document.getElementById(cardName + 'Content');
-            var toggle = document.getElementById(cardName + 'Toggle');
-            if (content.classList.contains('collapsed')) {
-                content.classList.remove('collapsed');
-                toggle.classList.add('active');
-                toggle.setAttribute('aria-expanded', 'true');
-            } else {
-                content.classList.add('collapsed');
-                toggle.classList.remove('active');
-                toggle.setAttribute('aria-expanded', 'false');
-            }
-        }
-
-        function toggleChart() {
-            var content = document.getElementById('chartContent');
-            var toggle = document.getElementById('chartToggle');
-            if (content.classList.contains('collapsed')) {
-                content.classList.remove('collapsed');
-                toggle.classList.add('active');
-                toggle.setAttribute('aria-expanded', 'true');
-            } else {
-                content.classList.add('collapsed');
-                toggle.classList.remove('active');
-                toggle.setAttribute('aria-expanded', 'false');
-            }
-        }
-
-        function toggleFeeDetails() {
-            var details = document.getElementById('feeDetails');
-            var icon = document.getElementById('toggleIcon');
-            var card = document.querySelector('.total-fees-card');
-            if (details.style.display === 'none') {
-                details.style.display = 'block';
-                icon.textContent = '▼';
-                card.setAttribute('aria-expanded', 'true');
-            } else {
-                details.style.display = 'none';
-                icon.textContent = '▶';
-                card.setAttribute('aria-expanded', 'false');
-            }
-        }
 
         // ========== MODE TOGGLE ==========
-        var currentMode = 'forward';
+        document.getElementById('forwardBtn').addEventListener('click', () => setMode('forward'));
+        document.getElementById('reverseBtn').addEventListener('click', () => setMode('reverse'));
 
         function setMode(mode) {
-            haptic('medium');
             currentMode = mode;
-            var forwardBtn = document.getElementById('forwardModeBtn');
-            var reverseBtn = document.getElementById('reverseModeBtn');
-            var reverseEls = document.querySelectorAll('.reverse-only');
-            var salePriceGroup = document.getElementById('salePrice').closest('.input-group');
-            var listAtCard = document.getElementById('listAtCard');
-            var resultsTitle = document.getElementById('resultsTitle');
-            var mobileProfitLabel = document.querySelector('.mobile-profit-label');
+            const forwardBtn = document.getElementById('forwardBtn');
+            const reverseBtn = document.getElementById('reverseBtn');
+            forwardBtn.classList.toggle('active', mode === 'forward');
+            reverseBtn.classList.toggle('active', mode === 'reverse');
 
+            const resultLabel = document.querySelector('.result-hero .result-label');
+            const mobileProfitLabel = document.querySelector('.mobile-profit-label');
             if (mode === 'reverse') {
-                forwardBtn.classList.remove('active');
-                forwardBtn.setAttribute('aria-selected', 'false');
-                reverseBtn.classList.add('active');
-                reverseBtn.setAttribute('aria-selected', 'true');
-                for (var i = 0; i < reverseEls.length; i++) reverseEls[i].style.display = 'block';
-                salePriceGroup.style.display = 'none';
-                listAtCard.style.display = 'block';
-                resultsTitle.textContent = 'Recommended Listing';
+                if (resultLabel) resultLabel.textContent = 'Recommended List Price';
                 if (mobileProfitLabel) mobileProfitLabel.textContent = 'List At';
             } else {
-                reverseBtn.classList.remove('active');
-                reverseBtn.setAttribute('aria-selected', 'false');
-                forwardBtn.classList.add('active');
-                forwardBtn.setAttribute('aria-selected', 'true');
-                for (var i = 0; i < reverseEls.length; i++) reverseEls[i].style.display = 'none';
-                salePriceGroup.style.display = 'block';
-                listAtCard.style.display = 'none';
-                resultsTitle.textContent = 'Results';
+                if (resultLabel) resultLabel.textContent = 'Net Profit';
                 if (mobileProfitLabel) mobileProfitLabel.textContent = 'Net Profit';
             }
-            recalculate();
+            calculate();
         }
 
-        // ========== CORE CALCULATION ==========
-        function recalculate() {
-            if (currentMode === 'reverse') {
-                calculateReverse();
-            } else {
-                calculateFees();
-            }
-        }
-
-        function calculateReverse() {
-            var itemCost = parseFloat(document.getElementById('itemCost').value) || 0;
-            var buyerShipping = parseFloat(document.getElementById('buyerShipping').value) || 0;
-            var shipping = parseFloat(document.getElementById('shipping').value) || 0;
-            var packagingCost = parseFloat(document.getElementById('packagingCost').value) || 0;
-            var categoryId = document.getElementById('category').value;
-            var storeLevel = document.getElementById('storeLevel').value;
-            var stateTaxRate = parseFloat(document.getElementById('stateTax').value) / 100;
-            var adFeeRate = parseFloat(document.getElementById('adFee').value) / 100;
-            var taxOnFeesRate = parseFloat(document.getElementById('taxOnFees').value) / 100 || 0;
-
-            var desiredProfit = parseFloat(document.getElementById('desiredProfit').value);
-            var desiredMargin = parseFloat(document.getElementById('desiredMargin').value);
-
-            var targetProfit;
-            if (!isNaN(desiredProfit) && desiredProfit > 0) {
-                targetProfit = desiredProfit;
-            } else if (!isNaN(desiredMargin) && desiredMargin > 0) {
-                targetProfit = null;
-            } else {
-                targetProfit = 0;
-            }
-
-            // Iterative solver for tiered fees — binary search
-            function solveForSalePrice(targetProfitVal, useMargin) {
-                var lo = 0, hi = 500000, mid, iters = 0;
-                while (hi - lo > 0.005 && iters < 100) {
-                    mid = (lo + hi) / 2;
-                    var totalSaleAmount = mid + buyerShipping;
-                    var salesTax = totalSaleAmount * stateTaxRate;
-                    var totalBuyerPays = totalSaleAmount + salesTax;
-
-                    var fvfResult = calculateTieredFVF(totalBuyerPays, categoryId, storeLevel);
-                    var ebayFee = fvfResult.fvf;
-                    var perOrderFee = fvfResult.noPerOrderFee ? 0 : (totalSaleAmount <= 10 ? 0.30 : 0.40);
-                    var adFeeCost = totalBuyerPays * adFeeRate;
-                    var taxOnFeesAmt = (ebayFee + perOrderFee) * taxOnFeesRate;
-                    var totalFees = ebayFee + perOrderFee + adFeeCost + taxOnFeesAmt;
-                    var netProfit = totalSaleAmount - totalFees - itemCost - shipping - packagingCost;
-
-                    var target;
-                    if (useMargin) {
-                        target = totalSaleAmount > 0 ? (netProfit / totalSaleAmount) : 0;
-                        if (target < desiredMargin / 100) {
-                            lo = mid;
-                        } else {
-                            hi = mid;
-                        }
-                    } else {
-                        if (netProfit < targetProfitVal) {
-                            lo = mid;
-                        } else {
-                            hi = mid;
-                        }
-                    }
-                    iters++;
-                }
-                return Math.ceil(((lo + hi) / 2) * 100) / 100;
-            }
-
-            var computedSalePrice;
-            if (targetProfit !== null) {
-                computedSalePrice = solveForSalePrice(targetProfit, false);
-            } else {
-                computedSalePrice = solveForSalePrice(0, true);
-            }
-
-            document.getElementById('salePrice').value = computedSalePrice.toFixed(2);
-            document.getElementById('listAtValue').textContent = '$' + computedSalePrice.toFixed(2);
-
-            var mobileProfitValue = document.getElementById('mobileProfitValue');
-            if (mobileProfitValue) {
-                mobileProfitValue.textContent = '$' + computedSalePrice.toFixed(2);
-                mobileProfitValue.style.color = '#a78bfa';
-            }
-
-            calculateFees(true);
-        }
-
-        function calculateFees(skipMobileUpdate) {
-            var salePrice = parseFloat(document.getElementById('salePrice').value) || 0;
-            var itemCost = parseFloat(document.getElementById('itemCost').value) || 0;
-            var buyerShipping = parseFloat(document.getElementById('buyerShipping').value) || 0;
-            var shipping = parseFloat(document.getElementById('shipping').value) || 0;
-            var packagingCost = parseFloat(document.getElementById('packagingCost').value) || 0;
-            var categoryId = document.getElementById('category').value;
-            var storeLevel = document.getElementById('storeLevel').value;
-            var stateTaxRate = parseFloat(document.getElementById('stateTax').value);
-            var adFeeRate = parseFloat(document.getElementById('adFee').value);
-            var taxOnFeesRate = parseFloat(document.getElementById('taxOnFees').value) || 0;
-
-            var totalSaleAmount = salePrice + buyerShipping;
-            var salesTaxAmount = totalSaleAmount * (stateTaxRate / 100);
-            var totalBuyerPays = totalSaleAmount + salesTaxAmount;
-
-            // Tiered FVF calculation
-            var fvfResult = calculateTieredFVF(totalBuyerPays, categoryId, storeLevel);
-            var ebayFee = fvfResult.fvf;
-            var perOrderFee = fvfResult.noPerOrderFee ? 0 : (totalSaleAmount <= 10 ? 0.30 : 0.40);
-            var adFeeCost = totalBuyerPays * (adFeeRate / 100);
-            var taxOnFeesAmount = (ebayFee + perOrderFee) * (taxOnFeesRate / 100);
-
-            var totalFees = ebayFee + perOrderFee + adFeeCost + taxOnFeesAmount;
-            var netProfit = totalSaleAmount - totalFees - itemCost - shipping - packagingCost;
-            var profitMargin = totalSaleAmount > 0 ? (netProfit / totalSaleAmount) * 100 : 0;
-            var revenueAfterFees = totalSaleAmount - totalFees;
-
-            document.getElementById('displaySalePrice').textContent = '$' + salePrice.toFixed(2);
-            document.getElementById('displayBuyerShipping').textContent = '$' + buyerShipping.toFixed(2);
-            document.getElementById('totalSaleAmount').textContent = '$' + totalSaleAmount.toFixed(2);
-            document.getElementById('salesTaxAmount').textContent = '$' + salesTaxAmount.toFixed(2);
-            document.getElementById('totalBuyerPays').textContent = '$' + totalBuyerPays.toFixed(2);
-            document.getElementById('ebayFee').textContent = '$' + ebayFee.toFixed(2);
-            document.getElementById('perOrderFee').textContent = '$' + perOrderFee.toFixed(2);
-            document.getElementById('adFeeCost').textContent = '$' + adFeeCost.toFixed(2);
-            document.getElementById('taxOnFeesAmount').textContent = '$' + taxOnFeesAmount.toFixed(2);
-            document.getElementById('totalFees').textContent = '$' + totalFees.toFixed(2);
-            document.getElementById('displayItemCost').textContent = '$' + itemCost.toFixed(2);
-            document.getElementById('displayShipping').textContent = '$' + shipping.toFixed(2);
-            document.getElementById('displayPackaging').textContent = '$' + packagingCost.toFixed(2);
-
-            var profitElement = document.getElementById('netProfit');
-            profitElement.textContent = '$' + netProfit.toFixed(2);
-            profitElement.className = 'result-value ' + (netProfit >= 0 ? 'profit' : 'loss');
-
-            if (!skipMobileUpdate) {
-                var mobileProfitValue = document.getElementById('mobileProfitValue');
-                if (mobileProfitValue) {
-                    mobileProfitValue.textContent = '$' + netProfit.toFixed(2);
-                    mobileProfitValue.style.color = netProfit >= 0 ? '#10b981' : '#ef4444';
-                }
-            }
-
-            document.getElementById('profitMargin').textContent = profitMargin.toFixed(2) + '%';
-            document.getElementById('revenueAfterFees').textContent = '$' + revenueAfterFees.toFixed(2);
-            updateProfitChart(itemCost, totalFees, shipping, packagingCost, netProfit, totalSaleAmount);
-        }
-
-        function updateProfitChart(itemCost, fees, shipping, packaging, profit, total) {
-            if (total <= 0) return;
-            var itemCostPercent = (itemCost / total) * 100;
-            var feesPercent = (fees / total) * 100;
-            var shippingPercent = (shipping / total) * 100;
-            var packagingPercent = (packaging / total) * 100;
-            var profitPercent = (profit / total) * 100;
-
-            document.getElementById('itemCostBar').style.setProperty('--bar-width', Math.max(itemCostPercent, 5) + '%');
-            document.getElementById('ebayFeesBar').style.setProperty('--bar-width', Math.max(feesPercent, 5) + '%');
-            document.getElementById('shippingBar').style.setProperty('--bar-width', Math.max(shippingPercent, 5) + '%');
-            document.getElementById('packagingBar').style.setProperty('--bar-width', Math.max(packagingPercent, 5) + '%');
-            document.getElementById('profitBar').style.setProperty('--bar-width', Math.max(Math.abs(profitPercent), 5) + '%');
-
-            document.getElementById('itemCostPercent').textContent = itemCostPercent.toFixed(1) + '%';
-            document.getElementById('ebayFeesPercent').textContent = feesPercent.toFixed(1) + '%';
-            document.getElementById('shippingPercent').textContent = shippingPercent.toFixed(1) + '%';
-            document.getElementById('packagingPercent').textContent = packagingPercent.toFixed(1) + '%';
-            document.getElementById('profitPercent').textContent = profitPercent.toFixed(1) + '%';
-
-            var profitBar = document.getElementById('profitBar');
-            profitBar.style.background = profit < 0 ? '#ef4444' : '#10b981';
-        }
-
-        // ========== DEBOUNCE & VALIDATION ==========
-        var _debounceTimer = null;
-        function debouncedRecalculate() {
-            clearTimeout(_debounceTimer);
-            _debounceTimer = setTimeout(recalculate, 150);
-        }
-
-        function validateInput(el) {
-            var val = parseFloat(el.value);
-            var min = parseFloat(el.getAttribute('min'));
-            var max = parseFloat(el.getAttribute('max'));
-            if (el.value !== '' && (isNaN(val) || (!isNaN(min) && val < min) || (!isNaN(max) && val > max))) {
-                el.classList.add('input-error');
-            } else {
-                el.classList.remove('input-error');
-            }
-        }
-
-        ['salePrice', 'itemCost', 'buyerShipping', 'shipping', 'packagingCost', 'taxOnFees', 'desiredProfit', 'desiredMargin'].forEach(function(id) {
-            var el = document.getElementById(id);
-            el.addEventListener('input', function() {
-                validateInput(el);
-                debouncedRecalculate();
-            });
+        // ========== ADVANCED TOGGLE ==========
+        document.getElementById('showAdvanced').addEventListener('change', (e) => {
+            document.getElementById('advancedSection').classList.toggle('active', e.target.checked);
         });
 
-        ['category', 'storeLevel', 'stateTax', 'adFee'].forEach(function(id) {
-            document.getElementById(id).addEventListener('change', recalculate);
+        // ========== CATEGORY SEARCH ==========
+        const categorySearch = document.getElementById('categorySearch');
+        const categorySuggestions = document.getElementById('categorySuggestions');
+
+        categorySearch.addEventListener('focus', () => {
+            renderCategorySuggestions('');
+            categorySuggestions.classList.add('active');
         });
 
-        // ========== SAVE / HISTORY ==========
-        var savedCalculations = JSON.parse(localStorage.getItem('ebayCalcSaved')) || [];
-        var _lastFocusedElement = null;
+        categorySearch.addEventListener('input', (e) => {
+            renderCategorySuggestions(e.target.value);
+            categorySuggestions.classList.add('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.category-search-wrapper')) {
+                categorySuggestions.classList.remove('active');
+            }
+        });
+
+        function renderCategorySuggestions(query) {
+            const q = (query || '').toLowerCase();
+            const filtered = CATEGORIES.filter(cat => cat.name.toLowerCase().includes(q));
+            const popular = filtered.filter(c => c.popular);
+            const all = filtered.filter(c => !c.popular);
+
+            let html = '';
+            if (!q && popular.length) {
+                html += '<div class="suggestion-group-label">⭐ Popular</div>';
+                popular.forEach(cat => { html += renderSuggestion(cat); });
+                if (all.length) {
+                    html += '<div class="suggestion-group-label">All Categories</div>';
+                    all.forEach(cat => { html += renderSuggestion(cat); });
+                }
+            } else {
+                if (filtered.length) {
+                    html += '<div class="suggestion-group-label">Search Results</div>';
+                    filtered.forEach(cat => { html += renderSuggestion(cat); });
+                } else {
+                    html += '<div style="padding:16px;color:var(--text-muted);font-size:0.875rem;text-align:center;">No categories found</div>';
+                }
+            }
+            categorySuggestions.innerHTML = html;
+        }
+
+        function renderSuggestion(cat) {
+            return `<div class="category-suggestion" onclick="selectCategory('${cat.id}')">
+                <span class="category-suggestion-icon">${cat.icon}</span>
+                <div class="category-suggestion-text">
+                    <div class="category-suggestion-name">${cat.name}</div>
+                    <div class="category-suggestion-rate">${cat.rate}% Final Value Fee</div>
+                </div>
+            </div>`;
+        }
+
+        function selectCategory(id) {
+            const cat = CATEGORIES.find(c => c.id === id);
+            if (!cat) return;
+            selectedCategory = cat;
+            categorySearch.value = cat.icon + ' ' + cat.name;
+            categorySuggestions.classList.remove('active');
+            calculate();
+        }
+
+        // ========== FEE ACCORDION ==========
+        document.getElementById('feeAccordion').addEventListener('click', function() {
+            this.classList.toggle('active');
+        });
+
+        // ========== CALCULATE ==========
+        function calculate() {
+            const salePrice     = parseFloat(document.getElementById('salePrice').value)     || 0;
+            const itemCost      = parseFloat(document.getElementById('itemCost').value)      || 0;
+            const buyerShipping = parseFloat(document.getElementById('buyerShipping').value) || 0;
+            const shipping      = parseFloat(document.getElementById('shipping').value)      || 0;
+            const packagingCost = parseFloat(document.getElementById('packagingCost').value) || 0;
+            const stateTaxRate  = parseFloat(document.getElementById('stateTax').value)      / 100 || 0;
+            const adFeeRate     = parseFloat(document.getElementById('adFee').value)         / 100 || 0;
+            const taxOnFeesRate = parseFloat(document.getElementById('taxOnFees').value)     / 100 || 0;
+
+            const totalSaleAmount  = salePrice + buyerShipping;
+            const salesTaxAmount   = totalSaleAmount * stateTaxRate;
+            const totalBuyerPays   = totalSaleAmount + salesTaxAmount;
+            const fvfRate          = selectedCategory.rate / 100;
+            const ebayFee          = totalBuyerPays * fvfRate;
+            const perOrderFee      = totalSaleAmount <= 10 ? 0.30 : 0.40;
+            const adFeeCost        = totalBuyerPays * adFeeRate;
+            const taxOnFeesAmount  = (ebayFee + perOrderFee) * taxOnFeesRate;
+            const totalFees        = ebayFee + perOrderFee + adFeeCost + taxOnFeesAmount;
+            const netProfit        = totalSaleAmount - totalFees - itemCost - shipping - packagingCost;
+            const profitMargin     = totalSaleAmount > 0 ? (netProfit / totalSaleAmount) * 100 : 0;
+
+            // Update results panel
+            document.getElementById('displaySalePrice').textContent   = '$' + salePrice.toFixed(2);
+            document.getElementById('totalSaleAmount').textContent     = '$' + totalSaleAmount.toFixed(2);
+            document.getElementById('salesTaxAmount').textContent      = '$' + salesTaxAmount.toFixed(2);
+            document.getElementById('ebayFee').textContent             = '$' + ebayFee.toFixed(2);
+            document.getElementById('perOrderFee').textContent         = '$' + perOrderFee.toFixed(2);
+            document.getElementById('adFeeCost').textContent           = '$' + adFeeCost.toFixed(2);
+            document.getElementById('taxOnFeesAmount').textContent     = '$' + taxOnFeesAmount.toFixed(2);
+            document.getElementById('totalFees').textContent           = '$' + totalFees.toFixed(2);
+            document.getElementById('displayItemCost').textContent     = '$' + itemCost.toFixed(2);
+            document.getElementById('displayShipping').textContent     = '$' + shipping.toFixed(2);
+            document.getElementById('displayPackaging').textContent    = '$' + packagingCost.toFixed(2);
+
+            const profitEl = document.getElementById('netProfit');
+            profitEl.textContent = '$' + netProfit.toFixed(2);
+            profitEl.style.color = netProfit >= 0 ? '#ffffff' : '#fca5a5';
+            profitEl.classList.add('success-animation');
+            setTimeout(() => profitEl.classList.remove('success-animation'), 600);
+
+            document.getElementById('profitMarginDisplay').textContent = profitMargin.toFixed(1) + '% margin';
+
+            // Mobile bar
+            document.getElementById('mobileProfitValue').textContent = '$' + netProfit.toFixed(2);
+            document.getElementById('mobileProfitValue').style.color = netProfit >= 0 ? 'white' : '#fca5a5';
+            document.getElementById('mobileMargin').textContent = profitMargin.toFixed(1) + '% margin';
+            document.getElementById('mobileFees').textContent   = '$' + totalFees.toFixed(2) + ' fees';
+
+            updateHealthIndicator(profitMargin);
+        }
+
+        function updateHealthIndicator(margin) {
+            const dots  = [1,2,3].map(n => document.getElementById('healthDot' + n));
+            const label = document.getElementById('healthLabel');
+            const score = document.getElementById('healthScore');
+            dots.forEach(d => { d.className = 'health-dot'; });
+
+            if (margin >= 30) {
+                dots.forEach(d => d.classList.add('active'));
+                label.textContent = 'Excellent Profit!';
+                score.textContent = '10';
+            } else if (margin >= 20) {
+                dots[0].classList.add('active'); dots[1].classList.add('active');
+                label.textContent = 'Good Margin';
+                score.textContent = (7 + (margin - 20) / 10).toFixed(1);
+            } else if (margin >= 10) {
+                dots[0].classList.add('active', 'warning');
+                label.textContent = 'Fair Margin';
+                score.textContent = (5 + (margin - 10) / 10).toFixed(1);
+            } else if (margin >= 0) {
+                dots[0].classList.add('active', 'danger');
+                label.textContent = 'Low Margin';
+                score.textContent = (margin / 10 * 5).toFixed(1);
+            } else {
+                label.textContent = 'Losing Money';
+                score.textContent = '0';
+            }
+        }
+
+        // ========== ACTION BUTTONS ==========
+        document.getElementById('saveBtn').addEventListener('click', saveCalculation);
+        document.getElementById('historyBtn').addEventListener('click', toggleHistory);
+        document.getElementById('resetBtn').addEventListener('click', resetAll);
+        document.getElementById('compareBtn').addEventListener('click', () => {
+            if (savedCalculations.length < 2) {
+                showToast('💡 Save at least 2 calculations to compare!', 'info');
+            } else {
+                showToast('⚖️ Compare mode coming soon!', 'info');
+            }
+        });
 
         function saveCalculation() {
-            haptic('light');
-            _lastFocusedElement = document.activeElement;
-            document.getElementById('saveModal').classList.add('active');
-            document.getElementById('saveName').value = '';
-            document.getElementById('saveName').focus();
-        }
+            var hp = document.getElementById('historyPanel');
+            if (hp) hp.remove();
+            var existing = document.getElementById('savePanel');
+            if (existing) { existing.remove(); return; }
 
-        function closeSaveModal() {
-            document.getElementById('saveModal').classList.remove('active');
-            if (_lastFocusedElement) _lastFocusedElement.focus();
+            var panel = document.createElement('div');
+            panel.id = 'savePanel';
+            panel.className = 'save-panel';
+
+            var profit = document.getElementById('netProfit').textContent;
+            var defaultName = selectedCategory.name.split(' ')[0] + ' — ' + profit;
+
+            var lbl = document.createElement('span');
+            lbl.className = 'save-panel-label';
+            lbl.textContent = 'Name this calculation';
+
+            var inp = document.createElement('input');
+            inp.id = 'saveNameInput';
+            inp.className = 'save-panel-input';
+            inp.type = 'text';
+            inp.placeholder = 'e.g. iPhone 15 Pro';
+            inp.value = defaultName;
+            inp.autocomplete = 'off';
+
+            var btnRow = document.createElement('div');
+            btnRow.className = 'save-panel-btns';
+
+            var okBtn = document.createElement('button');
+            okBtn.className = 'save-confirm-btn';
+            okBtn.type = 'button';
+            okBtn.textContent = 'Save';
+            okBtn.addEventListener('click', confirmSave);
+
+            var cancelBtn = document.createElement('button');
+            cancelBtn.className = 'save-cancel-btn';
+            cancelBtn.type = 'button';
+            cancelBtn.textContent = 'Cancel';
+            cancelBtn.addEventListener('click', function() {
+                var p = document.getElementById('savePanel');
+                if (p) p.remove();
+            });
+
+            btnRow.appendChild(okBtn);
+            btnRow.appendChild(cancelBtn);
+            panel.appendChild(lbl);
+            panel.appendChild(inp);
+            panel.appendChild(btnRow);
+
+            var qa = document.getElementById('saveBtn').closest('.quick-actions');
+            qa.parentNode.insertBefore(panel, qa.nextSibling);
+
+            inp.focus();
+            inp.select();
+            inp.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') confirmSave();
+                if (e.key === 'Escape') { var p = document.getElementById('savePanel'); if (p) p.remove(); }
+            });
         }
 
         function confirmSave() {
-            haptic('medium');
-            var name = document.getElementById('saveName').value.trim();
-            if (!name) {
-                alert('Please enter a name for this calculation');
-                return;
-            }
-
-            var calculation = {
+            var inp = document.getElementById('saveNameInput');
+            if (!inp) return;
+            var name = inp.value.trim();
+            if (!name) { inp.focus(); return; }
+            var profit = document.getElementById('netProfit').textContent;
+            var margin = document.getElementById('profitMarginDisplay').textContent;
+            savedCalculations.unshift({
                 name: name,
                 timestamp: new Date().toISOString(),
+                profit: profit,
+                margin: margin,
                 data: {
-                    salePrice: document.getElementById('salePrice').value,
-                    itemCost: document.getElementById('itemCost').value,
+                    salePrice:     document.getElementById('salePrice').value,
+                    itemCost:      document.getElementById('itemCost').value,
                     buyerShipping: document.getElementById('buyerShipping').value,
-                    shipping: document.getElementById('shipping').value,
+                    shipping:      document.getElementById('shipping').value,
                     packagingCost: document.getElementById('packagingCost').value,
-                    category: document.getElementById('category').value,
-                    storeLevel: document.getElementById('storeLevel').value,
-                    stateTax: document.getElementById('stateTax').value,
-                    adFee: document.getElementById('adFee').value,
-                    taxOnFees: document.getElementById('taxOnFees').value,
-                    netProfit: document.getElementById('netProfit').textContent,
-                    mode: currentMode,
-                    desiredProfit: document.getElementById('desiredProfit').value,
-                    desiredMargin: document.getElementById('desiredMargin').value
+                    stateTax:      document.getElementById('stateTax').value,
+                    adFee:         document.getElementById('adFee').value,
+                    taxOnFees:     document.getElementById('taxOnFees').value,
+                    categoryId:    selectedCategory.id,
+                    mode:          currentMode
                 }
-            };
-
-            savedCalculations.unshift(calculation);
-            if (savedCalculations.length > 20) {
-                savedCalculations = savedCalculations.slice(0, 20);
-            }
-            localStorage.setItem('ebayCalcSaved', JSON.stringify(savedCalculations));
-            closeSaveModal();
-            renderSavedItems();
-            document.getElementById('savedItemsContainer').style.display = 'block';
+            });
+            if (savedCalculations.length > 20) savedCalculations.pop();
+            try { localStorage.setItem('modernCalcSaved', JSON.stringify(savedCalculations)); } catch(e) {}
+            var p = document.getElementById('savePanel'); if (p) p.remove();
+            showToast('✅ Saved: ' + name, 'success');
         }
 
         function toggleHistory() {
-            var container = document.getElementById('savedItemsContainer');
-            var btn = document.getElementById('historyToggleBtn');
-            if (container.style.display === 'none') {
-                container.style.display = 'block';
-                if (btn) btn.setAttribute('aria-expanded', 'true');
-                renderSavedItems();
-            } else {
-                container.style.display = 'none';
-                if (btn) btn.setAttribute('aria-expanded', 'false');
-            }
-        }
-
-        function renderSavedItems() {
-            var container = document.getElementById('savedItems');
-            if (savedCalculations.length === 0) {
-                container.innerHTML = '<div style="text-align: center; padding: 20px; color: var(--text-muted); font-size: 12px;">No saved calculations yet</div>';
+            let panel = document.getElementById('historyPanel');
+            if (panel) {
+                panel.remove();
                 return;
             }
-            container.innerHTML = savedCalculations.map(function(calc, index) {
-                var safeName = calc.name.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-                var safeProfit = (calc.data.netProfit || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-                return '<div class="saved-item">' +
-                    '<div onclick="loadCalculation(' + index + ')" style="flex: 1;">' +
-                        '<div class="saved-item-name">' + safeName + '</div>' +
-                        '<div style="font-size: 10px; color: var(--text-muted); margin-top: 2px;">' +
-                            new Date(calc.timestamp).toLocaleDateString() + ' - Profit: ' + safeProfit +
-                        '</div>' +
-                    '</div>' +
-                    '<button class="saved-item-delete" onclick="deleteCalculation(' + index + ')" title="Delete">&#10005;</button>' +
-                '</div>';
-            }).join('');
-        }
-
-        function loadCalculation(index) {
-            var calc = savedCalculations[index];
-            if (!calc) return;
-            document.getElementById('salePrice').value = calc.data.salePrice;
-            document.getElementById('itemCost').value = calc.data.itemCost;
-            document.getElementById('buyerShipping').value = calc.data.buyerShipping;
-            document.getElementById('shipping').value = calc.data.shipping;
-            document.getElementById('packagingCost').value = calc.data.packagingCost || 0;
-            // Handle legacy saves that stored numeric category rates
-            var catVal = calc.data.category;
-            var catEl = document.getElementById('category');
-            catEl.value = catVal;
-            // If the value didn't match (legacy numeric), fall back to 'most'
-            if (catEl.value !== catVal) catEl.value = 'most';
-            var storeVal = calc.data.storeLevel;
-            var storeEl = document.getElementById('storeLevel');
-            storeEl.value = storeVal;
-            if (storeEl.value !== storeVal) storeEl.value = 'none';
-            document.getElementById('stateTax').value = calc.data.stateTax;
-            document.getElementById('adFee').value = calc.data.adFee;
-            document.getElementById('taxOnFees').value = calc.data.taxOnFees || 0;
-            document.getElementById('desiredProfit').value = calc.data.desiredProfit || 25;
-            document.getElementById('desiredMargin').value = calc.data.desiredMargin || '';
-            if (calc.data.mode && calc.data.mode !== currentMode) {
-                setMode(calc.data.mode);
+            panel = document.createElement('div');
+            panel.id = 'historyPanel';
+            panel.style.cssText = `
+                margin-top: var(--space-3);
+                padding: var(--space-3);
+                background: var(--glass-bg);
+                border: 1px solid var(--glass-border);
+                border-radius: var(--radius-lg);
+                max-height: 280px;
+                overflow-y: auto;
+            `;
+            if (!savedCalculations.length) {
+                panel.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-muted);font-size:0.875rem;">No saved calculations yet.<br>Hit 💾 Save to start!</div>';
             } else {
-                recalculate();
+                panel.innerHTML = savedCalculations.map((c, i) => `
+                    <div style="display:flex;align-items:center;gap:12px;padding:10px;border-radius:10px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.07);transition:background 0.2s;" 
+                         onmouseover="this.style.background='rgba(102,126,234,0.15)'" 
+                         onmouseout="this.style.background='transparent'"
+                         onclick="loadCalc(${i})">
+                        <div style="flex:1;">
+                            <div style="font-size:0.875rem;font-weight:700;color:var(--text-primary);">${c.name}</div>
+                            <div style="font-size:0.75rem;color:var(--text-muted);margin-top:2px;">
+                                ${new Date(c.timestamp).toLocaleDateString()} · ${c.profit} · ${c.margin}
+                            </div>
+                        </div>
+                        <button onclick="event.stopPropagation();deleteCalc(${i})" 
+                                style="background:none;border:none;color:#ef4444;font-size:1rem;cursor:pointer;padding:4px 8px;border-radius:6px;">✕</button>
+                    </div>`).join('');
             }
+            document.getElementById('resetBtn').parentElement.after(panel);
         }
 
-        function deleteCalculation(index) {
-            if (confirm('Delete this saved calculation?')) {
-                savedCalculations.splice(index, 1);
-                localStorage.setItem('ebayCalcSaved', JSON.stringify(savedCalculations));
-                renderSavedItems();
-            }
+        function loadCalc(index) {
+            const c = savedCalculations[index];
+            if (!c) return;
+            document.getElementById('salePrice').value     = c.data.salePrice || '';
+            document.getElementById('itemCost').value      = c.data.itemCost || '';
+            document.getElementById('buyerShipping').value = c.data.buyerShipping || 0;
+            document.getElementById('shipping').value      = c.data.shipping || 0;
+            document.getElementById('packagingCost').value = c.data.packagingCost || 0;
+            document.getElementById('stateTax').value      = c.data.stateTax || 0;
+            document.getElementById('adFee').value         = c.data.adFee || 0;
+            document.getElementById('taxOnFees').value     = c.data.taxOnFees || 0;
+            const cat = CATEGORIES.find(x => x.id === c.data.categoryId) || CATEGORIES[0];
+            selectCategory(cat.id);
+            if (c.data.mode) setMode(c.data.mode);
+            else calculate();
+            document.getElementById('historyPanel')?.remove();
+            showToast('📂 Loaded: ' + c.name, 'success');
         }
 
-        // ========== RESET ==========
-        function resetAllFields() {
-            haptic('heavy');
-            document.getElementById('salePrice').value = 100;
-            document.getElementById('itemCost').value = 50;
+        function deleteCalc(index) {
+            savedCalculations.splice(index, 1);
+            localStorage.setItem('modernCalcSaved', JSON.stringify(savedCalculations));
+            toggleHistory(); toggleHistory(); // re-render
+        }
+
+        function resetAll() {
+            document.getElementById('salePrice').value     = 100;
+            document.getElementById('itemCost').value      = 50;
             document.getElementById('buyerShipping').value = 0;
-            document.getElementById('shipping').value = 0;
+            document.getElementById('shipping').value      = 0;
             document.getElementById('packagingCost').value = 0;
-            document.getElementById('category').selectedIndex = 0;
-            document.getElementById('storeLevel').selectedIndex = 0;
-            document.getElementById('stateTax').selectedIndex = 0;
-            document.getElementById('adFee').selectedIndex = 0;
-            document.getElementById('taxOnFees').value = 0;
-            document.getElementById('desiredProfit').value = 25;
-            document.getElementById('desiredMargin').value = '';
-            if (currentMode !== 'forward') {
-                setMode('forward');
-            } else {
-                recalculate();
-            }
-            var results = document.getElementById('results');
-            results.classList.add('reset-shake');
-            setTimeout(function() { results.classList.remove('reset-shake'); }, 400);
+            document.getElementById('stateTax').value      = 0;
+            document.getElementById('adFee').value         = 0;
+            document.getElementById('taxOnFees').value     = 0;
+            selectCategory('most');
+            setMode('forward');
+            document.getElementById('historyPanel')?.remove();
+            showToast('🔄 Reset complete!', 'info');
         }
 
-        // ========== COMPARISON VIEW ==========
-        function computeValues(p) {
-            var totalSaleAmount = p.salePrice + p.buyerShipping;
-            var salesTaxAmount = totalSaleAmount * (p.stateTaxRate / 100);
-            var totalBuyerPays = totalSaleAmount + salesTaxAmount;
+        // ========== TOAST NOTIFICATIONS ==========
+        function showToast(message, type = 'info') {
+            const existing = document.getElementById('toast');
+            if (existing) existing.remove();
 
-            var catId = p.categoryId || 'most';
-            var storeLvl = p.storeLevel || 'none';
-            var fvfResult = calculateTieredFVF(totalBuyerPays, catId, storeLvl);
-            var ebayFee = fvfResult.fvf;
-            var perOrderFee = fvfResult.noPerOrderFee ? 0 : (totalSaleAmount <= 10 ? 0.30 : 0.40);
-            var adFeeCost = totalBuyerPays * (p.adFeeRate / 100);
-            var taxOnFeesAmount = (ebayFee + perOrderFee) * (p.taxOnFeesRate / 100);
-            var totalFees = ebayFee + perOrderFee + adFeeCost + taxOnFeesAmount;
-            var netProfit = totalSaleAmount - totalFees - p.itemCost - p.shipping - p.packagingCost;
-            var profitMargin = totalSaleAmount > 0 ? (netProfit / totalSaleAmount) * 100 : 0;
-
-            return {
-                salePrice: p.salePrice, itemCost: p.itemCost, totalSaleAmount: totalSaleAmount,
-                totalFees: totalFees, netProfit: netProfit, profitMargin: profitMargin,
-                shipping: p.shipping, packagingCost: p.packagingCost, ebayFee: ebayFee, adFeeCost: adFeeCost
-            };
-        }
-
-        function getCalculationSnapshot() {
-            return computeValues({
-                salePrice: parseFloat(document.getElementById('salePrice').value) || 0,
-                itemCost: parseFloat(document.getElementById('itemCost').value) || 0,
-                buyerShipping: parseFloat(document.getElementById('buyerShipping').value) || 0,
-                shipping: parseFloat(document.getElementById('shipping').value) || 0,
-                packagingCost: parseFloat(document.getElementById('packagingCost').value) || 0,
-                categoryId: document.getElementById('category').value,
-                storeLevel: document.getElementById('storeLevel').value,
-                stateTaxRate: parseFloat(document.getElementById('stateTax').value) || 0,
-                adFeeRate: parseFloat(document.getElementById('adFee').value) || 0,
-                taxOnFeesRate: parseFloat(document.getElementById('taxOnFees').value) || 0
+            const colors = { success: '#10b981', info: '#667eea', warning: '#f59e0b', error: '#ef4444' };
+            const toast = document.createElement('div');
+            toast.id = 'toast';
+            toast.textContent = message;
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 100px;
+                left: 50%;
+                transform: translateX(-50%) translateY(20px);
+                background: ${colors[type] || colors.info};
+                color: white;
+                padding: 12px 24px;
+                border-radius: 9999px;
+                font-size: 0.875rem;
+                font-weight: 600;
+                box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+                z-index: 9999;
+                opacity: 0;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                pointer-events: none;
+                white-space: nowrap;
+            `;
+            document.body.appendChild(toast);
+            requestAnimationFrame(() => {
+                toast.style.opacity = '1';
+                toast.style.transform = 'translateX(-50%) translateY(0)';
             });
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(-50%) translateY(20px)';
+                setTimeout(() => toast.remove(), 300);
+            }, 2500);
         }
 
-        function computeFromSaved(data) {
-            // Handle both new format (categoryId string) and legacy (numeric rate)
-            var catId = data.category;
-            if (!isNaN(parseFloat(catId)) && !FEE_TIERS[catId]) catId = 'most';
-            var storeLvl = data.storeLevel;
-            if (!isNaN(parseFloat(storeLvl))) storeLvl = 'none';
-
-            return computeValues({
-                salePrice: parseFloat(data.salePrice) || 0,
-                itemCost: parseFloat(data.itemCost) || 0,
-                buyerShipping: parseFloat(data.buyerShipping) || 0,
-                shipping: parseFloat(data.shipping) || 0,
-                packagingCost: parseFloat(data.packagingCost) || 0,
-                categoryId: catId,
-                storeLevel: storeLvl,
-                stateTaxRate: parseFloat(data.stateTax) || 0,
-                adFeeRate: parseFloat(data.adFee) || 0,
-                taxOnFeesRate: parseFloat(data.taxOnFees) || 0
-            });
-        }
-
-        function openCompareView() {
-            haptic('light');
-            _lastFocusedElement = document.activeElement;
-            populateCompareDropdowns();
-            updateComparison();
-            document.getElementById('compareModal').classList.add('active');
-            document.getElementById('compareA').focus();
-        }
-
-        function closeCompareModal() {
-            document.getElementById('compareModal').classList.remove('active');
-            if (_lastFocusedElement) _lastFocusedElement.focus();
-        }
-
-        function populateCompareDropdowns() {
-            var selA = document.getElementById('compareA');
-            var selB = document.getElementById('compareB');
-            var html = '<option value="current">Current Calculation</option>';
-            savedCalculations.forEach(function(calc, i) {
-                var safeName = calc.name.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-                html += '<option value="' + i + '">' + safeName + '</option>';
-            });
-            selA.innerHTML = html;
-            selB.innerHTML = html;
-            selA.value = 'current';
-            selB.value = savedCalculations.length > 0 ? '0' : 'current';
-        }
-
-        function updateComparison() {
-            var selA = document.getElementById('compareA').value;
-            var selB = document.getElementById('compareB').value;
-            var dataA = selA === 'current' ? getCalculationSnapshot() : computeFromSaved(savedCalculations[parseInt(selA)].data);
-            var dataB = selB === 'current' ? getCalculationSnapshot() : computeFromSaved(savedCalculations[parseInt(selB)].data);
-
-            var metrics = [
-                { label: 'Sale Price', key: 'salePrice', format: '$', higherBetter: true, highlight: false },
-                { label: 'Item Cost', key: 'itemCost', format: '$', higherBetter: false, highlight: false },
-                { label: 'Total Sale Amount', key: 'totalSaleAmount', format: '$', higherBetter: true, highlight: false },
-                { label: 'Total eBay Fees', key: 'totalFees', format: '$', higherBetter: false, highlight: true },
-                { label: 'Shipping Cost', key: 'shipping', format: '$', higherBetter: false, highlight: false },
-                { label: 'Packaging Cost', key: 'packagingCost', format: '$', higherBetter: false, highlight: false },
-                { label: 'Net Profit', key: 'netProfit', format: '$', higherBetter: true, highlight: true },
-                { label: 'Profit Margin', key: 'profitMargin', format: '%', higherBetter: true, highlight: true }
-            ];
-
-            var tbody = document.getElementById('compareTableBody');
-            var rows = '';
-            metrics.forEach(function(m) {
-                var valA = dataA[m.key]; var valB = dataB[m.key];
-                var delta = valB - valA;
-                var deltaClass = 'delta-neutral';
-                if (Math.abs(delta) > 0.005) {
-                    deltaClass = m.higherBetter ? (delta > 0 ? 'delta-positive' : 'delta-negative') : (delta < 0 ? 'delta-positive' : 'delta-negative');
-                }
-                var fmt = m.format === '$' ? function(v) { return '$' + v.toFixed(2); } : function(v) { return v.toFixed(2) + '%'; };
-                var deltaStr = (delta >= 0 ? '+' : '') + fmt(delta);
-                var rowClass = m.highlight ? ' class="highlight-row"' : '';
-                rows += '<tr' + rowClass + '><td>' + m.label + '</td><td>' + fmt(valA) + '</td><td>' + fmt(valB) + '</td><td class="' + deltaClass + '">' + deltaStr + '</td></tr>';
-            });
-            tbody.innerHTML = rows;
-        }
-
-        // ========== BULK CALCULATOR ==========
-        var bulkRowCounter = 0;
-
-        function openBulkModal() {
-            haptic('light');
-            _lastFocusedElement = document.activeElement;
-            if (document.getElementById('bulkTableBody').children.length === 0) {
-                for (var i = 0; i < 3; i++) addBulkRow();
-            }
-            document.getElementById('bulkModal').classList.add('active');
-        }
-
-        function closeBulkModal() {
-            document.getElementById('bulkModal').classList.remove('active');
-            if (_lastFocusedElement) _lastFocusedElement.focus();
-        }
-
-        function addBulkRow() {
-            var tbody = document.getElementById('bulkTableBody');
-            var tr = document.createElement('tr');
-            var rowId = bulkRowCounter++;
-            tr.id = 'bulkRow' + rowId;
-            tr.innerHTML = '<td><input type="text" placeholder="Item name" data-field="name"></td>' +
-                '<td><input type="number" placeholder="0.00" step="0.01" min="0" data-field="sale" value=""></td>' +
-                '<td><input type="number" placeholder="0.00" step="0.01" min="0" data-field="cost" value=""></td>' +
-                '<td><input type="number" placeholder="0.00" step="0.01" min="0" data-field="ship" value=""></td>' +
-                '<td class="bulk-result" data-field="fees">$0.00</td>' +
-                '<td class="bulk-result" data-field="profit">$0.00</td>' +
-                '<td class="bulk-result" data-field="margin">0%</td>' +
-                '<td><button class="bulk-row-delete" onclick="deleteBulkRow(' + rowId + ')">&#10005;</button></td>';
-            tbody.appendChild(tr);
-
-            // Attach input listeners
-            var inputs = tr.querySelectorAll('input[type="number"]');
-            for (var i = 0; i < inputs.length; i++) {
-                inputs[i].addEventListener('input', function() { recalcBulkRow(tr); });
-            }
-        }
-
-        function deleteBulkRow(rowId) {
-            var row = document.getElementById('bulkRow' + rowId);
-            if (row) row.remove();
-            updateBulkSummary();
-        }
-
-        function clearBulkRows() {
-            document.getElementById('bulkTableBody').innerHTML = '';
-            bulkRowCounter = 0;
-            for (var i = 0; i < 3; i++) addBulkRow();
-            updateBulkSummary();
-        }
-
-        function recalcBulkRow(tr) {
-            var sale = parseFloat(tr.querySelector('[data-field="sale"]').value) || 0;
-            var cost = parseFloat(tr.querySelector('[data-field="cost"]').value) || 0;
-            var ship = parseFloat(tr.querySelector('[data-field="ship"]').value) || 0;
-
-            // Use current category/store/tax settings from main calculator
-            var categoryId = document.getElementById('category').value;
-            var storeLevel = document.getElementById('storeLevel').value;
-            var stateTaxRate = parseFloat(document.getElementById('stateTax').value) || 0;
-            var adFeeRate = parseFloat(document.getElementById('adFee').value) || 0;
-            var taxOnFeesRate = parseFloat(document.getElementById('taxOnFees').value) || 0;
-
-            var totalSaleAmount = sale;
-            var salesTax = totalSaleAmount * (stateTaxRate / 100);
-            var totalBuyerPays = totalSaleAmount + salesTax;
-
-            var fvfResult = calculateTieredFVF(totalBuyerPays, categoryId, storeLevel);
-            var ebayFee = fvfResult.fvf;
-            var perOrderFee = fvfResult.noPerOrderFee ? 0 : (totalSaleAmount <= 10 ? 0.30 : 0.40);
-            var adFeeCost = totalBuyerPays * (adFeeRate / 100);
-            var taxOnFeesAmt = (ebayFee + perOrderFee) * (taxOnFeesRate / 100);
-            var totalFees = ebayFee + perOrderFee + adFeeCost + taxOnFeesAmt;
-            var netProfit = totalSaleAmount - totalFees - cost - ship;
-            var margin = totalSaleAmount > 0 ? (netProfit / totalSaleAmount) * 100 : 0;
-
-            tr.querySelector('[data-field="fees"]').textContent = '$' + totalFees.toFixed(2);
-            var profitCell = tr.querySelector('[data-field="profit"]');
-            profitCell.textContent = '$' + netProfit.toFixed(2);
-            profitCell.className = 'bulk-result ' + (netProfit >= 0 ? 'bulk-profit-positive' : 'bulk-profit-negative');
-            tr.querySelector('[data-field="margin"]').textContent = margin.toFixed(1) + '%';
-
-            updateBulkSummary();
-        }
-
-        function updateBulkSummary() {
-            var rows = document.getElementById('bulkTableBody').querySelectorAll('tr');
-            var totalItems = 0, totalRevenue = 0, totalCosts = 0, totalFees = 0, totalProfit = 0;
-
-            for (var i = 0; i < rows.length; i++) {
-                var sale = parseFloat(rows[i].querySelector('[data-field="sale"]').value) || 0;
-                var cost = parseFloat(rows[i].querySelector('[data-field="cost"]').value) || 0;
-                var ship = parseFloat(rows[i].querySelector('[data-field="ship"]').value) || 0;
-                var fees = parseFloat(rows[i].querySelector('[data-field="fees"]').textContent.replace('$', '')) || 0;
-                var profit = parseFloat(rows[i].querySelector('[data-field="profit"]').textContent.replace('$', '')) || 0;
-
-                if (sale > 0) totalItems++;
-                totalRevenue += sale;
-                totalCosts += cost + ship;
-                totalFees += fees;
-                totalProfit += profit;
-            }
-
-            document.getElementById('bulkTotalItems').textContent = totalItems;
-            document.getElementById('bulkTotalRevenue').textContent = '$' + totalRevenue.toFixed(2);
-            document.getElementById('bulkTotalCosts').textContent = '$' + totalCosts.toFixed(2);
-            document.getElementById('bulkTotalFees').textContent = '$' + totalFees.toFixed(2);
-            var profitEl = document.getElementById('bulkTotalProfit');
-            profitEl.textContent = '$' + totalProfit.toFixed(2);
-            profitEl.style.color = totalProfit >= 0 ? '#4ade80' : '#ef4444';
-        }
-
-        // ========== MODAL MANAGEMENT ==========
-        document.getElementById('saveModal').addEventListener('click', function(e) { if (e.target === this) closeSaveModal(); });
-        document.getElementById('compareModal').addEventListener('click', function(e) { if (e.target === this) closeCompareModal(); });
-        document.getElementById('bulkModal').addEventListener('click', function(e) { if (e.target === this) closeBulkModal(); });
-
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                if (document.getElementById('saveModal').classList.contains('active')) closeSaveModal();
-                else if (document.getElementById('compareModal').classList.contains('active')) closeCompareModal();
-                else if (document.getElementById('bulkModal').classList.contains('active')) closeBulkModal();
-                else if (document.getElementById('onboardingOverlay').classList.contains('active')) closeOnboarding();
-                return;
-            }
-            if (e.key === 'Tab') {
-                var activeModal = document.querySelector('.modal.active .modal-content');
-                if (!activeModal) return;
-                var focusable = activeModal.querySelectorAll('input, select, button, [tabindex]:not([tabindex="-1"])');
-                if (focusable.length === 0) return;
-                var first = focusable[0]; var last = focusable[focusable.length - 1];
-                if (e.shiftKey) {
-                    if (document.activeElement === first) { e.preventDefault(); last.focus(); }
-                } else {
-                    if (document.activeElement === last) { e.preventDefault(); first.focus(); }
-                }
-            }
+        // ========== INPUT LISTENERS ==========
+        ['salePrice','itemCost','buyerShipping','shipping','packagingCost','taxOnFees'].forEach(id => {
+            document.getElementById(id).addEventListener('input', calculate);
         });
-
-        document.getElementById('saveName').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') confirmSave();
+        ['stateTax','adFee','storeLevel'].forEach(id => {
+            document.getElementById(id).addEventListener('change', calculate);
         });
-
-        // ========== ONBOARDING ==========
-        var onboardingStep = 0;
-        var onboardingSteps = [
-            { icon: '💰', title: 'Welcome to eBay Fee Calculator!', text: 'The most comprehensive eBay fee calculator available. Accurately calculate your net profit with tiered fee rates, store-level pricing, and more.' },
-            { icon: '🔄', title: 'Two Powerful Modes', text: 'Use Calculate Profit to see fees on a known sale price, or Find List Price to reverse-calculate the price needed to hit your profit target.' },
-            { icon: '📦', title: 'Bulk & Compare', text: 'Calculate fees for multiple items at once with Bulk mode, save scenarios, and compare them side-by-side. All your data is saved locally on your device.' }
-        ];
-
-        function showOnboardingStep() {
-            var step = onboardingSteps[onboardingStep];
-            document.getElementById('onboardingIcon').textContent = step.icon;
-            document.getElementById('onboardingTitle').textContent = step.title;
-            document.getElementById('onboardingText').textContent = step.text;
-            for (var i = 0; i < 3; i++) {
-                document.getElementById('dot' + i).className = 'onboarding-dot' + (i === onboardingStep ? ' active' : '');
-            }
-            document.getElementById('onboardingNextBtn').textContent = onboardingStep === 2 ? 'Get Started' : 'Next';
-        }
-
-        function nextOnboardingStep() {
-            haptic('light');
-            onboardingStep++;
-            if (onboardingStep >= onboardingSteps.length) {
-                closeOnboarding();
-                return;
-            }
-            showOnboardingStep();
-        }
-
-        function closeOnboarding() {
-            document.getElementById('onboardingOverlay').classList.remove('active');
-            localStorage.setItem('ebayCalcOnboarded', 'true');
-        }
-
-        // Show onboarding for first-time users
-        if (!localStorage.getItem('ebayCalcOnboarded')) {
-            onboardingStep = 0;
-            showOnboardingStep();
-            document.getElementById('onboardingOverlay').classList.add('active');
-        }
 
         // ========== INIT ==========
-        if (window.innerWidth <= 1024) {
-            ['saleInfo', 'shipping', 'fees'].forEach(function(cardName) {
-                document.getElementById(cardName + 'Content').classList.add('collapsed');
-                var toggle = document.getElementById(cardName + 'Toggle');
-                if (toggle) toggle.setAttribute('aria-expanded', 'false');
-            });
-        }
-
-        recalculate();
-
-        // ========== SERVICE WORKER ==========
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js').catch(function() {});
-        }
+        selectCategory('most');
+        calculate();
     </script>
 </body>
 </html>
