@@ -171,7 +171,8 @@
         .theme-toggle {
             display: flex;
             align-items: center;
-            gap: var(--space-2);
+            gap: 8px;
+            flex-shrink: 0;
         }
 
         .theme-toggle-label {
@@ -182,24 +183,27 @@
 
         .toggle-switch {
             position: relative;
-            width: 56px;
-            height: 30px;
+            width: 52px;
+            height: 28px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: var(--radius-full);
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             border: 1px solid var(--glass-border);
+            flex-shrink: 0;
+            /* iOS: expand tap target via padding without changing visual size */
+            -webkit-tap-highlight-color: transparent;
         }
 
         .toggle-switch::before {
             content: '';
             position: absolute;
-            width: 24px;
-            height: 24px;
+            width: 22px;
+            height: 22px;
             border-radius: 50%;
             background: var(--primary-gradient);
             top: 2px;
-            left: 3px;
+            left: 2px;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
         }
@@ -210,7 +214,9 @@
 
         .toggle-switch:hover {
             background: rgba(255, 255, 255, 0.15);
-            transform: scale(1.05);
+        }
+        @media (hover: hover) {
+            .toggle-switch:hover { transform: scale(1.03); }
         }
 
         /* Main content grid */
@@ -749,17 +755,19 @@
             top: 0;
             z-index: 100;
             background: var(--primary-gradient);
-            padding: 12px 16px;
-            margin: -12px -12px 12px;
-            border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+            padding: 14px 16px;
+            margin: -14px -16px 14px;
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
             box-shadow: 0 8px 32px rgba(102, 126, 234, 0.4);
+            width: calc(100% + 32px);
+            box-sizing: border-box;
         }
 
         .mobile-profit-main {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: var(--space-2);
+            margin-bottom: 6px;
         }
 
         .mobile-profit-label {
@@ -771,15 +779,15 @@
         }
 
         .mobile-profit-value {
-            font-size: 1.75rem;
+            font-size: 1.375rem;
             font-weight: var(--font-weight-bold);
             color: white;
         }
 
         .mobile-profit-details {
             display: flex;
-            gap: var(--space-3);
-            font-size: 0.875rem;
+            gap: 16px;
+            font-size: 0.8125rem;
             color: rgba(255, 255, 255, 0.9);
         }
 
@@ -1002,7 +1010,8 @@
             
             /* Mobile profit bar with safe area */
             .mobile-profit-bar {
-                padding-top: max(12px, calc(env(safe-area-inset-top) + 8px));
+                padding-top: max(14px, calc(env(safe-area-inset-top) + 10px));
+                margin-top: max(-14px, calc(env(safe-area-inset-top) * -1 - 14px));
             }
         }
         
@@ -1022,10 +1031,16 @@
             
             button,
             .action-btn,
-            .mode-btn,
-            .toggle-switch {
+            .mode-btn {
                 min-height: 44px;
-                touch-action: manipulation; /* prevent 300ms tap delay */
+                touch-action: manipulation;
+            }
+            /* toggle-switch: tap target via theme-toggle padding, NOT min-height */
+            .theme-toggle {
+                padding: 7px 0;  /* gives 44px total tap height: 30 + 7+7 */
+            }
+            .toggle-switch {
+                touch-action: manipulation;
             }
         }
         
