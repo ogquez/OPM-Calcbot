@@ -1220,7 +1220,7 @@
                     </div>
 
                     <!-- Essential Inputs -->
-                    <div class="input-row">
+                    <div class="input-row" id="forwardInputRow">
                         <div class="input-group">
                             <label>Sale Price</label>
                             <input type="number" id="salePrice" placeholder="100.00" step="0.01" value="100">
@@ -1228,6 +1228,17 @@
                         <div class="input-group">
                             <label>Item Cost</label>
                             <input type="number" id="itemCost" placeholder="50.00" step="0.01" value="50">
+                        </div>
+                    </div>
+
+                    <div class="input-row" id="reverseInputRow" style="display: none;">
+                        <div class="input-group">
+                            <label>Target Profit 🎯</label>
+                            <input type="number" id="targetProfit" placeholder="30.00" step="0.01" value="30">
+                        </div>
+                        <div class="input-group">
+                            <label>Item Cost</label>
+                            <input type="number" id="itemCost2" placeholder="50.00" step="0.01" value="50">
                         </div>
                     </div>
 
@@ -1500,10 +1511,26 @@
             forwardBtn.classList.toggle('active', mode === 'forward');
             reverseBtn.classList.toggle('active', mode === 'reverse');
 
+            // Toggle input rows
+            const forwardRow = document.getElementById('forwardInputRow');
+            const reverseRow = document.getElementById('reverseInputRow');
+            if (mode === 'reverse') {
+                forwardRow.style.display = 'none';
+                reverseRow.style.display = 'grid';
+                // Sync itemCost between the two rows
+                document.getElementById('itemCost2').value = document.getElementById('itemCost').value;
+            } else {
+                forwardRow.style.display = 'grid';
+                reverseRow.style.display = 'none';
+                // Sync back
+                document.getElementById('itemCost').value = document.getElementById('itemCost2').value;
+            }
+
+            // Update result labels
             const resultLabel = document.querySelector('.result-hero .result-label');
             const mobileProfitLabel = document.querySelector('.mobile-profit-label');
             if (mode === 'reverse') {
-                if (resultLabel) resultLabel.textContent = 'Recommended List Price';
+                if (resultLabel) resultLabel.textContent = 'Required Sale Price';
                 if (mobileProfitLabel) mobileProfitLabel.textContent = 'List At';
             } else {
                 if (resultLabel) resultLabel.textContent = 'Net Profit';
@@ -1588,6 +1615,14 @@
 
         // ========== CALCULATE ==========
         function calculate() {
+            if (currentMode === 'reverse') {
+                calculateReverse();
+            } else {
+                calculateForward();
+            }
+        }
+
+        function calculateForward() {
             const salePrice     = parseFloat(document.getElementById('salePrice').value)     || 0;
             const itemCost      = parseFloat(document.getElementById('itemCost').value)      || 0;
             const buyerShipping = parseFloat(document.getElementById('buyerShipping').value) || 0;
@@ -1609,7 +1644,67 @@
             const netProfit        = totalSaleAmount - totalFees - itemCost - shipping - packagingCost;
             const profitMargin     = totalSaleAmount > 0 ? (netProfit / totalSaleAmount) * 100 : 0;
 
-            // Update results panel
+            updateUI(salePrice, totalSaleAmount, salesTaxAmount, ebayFee, perOrderFee, adFeeCost,
+                     taxOnFeesAmount, totalFees, itemCost, shipping, packagingCost, netProfit, profitMargin);
+        }
+
+        function calculateReverse() {
+            // Get inputs
+            const targetProfit  = parseFloat(document.getElementById('targetProfit').value)  || 0;
+            const itemCost      = parseFloat(document.getElementById('itemCost2').value)     || 0;
+            const buyerShipping = parseFloat(document.getElementById('buyerShipping').value) || 0;
+            const shipping      = parseFloat(document.getElementById('shipping').value)      || 0;
+            const packagingCost = parseFloat(document.getElementById('packagingCost').value) || 0;
+            const stateTaxRate  = parseFloat(document.getElementById('stateTax').value)      / 100 || 0;
+            const adFeeRate     = parseFloat(document.getElementById('adFee').value)         / 100 || 0;
+            const taxOnFeesRate = parseFloat(document.getElementById('taxOnFees').value)     / 100 || 0;
+            const fvfRate       = selectedCategory.rate / 100;
+
+            // Iterative solver: find salePrice such that netProfit = targetProfit
+            // Start with initial guess
+            var salePrice = targetProfit + itemCost + shipping + packagingCost + 10;
+
+            // Newton-Raphson iteration (converges in ~3-5 steps)
+            for (var i = 0; i < 20; i++) {
+                var totalSaleAmount = salePrice + buyerShipping;
+                var salesTaxAmount  = totalSaleAmount * stateTaxRate;
+                var totalBuyerPays  = totalSaleAmount + salesTaxAmount;
+                var ebayFee         = totalBuyerPays * fvfRate;
+                var perOrderFee     = totalSaleAmount <= 10 ? 0.30 : 0.40;
+                var adFeeCost       = totalBuyerPays * adFeeRate;
+                var taxOnFeesAmount = (ebayFee + perOrderFee) * taxOnFeesRate;
+                var totalFees       = ebayFee + perOrderFee + adFeeCost + taxOnFeesAmount;
+                var netProfit       = totalSaleAmount - totalFees - itemCost - shipping - packagingCost;
+
+                var error = targetProfit - netProfit;
+
+                // Converged within 1 cent
+                if (Math.abs(error) < 0.01) break;
+
+                // Adjust sale price
+                var effectiveRate = fvfRate + adFeeRate + (stateTaxRate * (fvfRate + adFeeRate)) + taxOnFeesRate * (fvfRate);
+                salePrice += error / (1 - effectiveRate);
+            }
+
+            // Final calculation with converged price
+            var totalSaleAmount = salePrice + buyerShipping;
+            var salesTaxAmount  = totalSaleAmount * stateTaxRate;
+            var totalBuyerPays  = totalSaleAmount + salesTaxAmount;
+            var ebayFee         = totalBuyerPays * fvfRate;
+            var perOrderFee     = totalSaleAmount <= 10 ? 0.30 : 0.40;
+            var adFeeCost       = totalBuyerPays * adFeeRate;
+            var taxOnFeesAmount = (ebayFee + perOrderFee) * taxOnFeesRate;
+            var totalFees       = ebayFee + perOrderFee + adFeeCost + taxOnFeesAmount;
+            var netProfit       = totalSaleAmount - totalFees - itemCost - shipping - packagingCost;
+            var profitMargin    = totalSaleAmount > 0 ? (netProfit / totalSaleAmount) * 100 : 0;
+
+            updateUI(salePrice, totalSaleAmount, salesTaxAmount, ebayFee, perOrderFee, adFeeCost,
+                     taxOnFeesAmount, totalFees, itemCost, shipping, packagingCost, netProfit, profitMargin);
+        }
+
+        function updateUI(salePrice, totalSaleAmount, salesTaxAmount, ebayFee, perOrderFee, adFeeCost,
+                          taxOnFeesAmount, totalFees, itemCost, shipping, packagingCost, netProfit, profitMargin) {
+            // Update result breakdowns
             document.getElementById('displaySalePrice').textContent   = '$' + salePrice.toFixed(2);
             document.getElementById('totalSaleAmount').textContent     = '$' + totalSaleAmount.toFixed(2);
             document.getElementById('salesTaxAmount').textContent      = '$' + salesTaxAmount.toFixed(2);
@@ -1622,22 +1717,26 @@
             document.getElementById('displayShipping').textContent     = '$' + shipping.toFixed(2);
             document.getElementById('displayPackaging').textContent    = '$' + packagingCost.toFixed(2);
 
-            const profitEl = document.getElementById('netProfit');
-            profitEl.textContent = '$' + netProfit.toFixed(2);
-            profitEl.style.color = netProfit >= 0 ? '#ffffff' : '#fca5a5';
+            // Hero display: show sale price in reverse mode, net profit in forward mode
+            var profitEl = document.getElementById('netProfit');
+            var heroValue = currentMode === 'reverse' ? salePrice : netProfit;
+            profitEl.textContent = '$' + heroValue.toFixed(2);
+            profitEl.style.color = (currentMode === 'reverse' || netProfit >= 0) ? '#ffffff' : '#fca5a5';
             profitEl.classList.add('success-animation');
-            setTimeout(() => profitEl.classList.remove('success-animation'), 600);
+            setTimeout(function() { profitEl.classList.remove('success-animation'); }, 600);
 
             document.getElementById('profitMarginDisplay').textContent = profitMargin.toFixed(1) + '% margin';
 
             // Mobile bar
-            document.getElementById('mobileProfitValue').textContent = '$' + netProfit.toFixed(2);
-            document.getElementById('mobileProfitValue').style.color = netProfit >= 0 ? 'white' : '#fca5a5';
+            var mobileValue = currentMode === 'reverse' ? salePrice : netProfit;
+            document.getElementById('mobileProfitValue').textContent = '$' + mobileValue.toFixed(2);
+            document.getElementById('mobileProfitValue').style.color = (currentMode === 'reverse' || netProfit >= 0) ? 'white' : '#fca5a5';
             document.getElementById('mobileMargin').textContent = profitMargin.toFixed(1) + '% margin';
             document.getElementById('mobileFees').textContent   = '$' + totalFees.toFixed(2) + ' fees';
 
             updateHealthIndicator(profitMargin);
         }
+
 
         function updateHealthIndicator(margin) {
             const dots  = [1,2,3].map(n => document.getElementById('healthDot' + n));
@@ -1888,11 +1987,13 @@
         }
 
         // ========== INPUT LISTENERS ==========
-        ['salePrice','itemCost','buyerShipping','shipping','packagingCost','taxOnFees'].forEach(id => {
-            document.getElementById(id).addEventListener('input', calculate);
+        ['salePrice','itemCost','targetProfit','itemCost2','buyerShipping','shipping','packagingCost','taxOnFees'].forEach(id => {
+            var el = document.getElementById(id);
+            if (el) el.addEventListener('input', calculate);
         });
         ['stateTax','adFee','storeLevel'].forEach(id => {
-            document.getElementById(id).addEventListener('change', calculate);
+            var el = document.getElementById(id);
+            if (el) el.addEventListener('change', calculate);
         });
 
         // ========== INIT ==========
