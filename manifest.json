@@ -1,21 +1,24 @@
 {
-  "name": "OPM eBay Fee Calculator",
-  "short_name": "OPM Calculator",
+  "name": "eBay Fee Calculator",
+  "short_name": "eBay Calc",
+  "description": "Calculate eBay fees and profit margins with tiered FVF rates",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#1a1a2e",
+  "background_color": "#0e0e18",
   "theme_color": "#667eea",
-  "orientation": "portrait",
+  "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "https://raw.githubusercontent.com/ogquez/OPM-Calcbot/main/icons/icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "icon-512.png",
+      "src": "https://raw.githubusercontent.com/ogquez/OPM_Calcbot/main/icons/icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
