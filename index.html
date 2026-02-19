@@ -67,7 +67,45 @@
             --font-weight-medium: 500;
             --font-weight-semibold: 600;
             --font-weight-bold: 700;
-        }
+    
+        /* ══════════════════════════════════════════════════════════════════ */
+        /* iOS System Colors (UIColor Equivalents)                             */
+        /* These map directly to Color.green, Color.red, etc. in SwiftUI      */
+        /* Light mode values from Apple Human Interface Guidelines            */
+        /* ══════════════════════════════════════════════════════════════════ */
+        
+        --ios-green-r: 52;
+        --ios-green-g: 199;
+        --ios-green-b: 89;
+        
+        --ios-yellow-r: 255;
+        --ios-yellow-g: 204;
+        --ios-yellow-b: 0;
+        
+        --ios-orange-r: 255;
+        --ios-orange-g: 149;
+        --ios-orange-b: 0;
+        
+        --ios-red-r: 255;
+        --ios-red-g: 59;
+        --ios-red-b: 48;
+        
+        --ios-blue-r: 0;
+        --ios-blue-g: 122;
+        --ios-blue-b: 255;
+        
+        --ios-purple-r: 175;
+        --ios-purple-g: 82;
+        --ios-purple-b: 222;
+        
+        /* Convenience rgba() constructors */
+        --ios-green: rgba(var(--ios-green-r), var(--ios-green-g), var(--ios-green-b), 1);
+        --ios-yellow: rgba(var(--ios-yellow-r), var(--ios-yellow-g), var(--ios-yellow-b), 1);
+        --ios-orange: rgba(var(--ios-orange-r), var(--ios-orange-g), var(--ios-orange-b), 1);
+        --ios-red: rgba(var(--ios-red-r), var(--ios-red-g), var(--ios-red-b), 1);
+        --ios-blue: rgba(var(--ios-blue-r), var(--ios-blue-g), var(--ios-blue-b), 1);
+        --ios-purple: rgba(var(--ios-purple-r), var(--ios-purple-g), var(--ios-purple-b), 1);
+    }
 
         [data-theme="light"] {
             --glass-bg: rgba(255, 255, 255, 0.7);
@@ -1702,6 +1740,64 @@
 
 
     <script>
+
+        /* ══════════════════════════════════════════════════════════════════
+         * APPLICATION STATE
+         * Single source of truth for all app state (MVVM pattern)
+         * Maps directly to SwiftUI @State and @Published properties
+         * ═══════════════════════════════════════════════════════════════════*/
+
+        var AppState = {
+            // Calculation Mode
+            mode: 'forward',  // 'forward' | 'reverse'
+            
+            // Input Values
+            selectedCategory: null,
+            salePrice: 0,
+            itemCost: 0,
+            targetProfit: 0,
+            shipping: 0,
+            packaging: 0,
+            storeTier: 'none',  // 'none' | 'basic' | 'premium' | 'anchor' | 'enterprise'
+            stateTax: 0,
+            adFeeEnabled: false,
+            taxOnFeesEnabled: false,
+            
+            // UI State
+            sectionStates: {
+                revenue: false,
+                fee: true,      // Expanded by default
+                cost: false
+            },
+            advancedMode: false,
+            
+            // Computed Results (updated by calculate())
+            results: {
+                netProfit: 0,
+                profitMargin: 0,
+                totalFees: 0,
+                fvfAmount: 0,
+                perOrderFee: 0,
+                adFee: 0,
+                taxOnFees: 0,
+                salesTax: 0,
+                breakEven: 0,
+                marginLevel: 'warning'  // 'excellent' | 'good' | 'fair' | 'warning' | 'negative'
+            }
+        };
+
+        /* ══════════════════════════════════════════════════════════════════
+         * Swift Equivalent:
+         * 
+         * class CalculatorViewModel: ObservableObject {
+         *     @Published var mode: CalculationMode = .forward
+         *     @Published var selectedCategory: Category?
+         *     @Published var salePrice: Double = 0
+         *     @Published var itemCost: Double = 0
+         *     // ... etc
+         * }
+         * ═══════════════════════════════════════════════════════════════════*/
+
         // ========== CATEGORY DATA ==========
         const CATEGORIES = [
             { id: 'most',          name: 'Most Categories',           icon: '📦', rate: 13.6,  popular: true },
@@ -2250,7 +2346,209 @@
          * Follows Apple's HIG for touch interactions and accessibility
          * ═══════════════════════════════════════════════════════════════════*/
 
-        var sectionStates = {};
+        
+
+        /* ══════════════════════════════════════════════════════════════════
+         * CALCULATION ENGINE (Pure Functions)
+         * These functions have NO side effects - they only calculate and return
+         * Drop these directly into Swift's CalculationEngine.swift
+         * ═══════════════════════════════════════════════════════════════════*/
+
+        /**
+         * Calculate all results from inputs (Forward mode)
+         * @param {Object} inputs - Calculation inputs
+         * @returns {Object} Complete results object
+         * 
+         * Swift equivalent:
+         * func calculateResults(inputs: CalculationInputs) -> CalculationResults
+         */
+        function calculateResults(inputs) {
+            // Extract inputs
+            var salePrice = inputs.salePrice || 0;
+            var itemCost = inputs.itemCost || 0;
+            var shipping = inputs.shipping || 0;
+            var packaging = inputs.packaging || 0;
+            var category = inputs.selectedCategory;
+            
+            // Calculate fees
+            var fvf = calculateTieredFVF(salePrice, category);
+            var perOrderFee = salePrice >= 10 ? 0.30 : 0.40;
+            var adFee = inputs.adFeeEnabled ? salePrice * 0.01 : 0;
+            var totalFees = fvf + perOrderFee + adFee;
+            
+            // Calculate costs
+            var totalCosts = itemCost + shipping + packaging;
+            
+            // Calculate profit
+            var netProfit = salePrice - totalCosts - totalFees;
+            var profitMargin = salePrice > 0 ? (netProfit / salePrice) * 100 : 0;
+            
+            // Calculate break-even
+            var breakEven = totalCosts / (1 - 0.15);
+            
+            // Determine margin level
+            var marginLevel = getMarginLevel(profitMargin);
+            
+            return {
+                netProfit: netProfit,
+                profitMargin: profitMargin,
+                totalFees: totalFees,
+                fvfAmount: fvf,
+                perOrderFee: perOrderFee,
+                adFee: adFee,
+                breakEven: breakEven,
+                marginLevel: marginLevel
+            };
+        }
+
+        /**
+         * Determine margin quality level
+         * @param {number} margin - Profit margin percentage
+         * @returns {string} Margin level classification
+         * 
+         * Swift equivalent:
+         * func getMarginLevel(_ margin: Double) -> MarginLevel
+         */
+        function getMarginLevel(margin) {
+            if (margin >= 25) return 'excellent';
+            if (margin >= 15) return 'good';
+            if (margin >= 10) return 'fair';
+            if (margin >= 0) return 'warning';
+            return 'negative';
+        }
+
+        /**
+         * Calculate required sale price from target profit (Reverse mode)
+         * Uses Newton-Raphson iterative solver
+         * @param {Object} inputs - Reverse calculation inputs
+         * @returns {number} Required sale price
+         * 
+         * Swift equivalent:
+         * func calculateReversePrice(inputs: ReverseInputs) -> Double
+         */
+        function calculateReversePrice(inputs) {
+            var targetProfit = inputs.targetProfit || 0;
+            var itemCost = inputs.itemCost || 0;
+            var shipping = inputs.shipping || 0;
+            var packaging = inputs.packaging || 0;
+            var totalCosts = itemCost + shipping + packaging;
+            
+            // Initial guess
+            var salePrice = targetProfit + totalCosts + 10;
+            var maxIterations = 20;
+            
+            // Newton-Raphson iteration
+            for (var i = 0; i < maxIterations; i++) {
+                var fees = calculateTieredFVF(salePrice, inputs.selectedCategory);
+                fees += salePrice >= 10 ? 0.30 : 0.40;  // Per-order fee
+                
+                var actualProfit = salePrice - totalCosts - fees;
+                var error = targetProfit - actualProfit;
+                
+                // Converged?
+                if (Math.abs(error) < 0.01) break;
+                
+                // Adjust price
+                salePrice += error / (1 - 0.15);
+            }
+            
+            return salePrice;
+        }
+
+        /* ══════════════════════════════════════════════════════════════════
+         * These functions are now "Swift-ready":
+         * - No DOM manipulation
+         * - No side effects
+         * - Pure input → output
+         * - Can be unit tested
+         * - Drop into CalculationEngine.swift almost unchanged
+         * ═══════════════════════════════════════════════════════════════════*/
+
+        /* ══════════════════════════════════════════════════════════════════
+         * UI COMPONENT FUNCTIONS
+         * Each function creates a UI element (maps to SwiftUI View)
+         * ═══════════════════════════════════════════════════════════════════*/
+
+        /**
+         * Update all UI elements with new results
+         * In Swift: This becomes computed properties on ViewModel
+         * @param {Object} results - Calculation results
+         */
+        function updateUIWithResults(results) {
+            // Hero card
+            var profitDisplay = document.getElementById('netProfit');
+            if (profitDisplay) {
+                profitDisplay.textContent = formatCurrency(results.netProfit);
+            }
+            
+            var marginDisplay = document.getElementById('profitMarginDisplay');
+            if (marginDisplay) {
+                marginDisplay.textContent = results.profitMargin.toFixed(1) + '%';
+            }
+            
+            // Summary section
+            var summaryProfit = document.getElementById('summaryProfit');
+            if (summaryProfit) {
+                summaryProfit.textContent = formatCurrency(results.netProfit);
+            }
+            
+            var summaryMargin = document.getElementById('summaryMargin');
+            if (summaryMargin) {
+                summaryMargin.textContent = results.profitMargin.toFixed(1) + '%';
+            }
+            
+            var summaryFees = document.getElementById('summaryFees');
+            if (summaryFees) {
+                summaryFees.textContent = formatCurrency(results.totalFees);
+            }
+            
+            var breakEvenPrice = document.getElementById('breakEvenPrice');
+            if (breakEvenPrice) {
+                breakEvenPrice.textContent = formatCurrency(results.breakEven);
+            }
+            
+            // Apply margin colors (iOS system colors)
+            updateMarginColors(results.profitMargin);
+        }
+
+        /**
+         * Format number as currency
+         * In Swift: Text(value, format: .currency(code: "USD"))
+         * @param {number} value - Number to format
+         * @returns {string} Formatted currency string
+         */
+        function formatCurrency(value) {
+            return '$' + value.toFixed(2);
+        }
+
+        /**
+         * Format number as percentage
+         * In Swift: Text("\(value, specifier: "%.1f")%")
+         * @param {number} value - Number to format
+         * @returns {string} Formatted percentage string
+         */
+        function formatPercentage(value) {
+            return value.toFixed(1) + '%';
+        }
+
+        /* ══════════════════════════════════════════════════════════════════
+         * Swift View Examples:
+         * 
+         * struct ResultRow: View {
+         *     let label: String
+         *     let value: String
+         *     
+         *     var body: some View {
+         *         HStack {
+         *             Text(label).foregroundColor(.secondary)
+         *             Spacer()
+         *             Text(value).fontWeight(.semibold)
+         *         }
+         *     }
+         * }
+         * ═══════════════════════════════════════════════════════════════════*/
+
+// Moved to AppState.sectionStates
 
         // Initialize from localStorage
         function initCollapsibleSections() {
